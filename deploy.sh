@@ -126,7 +126,10 @@ start_cluster() {
         fi
         info "Installation de K3s (Kubernetes léger, compatible LXC)..."
         info "Patience — téléchargement ~60 MB..."
-        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+        # Désinstaller une éventuelle installation précédente qui aurait échoué
+        k3s-uninstall.sh 2>/dev/null || true
+        # KubeletInUserNamespace=true : contourne l'absence de /dev/kmsg dans LXC
+        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik --kubelet-arg=feature-gates=KubeletInUserNamespace=true" sh -
         export KUBECONFIG="${K3S_KUBECONFIG}"
         info "Attente que le nœud K3s soit Ready (max 3 min)..."
         local i=0
