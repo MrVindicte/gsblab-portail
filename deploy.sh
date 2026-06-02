@@ -114,16 +114,31 @@ start_minikube() {
         success "Cluster déjà actif"
         return
     fi
-    info "Démarrage de Minikube (driver=docker, 2 CPU, 2 GB RAM)..."
+
+    # Nettoyer tout état corrompu d'une tentative précédente
+    info "Nettoyage d'un éventuel cluster en état invalide..."
+    minikube delete --purge 2>/dev/null || true
+
+    # Adapter la mémoire allouée selon ce qui est disponible sur la VM
+    AVAIL_MB=$(free -m | awk '/^Mem:/{print $7}')
+    MEM=1900
+    [[ "${AVAIL_MB:-9999}" -lt 2000 ]] && MEM=1500
+    info "Mémoire disponible : ${AVAIL_MB} MB → allocation Minikube : ${MEM} MB"
+
+    info "Démarrage de Minikube (driver=docker, 2 CPU, ${MEM} MB RAM)..."
     info "Patience — première fois : 3 à 5 minutes (téléchargement de l'image Minikube ~500 MB)"
     minikube start \
         --driver=docker \
         --force \
         --cpus=2 \
-        --memory=2048 \
-        --kubernetes-version=stable
+        --memory="${MEM}" \
+        --kubernetes-version=stable \
+        --wait=all \
+        --wait-timeout=6m
+
     info "Vérification de l'état du cluster..."
     minikube status
+    kubectl get nodes
     success "Cluster Kubernetes démarré"
 }
 
