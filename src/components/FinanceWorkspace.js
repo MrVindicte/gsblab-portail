@@ -1,5 +1,5 @@
 import { calculateFinancials, generateTcoProjections } from '../utils/financialMath.js?v=3';
-import { parseCSVUsers, parseJSONBudget } from '../utils/dataParsers.js?v=3';
+import { parseCSVUsers, parseJSONBudget } from '../utils/dataParsers.js?v=4';
 
 let chartInstance = null;
 let _prevSavings = 0;
