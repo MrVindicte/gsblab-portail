@@ -1,0 +1,481 @@
+// ==============================================================================
+// CORE ORCHESTRATOR - PORTAIL GSBLAB ES6 NATIVE
+// ==============================================================================
+import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=2';
+import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=2';
+import ExecutiveSummary from './components/ExecutiveSummary.js?v=2';
+import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=2';
+import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=2';
+import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=2';
+import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=2';
+import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=2';
+
+// Global state holding parameters
+window.appState = {
+  activeTab: 'dashboard',
+  usersCount: 333,
+  sitesCount: defaultSpokes.length,
+  serversCount: 4,
+  vmwareCorePrice: 300,
+  cloudMonthlyCost: 4500,
+  inflationRate: 0.05,
+  spokesList: defaultSpokes,
+  risksList: defaultRisks,
+  
+  // States for sub-components
+  activeCrisis: 'none',
+  crisisStep: 0,
+  pmoSubTab: 'risks',
+  pmoFilterCategory: 'Tout',
+  beforeAfterSliderVal: 50,
+  
+  // Presentation Mode — global continuous counter
+  presentationMode: false,
+  globalPresentationStep: 1,  // never resets between tabs
+  presentationStep: 1         // local step for the current tab (derived)
+};
+
+// ─── Presentation step configuration ────────────────────────────────────────
+// Update maxSteps when you add/remove data-pres-step elements in a component.
+const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison'];
+const PRES_MAX  = { dashboard: 13, finance: 6, tech: 4, drp: 2, pmo: 3, comparison: 3 };
+
+// Compute cumulative offsets once
+const PRES_OFFSET = {};
+let _acc = 0;
+for (const t of PRES_TABS) { PRES_OFFSET[t] = _acc; _acc += PRES_MAX[t]; }
+const PRES_TOTAL = _acc; // 31
+
+/** Convert a global step (1-based) to { tab, localStep } */
+const globalToLocal = (g) => {
+  for (let i = PRES_TABS.length - 1; i >= 0; i--) {
+    const t = PRES_TABS[i];
+    if (g > PRES_OFFSET[t]) {
+      return { tab: t, localStep: Math.min(g - PRES_OFFSET[t], PRES_MAX[t]) };
+    }
+  }
+  return { tab: PRES_TABS[0], localStep: 1 };
+};
+
+// ─── Presentation helpers ────────────────────────────────────────────────────
+const togglePresentationMode = (active) => {
+  window.appState.presentationMode = active;
+  window.appState.globalPresentationStep = 1;
+  window.appState.activeTab = 'dashboard';
+  window.appState.presentationStep = 1;
+  renderApp();
+};
+
+const navigatePresentation = (direction) => {
+  let next = window.appState.globalPresentationStep + direction;
+  next = Math.max(1, Math.min(PRES_TOTAL, next));
+  
+  const { tab, localStep } = globalToLocal(next);
+  window.appState.globalPresentationStep = next;
+  window.appState.presentationStep = localStep;
+
+  if (tab !== window.appState.activeTab) {
+    window.appState.activeTab = tab;
+    renderApp(); // full re-render to load the new tab's HTML
+  } else {
+    updatePresentationDOM();
+  }
+};
+
+
+const updatePresentationDOM = () => {
+  const elements = document.querySelectorAll('[data-pres-step]');
+  const steps = Array.from(elements).map(el => parseInt(el.getAttribute('data-pres-step')));
+  const maxStep = steps.length > 0 ? Math.max(...steps) : 1;
+  
+  if (window.appState.presentationStep > maxStep) {
+    window.appState.presentationStep = maxStep;
+  }
+  
+  elements.forEach(el => {
+    const stepVal = parseInt(el.getAttribute('data-pres-step'));
+    if (stepVal <= window.appState.presentationStep) {
+      el.classList.add('pres-revealed');
+    } else {
+      el.classList.remove('pres-revealed');
+    }
+  });
+
+  // --- Intro slide / Dashboard visibility swap ---
+  const introSlide = document.getElementById('pres-intro-slide');
+  const dashboard  = document.getElementById('pres-dashboard');
+  if (introSlide && dashboard) {
+    if (window.appState.presentationStep <= 1) {
+      // Show intro, hide dashboard
+      introSlide.classList.remove('hidden');
+      introSlide.classList.add('flex');
+      dashboard.classList.add('hidden');
+      dashboard.classList.remove('space-y-6', 'pb-2');
+      // Calculate exact chrome height for scrollbar-free fit
+      const header = document.querySelector('header');
+      const footer = document.querySelector('footer');
+      const chromeH = (header ? header.offsetHeight : 72) + (footer ? footer.offsetHeight : 48);
+      document.documentElement.style.setProperty('--layout-chrome', chromeH + 'px');
+    } else {
+      // Hide intro, show dashboard
+      introSlide.classList.add('hidden');
+      introSlide.classList.remove('flex');
+      dashboard.classList.remove('hidden');
+      dashboard.classList.add('space-y-6', 'pb-2');
+      document.documentElement.style.removeProperty('--layout-chrome');
+    }
+  }
+  
+  const counterEl = document.getElementById('pres-counter-label');
+  if (counterEl) {
+    counterEl.innerText = `Étape ${window.appState.globalPresentationStep} / ${PRES_TOTAL}`;
+  }
+
+  // --- Progress bar (replaces dots) ---
+  const pillsContainer = document.getElementById('pres-step-pills');
+  if (pillsContainer) {
+    const g   = window.appState.globalPresentationStep;
+    const pct = ((g - 1) / Math.max(PRES_TOTAL - 1, 1)) * 100;
+
+    // Tab boundary positions as % (between tabs)
+    const boundaryPcts = PRES_TABS.slice(1).map(t =>
+      (PRES_OFFSET[t] / (PRES_TOTAL)) * 100
+    );
+
+    const ticks = boundaryPcts.map(p =>
+      `<div style="position:absolute;top:-3px;left:${p}%;width:1px;height:10px;background:#334155;transform:translateX(-50%);pointer-events:none;"></div>`
+    ).join('');
+
+    pillsContainer.innerHTML = `
+      <div style="position:relative;width:100%;height:4px;background:#1e293b;border-radius:2px;">
+        <div style="position:absolute;inset:0;width:${pct}%;background:linear-gradient(90deg,#3b82f6,#6366f1);border-radius:2px;transition:width 0.25s ease;"></div>
+        ${ticks}
+        <div style="position:absolute;top:50%;left:${pct}%;transform:translate(-50%,-50%);width:10px;height:10px;background:#60a5fa;border-radius:50%;box-shadow:0 0 8px rgba(96,165,250,0.55);transition:left 0.25s ease;pointer-events:none;"></div>
+      </div>
+    `;
+
+    // Click anywhere on the bar to jump to that global step
+    pillsContainer.onclick = (e) => {
+      const rect = pillsContainer.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const target = Math.max(1, Math.min(PRES_TOTAL, Math.round(ratio * (PRES_TOTAL - 1)) + 1));
+      const { tab, localStep } = globalToLocal(target);
+      window.appState.globalPresentationStep = target;
+      window.appState.presentationStep = localStep;
+      if (tab !== window.appState.activeTab) {
+        window.appState.activeTab = tab;
+        renderApp();
+      } else {
+        updatePresentationDOM();
+      }
+    };
+  }
+
+  // --- Step contextual label ---
+  const stepLabelEl = document.getElementById('pres-step-label');
+  if (stepLabelEl) {
+    const labelEls = document.querySelectorAll(`[data-pres-step="${window.appState.presentationStep}"][data-pres-label]`);
+    const label = labelEls.length > 0 ? labelEls[0].getAttribute('data-pres-label') : '';
+    if (label) {
+      stepLabelEl.textContent = '· ' + label;
+      stepLabelEl.classList.remove('hidden');
+    } else {
+      stepLabelEl.classList.add('hidden');
+    }
+  }
+  
+  const btnPrev = document.getElementById('btn-pres-prev');
+  const btnNext = document.getElementById('btn-pres-next');
+  
+  if (btnPrev) {
+    if (window.appState.globalPresentationStep <= 1) {
+      btnPrev.classList.add('opacity-30', 'cursor-not-allowed');
+      btnPrev.setAttribute('disabled', 'true');
+    } else {
+      btnPrev.classList.remove('opacity-30', 'cursor-not-allowed');
+      btnPrev.removeAttribute('disabled');
+    }
+  }
+  if (btnNext) {
+    if (window.appState.globalPresentationStep >= PRES_TOTAL) {
+      btnNext.classList.add('opacity-30', 'cursor-not-allowed');
+      btnNext.setAttribute('disabled', 'true');
+    } else {
+      btnNext.classList.remove('opacity-30', 'cursor-not-allowed');
+      btnNext.removeAttribute('disabled');
+    }
+  }
+};
+
+const renderApp = () => {
+  const root = document.getElementById('root');
+  const state = window.appState;
+  const isPres = state.presentationMode;
+
+  if (isPres) {
+    document.body.classList.add('pres-mode-active');
+  } else {
+    document.body.classList.remove('pres-mode-active');
+  }
+
+  // Header template (matches App.tsx layout)
+  const headerHtml = `
+    <header class="bg-slate-900/90 backdrop-blur-md border-b border-white/5 py-4 px-8 sticky top-0 z-50 flex justify-between items-center no-print flex-shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-500 rounded-lg flex items-center justify-center font-black text-white text-base shadow-[0_0_15px_rgba(99,102,241,0.25)] flex-shrink-0">
+          G1
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
+              GSBLAB PORTAIL DECISIONNEL
+            </h1>
+            <div class="flex items-center bg-white/5 border border-white/10 px-2 py-0.5 rounded text-[9px] font-mono font-semibold tracking-wider text-slate-300 flex-shrink-0">
+              <span>2IC</span>
+              <span class="mx-1.5 text-slate-500">/</span>
+              <span class="text-blue-400">GRP.01</span>
+            </div>
+          </div>
+          <p class="text-xs text-slate-400 font-medium mt-0.5">
+            Réalisation : <strong class="text-white font-semibold">Romain, Léo & Jérôme</strong> — Mastère 2IC 2026
+          </p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <div class="group relative cursor-help">
+          <div class="bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-400 px-3 py-1.5 rounded-md text-xs font-mono font-bold tracking-wider flex items-center gap-1.5 transition duration-200 shadow-[0_0_12px_rgba(16,185,129,0.05)]">
+            <svg class="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <span>CERTIFIÉ HDS V2</span>
+          </div>
+          
+          <!-- Tooltip Encart Hover -->
+          <div class="absolute right-0 top-full mt-2 w-80 p-4 bg-[#111218] border border-white/10 rounded-xl shadow-2xl opacity-0 scale-95 pointer-events-none group-hover:opacity-100 group-hover:scale-100 group-hover:pointer-events-auto transition-all duration-200 z-50 space-y-2.5 text-left text-xs text-slate-300">
+            <div class="flex items-center gap-1.5 text-emerald-400 font-bold border-b border-white/5 pb-1.5 uppercase font-mono tracking-wider text-[10px]">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              Garanties HDS &amp; RGPD
+            </div>
+            <div class="space-y-2.5">
+              <div>
+                <span class="text-white font-semibold block text-[11px]">Pourquoi ?</span>
+                <p class="text-[10px] text-slate-400 leading-relaxed mt-0.5">Le cadre réglementaire <strong>HDS (Hébergeur Données de Santé)</strong> est une obligation légale pour stocker et traiter les examens des patients des 17 laboratoires.</p>
+              </div>
+              <div>
+                <span class="text-white font-semibold block text-[11px]">Comment ?</span>
+                <ul class="list-disc list-inside text-[10px] text-slate-400 leading-relaxed mt-0.5 space-y-1">
+                  <li>Cluster de stockage <strong>Ceph</strong> isolé en réseau privé.</li>
+                  <li>Tunnels <strong>IPsec VPN</strong> chiffrant les flux de santé des sites.</li>
+                  <li>Plan de Secours avec sauvegardes <strong>immuables PBS</strong>.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button 
+          id="btn-toggle-presentation"
+          class="${isPres ? 'bg-blue-600 border-blue-500 hover:bg-blue-700' : 'bg-white/5 border-white/5 hover:bg-white/10'} border text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition"
+          title="Basculer le mode présentation (Diaporama)"
+        >
+          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          <span>${isPres ? 'Vue Globale' : 'Présentation'}</span>
+        </button>
+        
+        <button 
+          id="btn-global-print"
+          class="bg-white/5 border border-white/5 hover:bg-white/10 hover:border-slate-400 text-[#f1f5f9] px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Exporter en PDF
+        </button>
+      </div>
+    </header>
+  `;
+
+  // Layout wrapper grid
+  const sidebarHtml = isPres ? '' : Sidebar(state.activeTab);
+  
+  let mainContentHtml = '';
+  switch (state.activeTab) {
+    case 'dashboard':
+      mainContentHtml = ExecutiveSummary(state);
+      break;
+    case 'finance':
+      mainContentHtml = FinanceWorkspace(state);
+      break;
+    case 'tech':
+      mainContentHtml = TechnicalWorkspace(state);
+      break;
+    case 'drp':
+      mainContentHtml = DrpSimulator(state);
+      break;
+    case 'pmo':
+      mainContentHtml = PmoWorkspace(state);
+      break;
+    case 'comparison':
+      mainContentHtml = BeforeAfterSlider(state);
+      break;
+  }
+
+  const footerHtml = isPres ? `
+    <footer class="bg-slate-900 border-t border-white/10 px-8 flex justify-between items-center no-print h-16 flex-shrink-0 z-50">
+      
+      <!-- Page Switcher -->
+      <div class="flex items-center gap-2">
+        <span class="text-[10px] uppercase font-extrabold text-slate-500 tracking-wider">Espace :</span>
+        <select id="pres-page-select" class="bg-slate-950 border border-white/10 text-white text-xs font-bold rounded-lg px-3 py-1 cursor-pointer focus:outline-none focus:border-blue-500 transition">
+          <option value="dashboard" ${state.activeTab === 'dashboard' ? 'selected' : ''}>Synthèse Générale</option>
+          <option value="finance" ${state.activeTab === 'finance' ? 'selected' : ''}>Espace Chiffrage & TCO</option>
+          <option value="tech" ${state.activeTab === 'tech' ? 'selected' : ''}>Technique & Architecture</option>
+          <option value="drp" ${state.activeTab === 'drp' ? 'selected' : ''}>Simulateur PRA / DRP</option>
+          <option value="pmo" ${state.activeTab === 'pmo' ? 'selected' : ''}>PMO : Risques & RACI</option>
+          <option value="comparison" ${state.activeTab === 'comparison' ? 'selected' : ''}>Dette : Avant / Après</option>
+        </select>
+      </div>
+
+      <!-- Navigation center: dots + label -->
+      <div class="flex flex-col items-center gap-1.5">
+        <div class="flex items-center gap-3">
+          <button 
+            id="btn-pres-prev" 
+            class="text-slate-400 hover:text-white transition p-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-md flex-shrink-0"
+            title="Étape précédente (Flèche gauche)"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" /></svg>
+          </button>
+          
+          <!-- Progress bar (generated by updatePresentationDOM) -->
+          <div id="pres-step-pills" style="width:220px;position:relative;cursor:pointer;" title="Cliquer pour naviguer"></div>
+          
+          <button 
+            id="btn-pres-next" 
+            class="text-slate-400 hover:text-white transition p-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-md flex-shrink-0"
+            title="Étape suivante (Flèche droite / Espace)"
+          >
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" /></svg>
+          </button>
+        </div>
+        <!-- Step counter + contextual label -->
+        <div class="flex items-center gap-1.5 select-none">
+          <span id="pres-counter-label" class="text-[10px] font-mono font-semibold text-slate-500">
+            Étape ${state.presentationStep} / --
+          </span>
+          <span id="pres-step-label" class="text-[10px] font-semibold text-indigo-400/80 font-mono hidden"></span>
+        </div>
+      </div>
+
+      <!-- Mode exit button on the right -->
+      <div>
+        <button 
+          id="btn-pres-exit" 
+          class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider transition"
+          title="Quitter le mode présentation (Echap)"
+        >
+          Vue Globale
+        </button>
+      </div>
+    </footer>
+  ` : `
+    <footer class="text-center py-2 px-8 text-xs text-slate-500 border-t border-white/5 bg-slate-950 flex justify-between items-center no-print h-10 flex-shrink-0">
+      <div>Projet Mastère 2IC 2026 — Groupe 1 — Conçu et réalisé par Romain, Léo & Jérôme</div>
+      <div class="flex items-center gap-1.5 font-semibold text-slate-400">
+        <span>GSBLAB</span>
+        <div class="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
+        <span>Architecture Cible</span>
+      </div>
+    </footer>
+  `;
+
+  // Inject structural HTML
+  root.innerHTML = `
+    ${headerHtml}
+    <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
+      ${sidebarHtml}
+      <main class="flex-1 p-6 md:p-8 overflow-y-auto">
+        <div class="max-w-7xl mx-auto space-y-8 animate-fade-in">
+          ${mainContentHtml}
+        </div>
+      </main>
+    </div>
+    ${footerHtml}
+  `;
+
+  // --- BIND EVENT LISTENERS ---
+  
+  // Print button
+  document.getElementById('btn-global-print').addEventListener('click', () => {
+    window.print();
+  });
+
+  // Toggle Presentation Mode button
+  document.getElementById('btn-toggle-presentation').addEventListener('click', () => {
+    togglePresentationMode(!window.appState.presentationMode);
+  });
+
+  // Sidebar links
+  if (!isPres) {
+    bindSidebarEvents(renderApp);
+  }
+
+  if (isPres) {
+    document.getElementById('btn-pres-prev').addEventListener('click', () => {
+      navigatePresentation(-1);
+    });
+    document.getElementById('btn-pres-next').addEventListener('click', () => {
+      navigatePresentation(1);
+    });
+    document.getElementById('btn-pres-exit').addEventListener('click', () => {
+      togglePresentationMode(false);
+    });
+    document.getElementById('pres-page-select').addEventListener('change', (e) => {
+      const selectedTab = e.target.value;
+      const globalStart = PRES_OFFSET[selectedTab] + 1;
+      window.appState.activeTab = selectedTab;
+      window.appState.globalPresentationStep = globalStart;
+      window.appState.presentationStep = 1;
+      renderApp();
+    });
+
+    // Update DOM step elements immediately on render
+    updatePresentationDOM();
+  }
+
+  // Active view specific bindings
+  switch (state.activeTab) {
+    case 'finance':
+      bindFinanceEvents(state, renderApp);
+      break;
+    case 'tech':
+      bindTechEvents(state);
+      break;
+    case 'drp':
+      bindDrpEvents(state, renderApp);
+      break;
+    case 'pmo':
+      bindPmoEvents(state, renderApp);
+      break;
+    case 'comparison':
+      bindSliderEvents(state);
+      break;
+  }
+};
+
+// Global keydown listeners for slide navigation
+window.addEventListener('keydown', (e) => {
+  if (!window.appState.presentationMode) return;
+  
+  if (e.key === 'ArrowRight' || e.key === ' ' || e.code === 'Space') {
+    e.preventDefault();
+    navigatePresentation(1);
+  } else if (e.key === 'ArrowLeft') {
+    e.preventDefault();
+    navigatePresentation(-1);
+  } else if (e.key === 'Escape') {
+    e.preventDefault();
+    togglePresentationMode(false);
+  }
+});
+
+// Initial Render
+document.addEventListener('DOMContentLoaded', renderApp);
+renderApp();
