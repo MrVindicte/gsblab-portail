@@ -194,30 +194,30 @@ export default function ExecutiveSummary(state) {
           </div>
 
           <!-- Léo Card -->
-          <div class="glass-panel rounded-xl p-4 border-t-[3px] border-purple-500/80 flex flex-col justify-between min-h-[140px] relative overflow-hidden group">
+          <div class="glass-panel rounded-xl p-4 border-t-[3px] border-red-500/80 flex flex-col justify-between min-h-[140px] relative overflow-hidden group">
             <div class="space-y-3">
               <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center font-bold text-purple-400 text-xs shadow-[0_0_10px_rgba(168,85,247,0.1)]">
+                <div class="w-8 h-8 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center font-bold text-red-400 text-xs shadow-[0_0_10px_rgba(239,68,68,0.1)]">
                   L
                 </div>
                 <div>
                   <h4 class="text-xs font-bold text-white leading-tight">Léo</h4>
-                  <span class="text-[8px] bg-purple-500/10 text-purple-400 border border-purple-500/20 px-1.5 py-0.5 rounded-full font-semibold uppercase tracking-wider mt-0.5 inline-block">
+                  <span class="text-[8px] bg-red-500/10 text-red-400 border border-red-500/20 px-1.5 py-0.5 rounded-full font-semibold uppercase tracking-wider mt-0.5 inline-block">
                     Architecture & IaC
                   </span>
                 </div>
               </div>
               <div class="space-y-1 text-slate-400 text-[10px] pl-1 leading-normal">
                 <div class="flex items-start gap-1.5">
-                  <span class="w-1 h-1 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                  <span class="w-1 h-1 bg-red-400 rounded-full mt-1.5 flex-shrink-0"></span>
                   <span>Design Proxmox VE HA & Stockage Ceph</span>
                 </div>
                 <div class="flex items-start gap-1.5">
-                  <span class="w-1 h-1 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                  <span class="w-1 h-1 bg-red-400 rounded-full mt-1.5 flex-shrink-0"></span>
                   <span>Cadre réglementaire HDS & DRP/PRA</span>
                 </div>
                 <div class="flex items-start gap-1.5">
-                  <span class="w-1 h-1 bg-purple-400 rounded-full mt-1.5 flex-shrink-0"></span>
+                  <span class="w-1 h-1 bg-red-400 rounded-full mt-1.5 flex-shrink-0"></span>
                   <span>Modélisation réseau & automatisation IaC</span>
                 </div>
               </div>
