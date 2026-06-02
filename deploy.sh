@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -eo pipefail
 
 # ==============================================================================
 #  CONFIGURATION — À MODIFIER AVANT DE PARTAGER
@@ -127,11 +127,13 @@ fetch_source() {
         # ── Mode Git (recommandé pour le travail en groupe) ──
         info "Source : dépôt Git → $REPO_URL"
         if [[ -d /opt/gsblab/app/.git ]]; then
-            git -C /opt/gsblab/app pull --ff-only 2>&1 | sed 's/^/  /'
+            git -C /opt/gsblab/app pull --ff-only 2>&1 | sed 's/^/  /' || true
         else
             rm -rf /opt/gsblab/app
             git clone "$REPO_URL" /opt/gsblab/app 2>&1 | sed 's/^/  /'
         fi
+        # Vérifier que le clone a atterri
+        [[ -f /opt/gsblab/app/index.html ]] || error "Le clone Git a échoué — /opt/gsblab/app/index.html absent. Vérifie l'URL du dépôt et ton accès réseau."
         info "Commit actuel : $(git -C /opt/gsblab/app log -1 --oneline)"
     else
         # ── Mode Zip (fallback local) ─────────────────────────
@@ -162,8 +164,10 @@ RUN rm -f /usr/share/nginx/html/Dockerfile \
           /usr/share/nginx/html/lancer_portail_windows.bat
 DEOF
 
-    eval $(minikube docker-env)
-    docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | tail -3
+    # Pointer le daemon Docker vers Minikube (évite que l'image soit construite dans le mauvais contexte)
+    eval $(minikube docker-env) || error "Impossible d'accéder au daemon Docker de Minikube. Réessaie : minikube start"
+    info "Build en cours (première fois : ~1-2 min pour télécharger nginx:alpine)..."
+    docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | sed 's/^/  /'
     success "Image gsblab-web:latest construite dans Minikube"
 }
 
