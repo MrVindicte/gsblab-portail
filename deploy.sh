@@ -46,28 +46,35 @@ install_docker() {
         success "Docker déjà installé et actif"
         return
     fi
-    info "Installation de Docker..."
-    apt-get update -qq
-    apt-get install -y -qq ca-certificates curl gnupg lsb-release
+    info "Mise à jour des paquets (apt update)..."
+    apt-get update
+    info "Installation des dépendances (ca-certificates, curl, gnupg)..."
+    apt-get install -y ca-certificates curl gnupg lsb-release
     install -m 0755 -d /etc/apt/keyrings
+    info "Ajout de la clé GPG Docker..."
     curl -fsSL https://download.docker.com/linux/debian/gpg \
         | gpg --dearmor -o /etc/apt/keyrings/docker.gpg 2>/dev/null || \
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg \
         | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
     if grep -qi kali /etc/os-release; then
+        info "OS détecté : Kali Linux → dépôt Debian Bookworm"
         echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] \
 https://download.docker.com/linux/debian bookworm stable" \
             > /etc/apt/sources.list.d/docker.list
     else
+        info "OS détecté : $(. /etc/os-release && echo "$ID $VERSION_CODENAME")"
         echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] \
 https://download.docker.com/linux/$(. /etc/os-release && echo "$ID") \
 $(. /etc/os-release && echo "$VERSION_CODENAME") stable" \
             > /etc/apt/sources.list.d/docker.list
     fi
-    apt-get update -qq
-    apt-get install -y -qq docker-ce docker-ce-cli containerd.io docker-buildx-plugin
+    info "Mise à jour apt avec le dépôt Docker..."
+    apt-get update
+    info "Installation de docker-ce, docker-ce-cli, containerd, buildx..."
+    apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin
+    info "Activation du service Docker au démarrage..."
     systemctl enable docker --now
-    success "Docker installé"
+    success "Docker installé ($(docker --version))"
 }
 
 # ─── kubectl ──────────────────────────────────────────────
@@ -77,9 +84,10 @@ install_kubectl() {
         success "kubectl déjà présent"
         return
     fi
-    info "Téléchargement de kubectl..."
+    info "Récupération de la version stable de kubectl..."
     KUBE_VER=$(curl -Ls https://dl.k8s.io/release/stable.txt)
-    curl -LsO "https://dl.k8s.io/release/${KUBE_VER}/bin/linux/amd64/kubectl"
+    info "Version : ${KUBE_VER} — téléchargement en cours..."
+    curl -L --progress-bar "https://dl.k8s.io/release/${KUBE_VER}/bin/linux/amd64/kubectl" -o kubectl
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
     rm -f kubectl
     success "kubectl ${KUBE_VER} installé"
@@ -92,11 +100,11 @@ install_minikube() {
         success "Minikube déjà présent"
         return
     fi
-    info "Téléchargement de Minikube..."
-    curl -LsO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+    info "Téléchargement de Minikube (binaire ~100 MB)..."
+    curl -L --progress-bar https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 -o minikube-linux-amd64
     install minikube-linux-amd64 /usr/local/bin/minikube
     rm -f minikube-linux-amd64
-    success "Minikube installé"
+    success "Minikube installé ($(minikube version --short))"
 }
 
 # ─── Démarrage Minikube ───────────────────────────────────
@@ -106,14 +114,16 @@ start_minikube() {
         success "Cluster déjà actif"
         return
     fi
-    info "Démarrage de Minikube (driver=docker)..."
+    info "Démarrage de Minikube (driver=docker, 2 CPU, 2 GB RAM)..."
+    info "Patience — première fois : 3 à 5 minutes (téléchargement de l'image Minikube ~500 MB)"
     minikube start \
         --driver=docker \
         --force \
         --cpus=2 \
         --memory=2048 \
-        --kubernetes-version=stable \
-        2>&1 | grep -v "^$" | sed 's/^/  /'
+        --kubernetes-version=stable
+    info "Vérification de l'état du cluster..."
+    minikube status
     success "Cluster Kubernetes démarré"
 }
 
@@ -121,7 +131,8 @@ start_minikube() {
 fetch_source() {
     step "Récupération du code source"
     mkdir -p /opt/gsblab/k8s
-    apt-get install -y -qq git unzip 2>/dev/null || true
+    info "Installation de git et unzip si absents..."
+    apt-get install -y git unzip 2>/dev/null || true
 
     if [[ -n "$REPO_URL" ]]; then
         # ── Mode Git (recommandé pour le travail en groupe) ──
@@ -563,7 +574,8 @@ deploy() {
 # ─── Nginx reverse proxy ──────────────────────────────────
 setup_nginx() {
     step "Nginx (reverse proxy)"
-    apt-get install -y -qq nginx
+    info "Installation de nginx..."
+    apt-get install -y nginx
 
     # Désactiver Apache s'il est présent (évite le conflit sur le port 80)
     systemctl stop apache2 2>/dev/null || true
