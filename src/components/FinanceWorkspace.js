@@ -2,6 +2,20 @@ import { calculateFinancials, generateTcoProjections } from '../utils/financialM
 import { parseCSVUsers, parseJSONBudget } from '../utils/dataParsers.js?v=3';
 
 let chartInstance = null;
+let _prevSavings = 0;
+let _prevPct = 0;
+
+const animateValue = (el, from, to, formatter, duration = 450) => {
+  if (!el) return;
+  const start = performance.now();
+  const tick = (now) => {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = formatter(from + (to - from) * ease);
+    if (p < 1) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
 
 // Formateur de devises
 const formatEuro = (val) => {
@@ -112,7 +126,7 @@ export default function FinanceWorkspace(state) {
           <div 
             data-pres-step="2"
             id="drag-drop-zone"
-            class="border-2 border-dashed border-white/10 hover:border-blue-500/50 bg-slate-900/40 text-slate-400 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition"
+            class="border-2 border-dashed border-white/10 hover:border-blue-500/60 bg-slate-900/40 hover:bg-blue-500/5 text-slate-400 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 hover:shadow-[0_0_24px_rgba(99,102,241,0.12)]"
           >
             <input 
               type="file" 
@@ -247,8 +261,11 @@ const updateValues = (state) => {
   document.getElementById('lbl-cloud').innerText = formatEuro(state.cloudMonthlyCost) + "/m";
   document.getElementById('lbl-inflation').innerText = Math.round(state.inflationRate * 100) + " %";
 
-  document.getElementById('kpi-savings').innerText = formatEuro(netSavings);
-  document.getElementById('kpi-pct-vmware').innerText = "+" + pctVmwareIncrease.toFixed(1) + "%";
+  animateValue(document.getElementById('kpi-savings'), _prevSavings, netSavings, formatEuro);
+  animateValue(document.getElementById('kpi-pct-vmware'), _prevPct, pctVmwareIncrease,
+    v => "+" + Math.max(0, v).toFixed(1) + "%");
+  _prevSavings = netSavings;
+  _prevPct = pctVmwareIncrease;
 
   // Alerte budgetaire
   const advisory = document.getElementById('budget-advisory');
@@ -275,32 +292,32 @@ const updateValues = (state) => {
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">Équipements (Dell R760, Switches, Baie SSD)</td>
       <td class="py-2 px-3 font-mono">${formatEuro(data.proxmox.capex.hardware)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.vmware.capex.hardware)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.cloud.capex.hardware)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(data.vmware.capex.hardware)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(data.cloud.capex.hardware)}</td>
     </tr>
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">Sécurité & Périphériques (Firewalls, Laptops)</td>
       <td class="py-2 px-3 font-mono">${formatEuro(data.proxmox.capex.security)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.vmware.capex.security)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.cloud.capex.security)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(data.vmware.capex.security)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(data.cloud.capex.security)}</td>
     </tr>
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">Licences Logicielles Bureautiques (Office LTSC)</td>
       <td class="py-2 px-3 font-mono">${formatEuro(data.proxmox.capex.software)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.vmware.capex.software)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.cloud.capex.software)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(data.vmware.capex.software)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(data.cloud.capex.software)}</td>
     </tr>
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">Prestations ESN d'Intégration & Conduite</td>
       <td class="py-2 px-3 font-mono">${formatEuro(data.proxmox.capex.integration)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.vmware.capex.integration)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.cloud.capex.integration)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(data.vmware.capex.integration)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(data.cloud.capex.integration)}</td>
     </tr>
     <tr class="border-b-2 border-white/10 font-bold bg-slate-900/50 text-white">
       <td class="py-2 px-3">TOTAL INVESTISSEMENT INITIAL (CAPEX)</td>
       <td class="py-2 px-3 font-mono text-blue-400">${formatEuro(data.proxmox.capex.total)}</td>
       <td class="py-2 px-3 font-mono text-red-500">${formatEuro(data.vmware.capex.total)}</td>
-      <td class="py-2 px-3 font-mono text-purple-400">${formatEuro(data.cloud.capex.total)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400">${formatEuro(data.cloud.capex.total)}</td>
     </tr>
 
     <!-- OPEX -->
@@ -310,32 +327,32 @@ const updateValues = (state) => {
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">Support Hyperviseur (Sockets / Cœurs)</td>
       <td class="py-2 px-3 font-mono">${formatEuro(data.proxmox.opex.hypervisorSupport)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.vmware.opex.hypervisorSupport)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.cloud.opex.hypervisorSupport)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(data.vmware.opex.hypervisorSupport)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(data.cloud.opex.hypervisorSupport)}</td>
     </tr>
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">Hébergement Cloud VMs (Souveraineté HDS)</td>
       <td class="py-2 px-3 font-mono">${formatEuro(data.proxmox.opex.cloudHosting)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.vmware.opex.cloudHosting)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.cloud.opex.cloudHosting)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(data.vmware.opex.cloudHosting)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(data.cloud.opex.cloudHosting)}</td>
     </tr>
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">Collaboratif (M365 Exchange Online)</td>
       <td class="py-2 px-3 font-mono">${formatEuro(data.proxmox.opex.messagerieSaas)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.vmware.opex.messagerieSaas)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.cloud.opex.messagerieSaas)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(data.vmware.opex.messagerieSaas)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(data.cloud.opex.messagerieSaas)}</td>
     </tr>
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">Maintenance Firewalls (UTM) & Liens WAN</td>
       <td class="py-2 px-3 font-mono">${formatEuro(data.proxmox.opex.networkAndWan)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.vmware.opex.networkAndWan)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(data.cloud.opex.networkAndWan)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(data.vmware.opex.networkAndWan)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(data.cloud.opex.networkAndWan)}</td>
     </tr>
     <tr class="border-b-2 border-white/10 font-bold bg-slate-900/50 text-white">
       <td class="py-2 px-3">TOTAL OPEX RÉCURRENT (AN 1)</td>
       <td class="py-2 px-3 font-mono text-blue-400">${formatEuro(data.proxmox.opex.total)}</td>
       <td class="py-2 px-3 font-mono text-red-500">${formatEuro(data.vmware.opex.total)}</td>
-      <td class="py-2 px-3 font-mono text-purple-400">${formatEuro(data.cloud.opex.total)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400">${formatEuro(data.cloud.opex.total)}</td>
     </tr>
 
     <!-- TCO Summary -->
@@ -345,14 +362,14 @@ const updateValues = (state) => {
     <tr class="border-b border-white/5 text-slate-300">
       <td class="py-2 px-3">TCO Cumulé à 3 ans</td>
       <td class="py-2 px-3 font-mono font-semibold text-blue-400">${formatEuro(projections[2].proxmoxTco)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(projections[2].vmwareTco)}</td>
-      <td class="py-2 px-3 font-mono text-slate-400">${formatEuro(projections[2].cloudTco)}</td>
+      <td class="py-2 px-3 font-mono text-red-400/80">${formatEuro(projections[2].vmwareTco)}</td>
+      <td class="py-2 px-3 font-mono text-amber-400/80">${formatEuro(projections[2].cloudTco)}</td>
     </tr>
     <tr class="font-bold text-white bg-slate-900/60 text-sm">
       <td class="py-3 px-3">TCO Cumulé à 5 ans</td>
       <td class="py-3 px-3 font-mono text-emerald-400">${formatEuro(finalTcoProxmox)}</td>
       <td class="py-3 px-3 font-mono text-red-500">${formatEuro(finalTcoVmware)}</td>
-      <td class="py-3 px-3 font-mono text-purple-400">${formatEuro(finalTcoCloud)}</td>
+      <td class="py-3 px-3 font-mono text-amber-400">${formatEuro(finalTcoCloud)}</td>
     </tr>
   `;
 
@@ -414,9 +431,10 @@ export function bindFinanceEvents(state, renderApp) {
           position: 'top',
           labels: {
             color: '#cbd5e1',
-            font: { family: 'Inter', size: 11, weight: '500' },
+            font: { family: 'Inter', size: 13, weight: '600' },
+            pointStyleWidth: 12,
             usePointStyle: true,
-            padding: 15
+            padding: 18
           }
         },
         tooltip: {

@@ -234,8 +234,16 @@ const renderApp = () => {
               MASTÈRE 2IC &nbsp;·&nbsp; GRP.01
             </span>
           </div>
-          <p class="text-[11px] text-slate-500 mt-0.5 tracking-wide">
-            Romain, Léo &amp; Jérôme &nbsp;—&nbsp; 2026
+          <p class="text-[11px] text-slate-500 mt-0.5 tracking-wide flex items-center gap-1.5">
+            <span>Romain, Léo &amp; Jérôme &nbsp;—&nbsp; 2026</span>
+            ${!isPres ? `<span class="text-slate-700">·</span><span class="text-slate-400 font-medium">${{
+              dashboard: 'Synthèse Générale',
+              finance: 'Chiffrage & TCO',
+              tech: 'Architecture',
+              drp: 'Simulateur PRA',
+              pmo: 'PMO & Risques',
+              comparison: 'Avant / Après'
+            }[state.activeTab] || ''}</span>` : ''}
           </p>
         </div>
       </div>
@@ -354,11 +362,12 @@ const renderApp = () => {
           </button>
         </div>
         <!-- Step counter + contextual label -->
-        <div class="flex items-center gap-1.5 select-none">
+        <div class="flex items-center gap-2 select-none">
           <span id="pres-counter-label" class="text-[10px] font-mono font-semibold text-slate-500">
             Étape ${state.presentationStep} / --
           </span>
           <span id="pres-step-label" class="text-[10px] font-semibold text-indigo-400/80 font-mono hidden"></span>
+          <span class="text-[9px] font-mono text-slate-700 border border-slate-800 rounded px-1 py-0.5 tracking-wider">← ESPACE →</span>
         </div>
       </div>
 
