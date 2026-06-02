@@ -122,8 +122,33 @@ export default function FinanceWorkspace(state) {
 
           </div>
 
+          <!-- Preset Cas Projet GSBLAB -->
+          <button
+            id="btn-preset-gsblab"
+            class="w-full glass-panel rounded-xl p-4 border border-indigo-500/20 hover:border-indigo-500/50 hover:bg-indigo-500/5 hover:shadow-[0_0_20px_rgba(99,102,241,0.12)] transition-all duration-200 text-left group"
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-8 h-8 rounded-lg bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-white group-hover:text-indigo-300 transition-colors">Cas Projet GSBLAB</div>
+                <div class="text-[10px] text-slate-500">Préréglage officiel du dossier</div>
+              </div>
+              <span class="ml-auto text-[9px] font-bold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">PRESET</span>
+            </div>
+            <div class="grid grid-cols-3 gap-1.5 text-[9px]">
+              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Utilisateurs</span><span class="text-indigo-300 font-bold font-mono">321</span></div>
+              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Spokes</span><span class="text-indigo-300 font-bold font-mono">14</span></div>
+              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Serveurs</span><span class="text-indigo-300 font-bold font-mono">4</span></div>
+              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">VMware/cœur</span><span class="text-red-400 font-bold font-mono">300€</span></div>
+              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Cloud HDS</span><span class="text-amber-400 font-bold font-mono">4 500€</span></div>
+              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Inflation</span><span class="text-slate-300 font-bold font-mono">5%</span></div>
+            </div>
+          </button>
+
           <!-- Drag & Drop Zone -->
-          <div 
+          <div
             data-pres-step="2"
             id="drag-drop-zone"
             class="border-2 border-dashed border-white/10 hover:border-blue-500/60 bg-slate-900/40 hover:bg-blue-500/5 text-slate-400 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all duration-200 hover:shadow-[0_0_24px_rgba(99,102,241,0.12)]"
@@ -597,5 +622,19 @@ export function bindFinanceEvents(state, renderApp) {
     const r = new FileReader();
     r.onload = (evt) => processText(evt.target.result, file.name);
     r.readAsText(file);
+  });
+
+  // Preset Cas Projet GSBLAB (après showMsg pour éviter TDZ)
+  const PRESET_GSBLAB = { usersCount: 321, sitesCount: 14, serversCount: 4, vmwareCorePrice: 300, cloudMonthlyCost: 4500, inflationRate: 0.05 };
+  document.getElementById('btn-preset-gsblab').addEventListener('click', () => {
+    Object.assign(state, PRESET_GSBLAB);
+    document.getElementById('sld-users').value     = PRESET_GSBLAB.usersCount;
+    document.getElementById('sld-sites').value     = PRESET_GSBLAB.sitesCount;
+    document.getElementById('sld-servers').value   = PRESET_GSBLAB.serversCount;
+    document.getElementById('sld-vmware').value    = PRESET_GSBLAB.vmwareCorePrice;
+    document.getElementById('sld-cloud').value     = PRESET_GSBLAB.cloudMonthlyCost;
+    document.getElementById('sld-inflation').value = Math.round(PRESET_GSBLAB.inflationRate * 100);
+    updateValues(state);
+    showMsg('Préréglage GSBLAB appliqué — valeurs officielles du dossier de projet.', false);
   });
 }
