@@ -9,6 +9,12 @@ set -eo pipefail
 REPO_URL="https://github.com/MrVindicte/gsblab-portail.git"
 # ==============================================================================
 
+# ─── Détection environnement (LXC Proxmox vs VM/bare-metal) ──
+# Rempli dans main() — utilisé par start_cluster, build_docker_image, setup_nginx
+USE_K3S=false
+UPSTREAM_IP="192.168.49.2"   # Minikube interne par défaut
+K3S_KUBECONFIG="/etc/rancher/k3s/k3s.yaml"
+
 # ─── Couleurs ─────────────────────────────────────────────
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'
 BLUE='\033[0;34m'; CYAN='\033[0;36m'; BOLD='\033[1m'; NC='\033[0m'
@@ -107,39 +113,58 @@ install_minikube() {
     success "Minikube installé ($(minikube version --short))"
 }
 
-# ─── Démarrage Minikube ───────────────────────────────────
-start_minikube() {
+# ─── Démarrage cluster (Minikube ou K3s selon l'environnement) ───
+start_cluster() {
     step "Démarrage du cluster"
-    if minikube status 2>/dev/null | grep -q "Running"; then
-        success "Cluster déjà actif"
-        return
+
+    if $USE_K3S; then
+        # ── Chemin K3s (LXC Proxmox) ────────────────────────────
+        if k3s kubectl get nodes &>/dev/null 2>&1; then
+            success "Cluster K3s déjà actif"
+            export KUBECONFIG="${K3S_KUBECONFIG}"
+            return
+        fi
+        info "Installation de K3s (Kubernetes léger, compatible LXC)..."
+        info "Patience — téléchargement ~60 MB..."
+        curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
+        export KUBECONFIG="${K3S_KUBECONFIG}"
+        info "Attente que le nœud K3s soit Ready (max 3 min)..."
+        local i=0
+        until kubectl get nodes 2>/dev/null | grep -q "Ready"; do
+            sleep 5; i=$((i+5))
+            [[ $i -ge 180 ]] && error "K3s ne répond pas après 3 minutes. Vérifie les logs : journalctl -u k3s -n 50"
+        done
+        kubectl get nodes
+        success "Cluster K3s démarré"
+    else
+        # ── Chemin Minikube (VM / bare-metal) ───────────────────
+        if minikube status 2>/dev/null | grep -q "Running"; then
+            success "Cluster Minikube déjà actif"
+            return
+        fi
+        info "Nettoyage d'un éventuel cluster en état invalide..."
+        minikube delete --purge 2>/dev/null || true
+
+        AVAIL_MB=$(free -m | awk '/^Mem:/{print $7}')
+        MEM=1900
+        [[ "${AVAIL_MB:-9999}" -lt 2000 ]] && MEM=1500
+        info "Mémoire disponible : ${AVAIL_MB} MB → allocation Minikube : ${MEM} MB"
+
+        info "Démarrage de Minikube (driver=docker, 2 CPU, ${MEM} MB RAM)..."
+        info "Patience — première fois : 3 à 5 minutes (téléchargement de l'image Minikube ~500 MB)"
+        minikube start \
+            --driver=docker \
+            --force \
+            --cpus=2 \
+            --memory="${MEM}" \
+            --kubernetes-version=stable \
+            --wait=all \
+            --wait-timeout=6m
+        info "Vérification de l'état du cluster..."
+        minikube status
+        kubectl get nodes
+        success "Cluster Minikube démarré"
     fi
-
-    # Nettoyer tout état corrompu d'une tentative précédente
-    info "Nettoyage d'un éventuel cluster en état invalide..."
-    minikube delete --purge 2>/dev/null || true
-
-    # Adapter la mémoire allouée selon ce qui est disponible sur la VM
-    AVAIL_MB=$(free -m | awk '/^Mem:/{print $7}')
-    MEM=1900
-    [[ "${AVAIL_MB:-9999}" -lt 2000 ]] && MEM=1500
-    info "Mémoire disponible : ${AVAIL_MB} MB → allocation Minikube : ${MEM} MB"
-
-    info "Démarrage de Minikube (driver=docker, 2 CPU, ${MEM} MB RAM)..."
-    info "Patience — première fois : 3 à 5 minutes (téléchargement de l'image Minikube ~500 MB)"
-    minikube start \
-        --driver=docker \
-        --force \
-        --cpus=2 \
-        --memory="${MEM}" \
-        --kubernetes-version=stable \
-        --wait=all \
-        --wait-timeout=6m
-
-    info "Vérification de l'état du cluster..."
-    minikube status
-    kubectl get nodes
-    success "Cluster Kubernetes démarré"
 }
 
 # ─── Récupération du code source ─────────────────────────
@@ -190,11 +215,19 @@ RUN rm -f /usr/share/nginx/html/Dockerfile \
           /usr/share/nginx/html/lancer_portail_windows.bat
 DEOF
 
-    # Pointer le daemon Docker vers Minikube (évite que l'image soit construite dans le mauvais contexte)
-    eval $(minikube docker-env) || error "Impossible d'accéder au daemon Docker de Minikube. Réessaie : minikube start"
     info "Build en cours (première fois : ~1-2 min pour télécharger nginx:alpine)..."
-    docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | sed 's/^/  /'
-    success "Image gsblab-web:latest construite dans Minikube"
+    if $USE_K3S; then
+        # Construire avec Docker puis importer dans le containerd de K3s
+        docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | sed 's/^/  /'
+        info "Import de l'image dans le registry containerd de K3s..."
+        docker save gsblab-web:latest | k3s ctr images import -
+        success "Image gsblab-web:latest importée dans K3s"
+    else
+        # Pointer le daemon Docker vers Minikube
+        eval $(minikube docker-env) || error "Impossible d'accéder au daemon Docker de Minikube. Réessaie : minikube start"
+        docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | sed 's/^/  /'
+        success "Image gsblab-web:latest construite dans Minikube"
+    fi
 }
 
 # ─── (supprimé) ───────────────────────────────────────────
@@ -596,17 +629,17 @@ setup_nginx() {
     systemctl stop apache2 2>/dev/null || true
     systemctl disable apache2 2>/dev/null || true
 
-    cat > /etc/nginx/sites-available/gsblab << 'EOF'
+    cat > /etc/nginx/sites-available/gsblab << EOF
 server {
     listen 80 default_server;
     listen 30080 default_server;
     server_name _;
     location / {
-        proxy_pass         http://192.168.49.2:30080;
+        proxy_pass         http://${UPSTREAM_IP}:30080;
         proxy_http_version 1.1;
-        proxy_set_header   Host $host;
-        proxy_set_header   X-Real-IP $remote_addr;
-        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   Host \$host;
+        proxy_set_header   X-Real-IP \$remote_addr;
+        proxy_set_header   X-Forwarded-For \$proxy_add_x_forwarded_for;
         proxy_read_timeout 30s;
         add_header Cache-Control "no-cache, no-store, must-revalidate";
         add_header Pragma "no-cache";
@@ -636,18 +669,23 @@ REPO_URL="${REPO_URL}"
 
 log() { logger -t gsblab "\$1"; echo "\$1"; }
 
-# Démarrer Minikube si arrêté
-if ! minikube status 2>/dev/null | grep -q "Running"; then
-    log "Démarrage de Minikube..."
-    minikube start --driver=docker --force --cpus=2 --memory=2048 2>&1 | logger -t gsblab
+USE_K3S="${USE_K3S}"
+if \$USE_K3S; then
+    export KUBECONFIG="${K3S_KUBECONFIG}"
+    # K3s démarre automatiquement via systemd — attendre qu'il soit prêt
+    until kubectl get nodes 2>/dev/null | grep -q "Ready"; do sleep 5; done
+else
+    # Démarrer Minikube si arrêté
+    if ! minikube status 2>/dev/null | grep -q "Running"; then
+        log "Démarrage de Minikube..."
+        minikube start --driver=docker --force --cpus=2 --memory=1900 2>&1 | logger -t gsblab
+    fi
+    until kubectl get nodes 2>/dev/null | grep -q "Ready"; do sleep 5; done
+    eval \$(minikube docker-env)
 fi
-
-# Attendre que kubectl soit prêt
-until kubectl get nodes 2>/dev/null | grep -q "Ready"; do sleep 5; done
 
 # Récupérer le code source
 git config --global --add safe.directory /opt/gsblab/app 2>/dev/null || true
-eval \$(minikube docker-env)
 if [[ -n "\$REPO_URL" ]]; then
     if [[ -d /opt/gsblab/app/.git ]]; then
         git -C /opt/gsblab/app pull --ff-only 2>&1 | logger -t gsblab
@@ -671,6 +709,9 @@ RUN rm -f /usr/share/nginx/html/Dockerfile /usr/share/nginx/html/lancer_portail.
 DEOF
 
 docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | logger -t gsblab
+if \$USE_K3S; then
+    docker save gsblab-web:latest | k3s ctr images import - 2>&1 | logger -t gsblab
+fi
 kubectl apply -f /opt/gsblab/k8s/deployment.yaml 2>&1 | logger -t gsblab
 kubectl apply -f /opt/gsblab/k8s/service.yaml    2>&1 | logger -t gsblab
 kubectl rollout status deployment/web-deployment --timeout=180s 2>&1 | logger -t gsblab
@@ -683,7 +724,12 @@ SCRIPT
     cat > /usr/local/bin/gsblab-sync.sh << SYNCSCRIPT
 #!/bin/bash
 export HOME=/root
-export KUBECONFIG=/root/.kube/config
+USE_K3S="${USE_K3S}"
+if \$USE_K3S; then
+    export KUBECONFIG="${K3S_KUBECONFIG}"
+else
+    export KUBECONFIG=/root/.kube/config
+fi
 REPO_URL="${REPO_URL}"
 
 [[ -z "\$REPO_URL" ]] && exit 0
@@ -696,8 +742,13 @@ AFTER=\$(git -C /opt/gsblab/app rev-parse HEAD 2>/dev/null)
 
 if [[ "\$BEFORE" != "\$AFTER" ]]; then
     logger -t gsblab-sync "Nouveau commit détecté (\${AFTER:0:7}), rebuild en cours..."
-    eval \$(minikube docker-env)
-    docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | logger -t gsblab-sync
+    if \$USE_K3S; then
+        docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | logger -t gsblab-sync
+        docker save gsblab-web:latest | k3s ctr images import - 2>&1 | logger -t gsblab-sync
+    else
+        eval \$(minikube docker-env)
+        docker build -t gsblab-web:latest /opt/gsblab/app/ 2>&1 | logger -t gsblab-sync
+    fi
     kubectl rollout restart deployment/web-deployment 2>&1 | logger -t gsblab-sync
     logger -t gsblab-sync "Redéploiement terminé."
 fi
@@ -705,12 +756,17 @@ SYNCSCRIPT
     chmod +x /usr/local/bin/gsblab-sync.sh
 
     # ── Unité systemd principale ─────────────────────────────
-    cat > /etc/systemd/system/gsblab.service << 'UNIT'
+    K3S_DEP=""
+    $USE_K3S && K3S_DEP="k3s.service"
+    AFTER_DEPS="network-online.target docker.service${K3S_DEP:+ $K3S_DEP}"
+    REQUIRES_DEP="docker.service${K3S_DEP:+ $K3S_DEP}"
+
+    cat > /etc/systemd/system/gsblab.service << UNIT
 [Unit]
 Description=GSBLAB — Kubernetes Web Cluster (3 répliques)
-After=network-online.target docker.service
+After=network-online.target ${AFTER_DEPS}
 Wants=network-online.target
-Requires=docker.service
+Requires=${REQUIRES_DEP}
 
 [Service]
 Type=simple
@@ -724,6 +780,7 @@ StandardError=journal
 [Install]
 WantedBy=multi-user.target
 UNIT
+
 
     # ── Timer systemd : sync toutes les 2 minutes ────────────
     cat > /etc/systemd/system/gsblab-sync.service << 'UNIT'
@@ -798,10 +855,23 @@ main() {
     banner
     [[ "$EUID" -ne 0 ]] && error "Lance le script en root : sudo bash deploy.sh"
     check_os
+
+    # Détecter si on tourne dans un conteneur LXC (Proxmox)
+    VIRT=$(systemd-detect-virt --container 2>/dev/null || echo "none")
+    if [[ "$VIRT" == "lxc" ]]; then
+        warn "Environnement LXC Proxmox détecté → utilisation de K3s (Minikube incompatible avec LXC)"
+        USE_K3S=true
+        UPSTREAM_IP="127.0.0.1"
+    else
+        info "Environnement : ${VIRT:-bare-metal/VM} → utilisation de Minikube"
+    fi
+
     install_docker
     install_kubectl
-    install_minikube
-    start_minikube
+    if ! $USE_K3S; then
+        install_minikube
+    fi
+    start_cluster
     fetch_source
     build_docker_image
     create_manifests
