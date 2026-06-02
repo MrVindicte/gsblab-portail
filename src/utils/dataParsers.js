@@ -7,8 +7,6 @@ export const parseCSVUsers = (csvText) => {
     if (lines.length <= 1) {
       return { usersCount: 0, errorMessage: "Le fichier CSV est vide ou ne contient pas d'en-tête." };
     }
-    
-    // Déduction du nombre de lignes (hors en-tête)
     const count = lines.length - 1;
     return { usersCount: count };
   } catch (error) {
@@ -17,36 +15,60 @@ export const parseCSVUsers = (csvText) => {
 };
 
 /**
- * Parseur pour le fichier JSON d'import de budget devis
- * Gère deux formats :
- *   1. Format riche GSBLAB : { "parametres": { "utilisateurs_laptops": { "valeur": 321 }, ... }, "scenarios": [...] }
- *   2. Format plat simple  : { "usersCount": 300, "vmwareCorePrice": 300, ... }
+ * Parseur pour le fichier JSON d'import de budget
+ * Gère trois formats :
+ *   1. Format prévisionnel pluriannuel (trajectoire_budgetaire[])
+ *   2. Format riche GSBLAB (parametres.{clé}.valeur + scenarios)
+ *   3. Format plat simple { usersCount, sitesCount, ... }
  */
 export const parseJSONBudget = (jsonText) => {
   try {
     const parsed = JSON.parse(jsonText);
     const result = {};
 
-    // Format riche : section "parametres" avec structure { libelle, valeur, unite, min, max, pas }
+    // ── Format prévisionnel pluriannuel ──────────────────────────────────────
+    if (Array.isArray(parsed.trajectoire_budgetaire)) {
+      const anneesCible = parsed.trajectoire_budgetaire.filter(a => !a.hors_enveloppe_migration);
+      const cible = anneesCible[anneesCible.length - 1];
+      const growth = parsed.parametres_croissance || {};
+      const synthese = parsed.synthese?.projet_migration_2026_2030 || {};
+
+      if (cible) {
+        if (cible.effectifs !== undefined) result.usersCount = cible.effectifs;
+        if (cible.nb_sites  !== undefined) result.sitesCount = cible.nb_sites;
+      }
+      if (growth.inflation_abonnements_pct !== undefined)
+        result.inflationRate = growth.inflation_abonnements_pct / 100;
+
+      result._label   = parsed.meta?.document || 'Budget prévisionnel';
+      result._horizon = parsed.meta?.horizon  || '';
+      result._totalHT = synthese.total_projet_ht;
+      result._plafond = synthese.budget_plafond_ht || parsed.meta?.budget_plafond_ht;
+      result._reserve = synthese.reserve_disponible_ht;
+      result._isPrevisionnel = true;
+    }
+
+    // ── Format riche GSBLAB (parametres.{clé}.valeur) ────────────────────────
     if (parsed.parametres && typeof parsed.parametres === 'object') {
       const p = parsed.parametres;
-      if (p.utilisateurs_laptops?.valeur !== undefined)  result.usersCount      = p.utilisateurs_laptops.valeur;
-      if (p.laboratoires_spokes?.valeur  !== undefined)  result.sitesCount      = p.laboratoires_spokes.valeur;
+      if (p.utilisateurs_laptops?.valeur  !== undefined) result.usersCount      = p.utilisateurs_laptops.valeur;
+      if (p.laboratoires_spokes?.valeur   !== undefined) result.sitesCount      = p.laboratoires_spokes.valeur;
       if (p.serveurs_physiques_ha?.valeur !== undefined) result.serversCount    = p.serveurs_physiques_ha.valeur;
       if (p.abonnement_vmware_coeur?.valeur !== undefined) result.vmwareCorePrice = p.abonnement_vmware_coeur.valeur;
       if (p.hebergement_cloud_hds?.valeur !== undefined) result.cloudMonthlyCost = p.hebergement_cloud_hds.valeur;
       if (p.inflation_abonnements?.valeur !== undefined) result.inflationRate   = p.inflation_abonnements.valeur / 100;
     }
 
-    // Format plat simple (priorité si les deux sont présents)
-    if (typeof parsed.usersCount      === 'number') result.usersCount      = parsed.usersCount;
-    if (typeof parsed.sitesCount      === 'number') result.sitesCount      = parsed.sitesCount;
-    if (typeof parsed.serversCount    === 'number') result.serversCount    = parsed.serversCount;
-    if (typeof parsed.vmwareCorePrice === 'number') result.vmwareCorePrice = parsed.vmwareCorePrice;
+    // ── Format plat simple ────────────────────────────────────────────────────
+    if (typeof parsed.usersCount       === 'number') result.usersCount      = parsed.usersCount;
+    if (typeof parsed.sitesCount       === 'number') result.sitesCount      = parsed.sitesCount;
+    if (typeof parsed.serversCount     === 'number') result.serversCount    = parsed.serversCount;
+    if (typeof parsed.vmwareCorePrice  === 'number') result.vmwareCorePrice = parsed.vmwareCorePrice;
     if (typeof parsed.cloudMonthlyCost === 'number') result.cloudMonthlyCost = parsed.cloudMonthlyCost;
-    if (typeof parsed.inflationRate   === 'number') result.inflationRate   = parsed.inflationRate;
+    if (typeof parsed.inflationRate    === 'number') result.inflationRate   = parsed.inflationRate;
 
-    if (Object.keys(result).length === 0) {
+    const params = ['usersCount','sitesCount','serversCount','vmwareCorePrice','cloudMonthlyCost','inflationRate'];
+    if (!params.some(k => result[k] !== undefined)) {
       return { errorMessage: "Aucun paramètre valide détecté dans le fichier JSON. Exemple : { \"usersCount\": 300 }" };
     }
 

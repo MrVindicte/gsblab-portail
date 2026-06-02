@@ -1,5 +1,5 @@
 import { calculateFinancials, generateTcoProjections } from '../utils/financialMath.js?v=3';
-import { parseCSVUsers, parseJSONBudget } from '../utils/dataParsers.js?v=4';
+import { parseCSVUsers, parseJSONBudget } from '../utils/dataParsers.js?v=5';
 
 let chartInstance = null;
 let _prevSavings = 0;
@@ -66,8 +66,8 @@ export default function FinanceWorkspace(state) {
                 <span class="text-slate-300">Laboratoires (Spokes)</span>
                 <span class="font-mono text-blue-400 font-bold" id="lbl-sites">${state.sitesCount}</span>
               </div>
-              <input 
-                type="range" id="sld-sites" min="5" max="25" value="${state.sitesCount}"
+              <input
+                type="range" id="sld-sites" min="5" max="35" value="${state.sitesCount}"
                 class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-500"
               />
             </div>
@@ -582,15 +582,27 @@ export function bindFinanceEvents(state, renderApp) {
         showMsg(res.errorMessage, true);
       } else if (res.data) {
         const d = res.data;
-        if (d.usersCount !== undefined) { state.usersCount = d.usersCount; document.getElementById('sld-users').value = d.usersCount; }
-        if (d.sitesCount !== undefined) { state.sitesCount = d.sitesCount; document.getElementById('sld-sites').value = d.sitesCount; }
-        if (d.serversCount !== undefined) { state.serversCount = d.serversCount; document.getElementById('sld-servers').value = d.serversCount; }
-        if (d.vmwareCorePrice !== undefined) { state.vmwareCorePrice = d.vmwareCorePrice; document.getElementById('sld-vmware').value = d.vmwareCorePrice; }
-        if (d.cloudMonthlyCost !== undefined) { state.cloudMonthlyCost = d.cloudMonthlyCost; document.getElementById('sld-cloud').value = d.cloudMonthlyCost; }
-        if (d.inflationRate !== undefined) { state.inflationRate = d.inflationRate; document.getElementById('sld-inflation').value = Math.round(d.inflationRate * 100); }
-        
+        if (d.usersCount     !== undefined) { state.usersCount     = d.usersCount;     document.getElementById('sld-users').value     = d.usersCount; }
+        if (d.sitesCount     !== undefined) { state.sitesCount     = d.sitesCount;     document.getElementById('sld-sites').value     = d.sitesCount; }
+        if (d.serversCount   !== undefined) { state.serversCount   = d.serversCount;   document.getElementById('sld-servers').value   = d.serversCount; }
+        if (d.vmwareCorePrice  !== undefined) { state.vmwareCorePrice  = d.vmwareCorePrice;  document.getElementById('sld-vmware').value    = d.vmwareCorePrice; }
+        if (d.cloudMonthlyCost !== undefined) { state.cloudMonthlyCost = d.cloudMonthlyCost; document.getElementById('sld-cloud').value     = d.cloudMonthlyCost; }
+        if (d.inflationRate  !== undefined) { state.inflationRate  = d.inflationRate;  document.getElementById('sld-inflation').value = Math.round(d.inflationRate * 100); }
+
         updateValues(state);
-        showMsg(`Import réussi : Paramètres budgétaires appliqués depuis ${name}.`, false);
+
+        if (d._isPrevisionnel) {
+          const fmt = v => v != null ? new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(v) : '—';
+          showMsg(
+            `<strong>${d._label}</strong> chargé (${d._horizon}) — ` +
+            `Cible : <strong>${d.usersCount} utilisateurs · ${d.sitesCount} sites</strong> — ` +
+            `Enveloppe projet : <strong>${fmt(d._totalHT)}</strong> / plafond ${fmt(d._plafond)} — ` +
+            `Réserve disponible : <strong>${fmt(d._reserve)}</strong>`,
+            false
+          );
+        } else {
+          showMsg(`Import réussi : Paramètres budgétaires appliqués depuis ${name}.`, false);
+        }
       }
     }
   };
