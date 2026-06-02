@@ -1,5 +1,5 @@
-import { calculateFinancials, generateTcoProjections } from '../utils/financialMath.js?v=2';
-import { parseCSVUsers, parseJSONBudget } from '../utils/dataParsers.js?v=2';
+import { calculateFinancials, generateTcoProjections } from '../utils/financialMath.js?v=3';
+import { parseCSVUsers, parseJSONBudget } from '../utils/dataParsers.js?v=3';
 
 let chartInstance = null;
 
@@ -139,16 +139,22 @@ export default function FinanceWorkspace(state) {
           <!-- KPIs Cards -->
           <div data-pres-step="3" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
-            <div class="glass-panel print-card rounded-xl p-5 border-l-4 border-l-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.05)]">
-              <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Économie Nette (5 ans)</span>
-              <div class="text-2xl font-mono font-bold text-emerald-400 my-1" id="kpi-savings">-- €</div>
-              <div class="text-xs text-slate-400">Par rapport au statu quo VMware</div>
+            <div class="glass-panel print-card rounded-xl p-5 border-l-4 border-l-emerald-500 shadow-[0_0_18px_rgba(16,185,129,0.08)]">
+              <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Économie Nette (5 ans)</span>
+              <div class="flex items-end gap-2 my-1.5">
+                <div class="text-2xl font-mono font-extrabold text-emerald-400 leading-none" id="kpi-savings">-- €</div>
+                <span class="text-emerald-500 text-lg font-bold leading-none mb-0.5">↑</span>
+              </div>
+              <div class="text-xs text-slate-400 font-medium">vs. statu quo VMware Broadcom</div>
             </div>
 
-            <div class="glass-panel print-card rounded-xl p-5 border-l-4 border-l-red-500">
-              <span class="text-[10px] font-bold text-slate-500 uppercase tracking-widest">Surcoût VMware Broadcom</span>
-              <div class="text-2xl font-mono font-bold text-red-500 my-1" id="kpi-pct-vmware">--%</div>
-              <div class="text-xs text-slate-400">Dû au licensing par cœur</div>
+            <div class="glass-panel print-card rounded-xl p-5 border-l-4 border-l-red-500 shadow-[0_0_18px_rgba(239,68,68,0.05)]">
+              <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Surcoût VMware Broadcom</span>
+              <div class="flex items-end gap-2 my-1.5">
+                <div class="text-2xl font-mono font-extrabold text-red-400 leading-none" id="kpi-pct-vmware">--%</div>
+                <span class="text-red-500 text-lg font-bold leading-none mb-0.5">↑</span>
+              </div>
+              <div class="text-xs text-slate-400 font-medium">Dû au licensing par cœur</div>
             </div>
 
           </div>
@@ -203,7 +209,7 @@ export default function FinanceWorkspace(state) {
                       <th class="py-2 px-3">Rubriques Budgétaires</th>
                       <th class="py-2 px-3 text-blue-400">Proxmox VE</th>
                       <th class="py-2 px-3 text-red-500">VMware</th>
-                      <th class="py-2 px-3 text-purple-400">Cloud HDS</th>
+                      <th class="py-2 px-3 text-amber-400">Cloud HDS</th>
                     </tr>
                   </thead>
                   <tbody id="budget-table-body"></tbody>
@@ -394,7 +400,7 @@ export function bindFinanceEvents(state, renderApp) {
         {
           label: 'Alternative Public Cloud HDS',
           data: projections.map(p => p.cloudTco),
-          borderColor: '#c084fc',
+          borderColor: '#f59e0b',
           borderWidth: 2.5,
           tension: 0.15
         }
@@ -417,7 +423,7 @@ export function bindFinanceEvents(state, renderApp) {
           backgroundColor: '#0f172a',
           titleColor: '#f8fafc',
           bodyColor: '#f1f5f9',
-          borderColor: 'rgba(0, 205, 255, 0.25)',
+          borderColor: 'rgba(99,102,241,0.3)',
           borderWidth: 1,
           titleFont: { family: 'Inter', weight: 'bold' },
           bodyFont: { family: 'JetBrains Mono' },

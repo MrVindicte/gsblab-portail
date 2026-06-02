@@ -22,14 +22,15 @@ export default function Sidebar(activeTab) {
     return `
       <button
         data-tab="${item.id}"
-        class="sidebar-nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition text-left border ${
-          isActive 
-            ? 'bg-blue-600/10 border-blue-500/20 text-blue-400 font-semibold' 
-            : 'text-slate-400 hover:bg-white/5 hover:text-white border-transparent'
+        class="sidebar-nav-btn w-full flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 text-left border ${
+          isActive
+            ? 'bg-blue-500/15 border-blue-500/35 text-blue-300 font-semibold shadow-[inset_3px_0_0_#6366f1]'
+            : 'text-slate-400 hover:bg-white/5 hover:text-slate-200 border-transparent'
         }"
       >
-        <span class="${isActive ? 'text-blue-400' : 'text-slate-400'}">${icons[item.icon]}</span>
+        <span class="${isActive ? 'text-blue-400' : 'text-slate-500 group-hover:text-slate-300'}">${icons[item.icon]}</span>
         ${item.name}
+        ${isActive ? '<span class="ml-auto w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_6px_#818cf8]"></span>' : ''}
       </button>
     `;
   }).join('');

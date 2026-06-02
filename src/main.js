@@ -1,14 +1,14 @@
 // ==============================================================================
 // CORE ORCHESTRATOR - PORTAIL GSBLAB ES6 NATIVE
 // ==============================================================================
-import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=2';
-import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=2';
-import ExecutiveSummary from './components/ExecutiveSummary.js?v=2';
-import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=2';
-import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=2';
-import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=2';
-import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=2';
-import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=2';
+import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
+import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=3';
+import ExecutiveSummary from './components/ExecutiveSummary.js?v=3';
+import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=3';
+import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=3';
+import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=3';
+import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=3';
+import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=3';
 
 // Global state holding parameters
 window.appState = {
@@ -143,14 +143,14 @@ const updatePresentationDOM = () => {
     );
 
     const ticks = boundaryPcts.map(p =>
-      `<div style="position:absolute;top:-3px;left:${p}%;width:1px;height:10px;background:#334155;transform:translateX(-50%);pointer-events:none;"></div>`
+      `<div style="position:absolute;top:-4px;left:${p}%;width:2px;height:14px;background:#475569;border-radius:1px;transform:translateX(-50%);pointer-events:none;"></div>`
     ).join('');
 
     pillsContainer.innerHTML = `
-      <div style="position:relative;width:100%;height:4px;background:#1e293b;border-radius:2px;">
-        <div style="position:absolute;inset:0;width:${pct}%;background:linear-gradient(90deg,#3b82f6,#6366f1);border-radius:2px;transition:width 0.25s ease;"></div>
+      <div style="position:relative;width:100%;height:6px;background:#1e293b;border-radius:3px;box-shadow:inset 0 1px 2px rgba(0,0,0,0.4);">
+        <div style="position:absolute;inset:0;width:${pct}%;background:linear-gradient(90deg,#3b82f6,#6366f1);border-radius:3px;transition:width 0.3s cubic-bezier(0.16,1,0.3,1);box-shadow:0 0 8px rgba(99,102,241,0.4);"></div>
         ${ticks}
-        <div style="position:absolute;top:50%;left:${pct}%;transform:translate(-50%,-50%);width:10px;height:10px;background:#60a5fa;border-radius:50%;box-shadow:0 0 8px rgba(96,165,250,0.55);transition:left 0.25s ease;pointer-events:none;"></div>
+        <div style="position:absolute;top:50%;left:${pct}%;transform:translate(-50%,-50%);width:12px;height:12px;background:#818cf8;border:2px solid #1e293b;border-radius:50%;box-shadow:0 0 10px rgba(129,140,248,0.7);transition:left 0.3s cubic-bezier(0.16,1,0.3,1);pointer-events:none;"></div>
       </div>
     `;
 
@@ -220,24 +220,22 @@ const renderApp = () => {
 
   // Header template (matches App.tsx layout)
   const headerHtml = `
-    <header class="bg-slate-900/90 backdrop-blur-md border-b border-white/5 py-4 px-8 sticky top-0 z-50 flex justify-between items-center no-print flex-shrink-0">
+    <header class="bg-slate-900/95 backdrop-blur-md border-b border-white/5 py-3 px-8 sticky top-0 z-50 flex justify-between items-center no-print flex-shrink-0">
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-500 rounded-lg flex items-center justify-center font-black text-white text-base shadow-[0_0_15px_rgba(99,102,241,0.25)] flex-shrink-0">
+        <div class="w-9 h-9 bg-gradient-to-br from-blue-600 to-indigo-500 rounded-lg flex items-center justify-center font-black text-white text-sm shadow-[0_0_15px_rgba(99,102,241,0.3)] flex-shrink-0 select-none">
           G1
         </div>
         <div>
-          <div class="flex items-center gap-2">
-            <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">
-              GSBLAB PORTAIL DECISIONNEL
+          <div class="flex items-center gap-2.5">
+            <h1 class="text-base font-bold tracking-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+              GSBLAB &mdash; PORTAIL DÉCISIONNEL
             </h1>
-            <div class="flex items-center bg-white/5 border border-white/10 px-2 py-0.5 rounded text-[9px] font-mono font-semibold tracking-wider text-slate-300 flex-shrink-0">
-              <span>2IC</span>
-              <span class="mx-1.5 text-slate-500">/</span>
-              <span class="text-blue-400">GRP.01</span>
-            </div>
+            <span class="hidden sm:flex items-center bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-widest text-blue-400 flex-shrink-0">
+              MASTÈRE 2IC &nbsp;·&nbsp; GRP.01
+            </span>
           </div>
-          <p class="text-xs text-slate-400 font-medium mt-0.5">
-            Réalisation : <strong class="text-white font-semibold">Romain, Léo & Jérôme</strong> — Mastère 2IC 2026
+          <p class="text-[11px] text-slate-500 mt-0.5 tracking-wide">
+            Romain, Léo &amp; Jérôme &nbsp;—&nbsp; 2026
           </p>
         </div>
       </div>
@@ -392,7 +390,7 @@ const renderApp = () => {
     <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
       ${sidebarHtml}
       <main class="flex-1 p-6 md:p-8 overflow-y-auto">
-        <div class="max-w-7xl mx-auto space-y-8 animate-fade-in">
+        <div class="max-w-7xl mx-auto space-y-8 tab-enter">
           ${mainContentHtml}
         </div>
       </main>

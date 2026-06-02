@@ -1,4 +1,4 @@
-import { defaultRaci } from '../config/defaultData.js?v=2';
+import { defaultRaci } from '../config/defaultData.js?v=3';
 
 export default function PmoWorkspace(state) {
   // Sort risks by criticality descending

@@ -24,13 +24,13 @@ export default function ExecutiveSummary(state) {
   ];
 
   const renderedKpis = kpis.map((kpi, idx) => `
-    <div data-pres-step="${idx + 3}" data-pres-label="${kpi.title}" class="glass-panel rounded-xl p-4 flex items-center justify-between transition duration-200">
-      <div class="space-y-1">
-        <span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">${kpi.title}</span>
-        <div class="text-2xl font-mono font-bold text-white">${kpi.value}</div>
-        <p class="text-[10px] text-slate-400">${kpi.desc}</p>
+    <div data-pres-step="${idx + 3}" data-pres-label="${kpi.title}" class="glass-panel rounded-xl p-4 flex items-center justify-between transition duration-200 hover:border-white/15">
+      <div class="space-y-1.5">
+        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">${kpi.title}</span>
+        <div class="text-3xl font-mono font-extrabold text-white leading-none">${kpi.value}</div>
+        <p class="text-xs text-slate-400 font-medium">${kpi.desc}</p>
       </div>
-      <div class="w-10 h-10 rounded-xl ${kpi.bg} flex items-center justify-center flex-shrink-0">
+      <div class="w-11 h-11 rounded-xl ${kpi.bg} flex items-center justify-center flex-shrink-0 shadow-inner">
         ${kpi.icon}
       </div>
     </div>
@@ -38,11 +38,11 @@ export default function ExecutiveSummary(state) {
 
   // 4th KPI Card (HDS Compliance Dial)
   const hdsKpiCard = `
-    <div data-pres-step="6" data-pres-label="Conformité HDS v2" class="glass-panel rounded-xl p-4 flex items-center justify-between transition duration-200">
-      <div class="space-y-1">
-        <span class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Conformité HDS v2</span>
-        <div class="text-2xl font-mono font-bold text-white">95%</div>
-        <p class="text-[10px] text-emerald-400 font-semibold uppercase tracking-wider">Certifié (Act. 1 à 6)</p>
+    <div data-pres-step="6" data-pres-label="Conformité HDS v2" class="glass-panel rounded-xl p-4 flex items-center justify-between transition duration-200 hover:border-white/15">
+      <div class="space-y-1.5">
+        <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Conformité HDS v2</span>
+        <div class="text-3xl font-mono font-extrabold text-white leading-none">95%</div>
+        <p class="text-xs text-emerald-400 font-semibold">Certifié — Act. 1 à 6</p>
       </div>
       <div class="w-10 h-10 flex items-center justify-center relative flex-shrink-0">
         <svg class="w-9 h-9 transform -rotate-90" viewBox="0 0 36 36">
