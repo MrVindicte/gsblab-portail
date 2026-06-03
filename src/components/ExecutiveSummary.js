@@ -404,6 +404,129 @@ export default function ExecutiveSummary(state) {
           </div>
         </div>
       </div>
+
+      <!-- ── CONCLUSION — Step 14 ── -->
+      <div data-pres-step="14" data-pres-label="Conclusion & Recommandation" class="glass-panel rounded-2xl p-6 border border-indigo-500/20 space-y-5 relative overflow-hidden">
+        <!-- Glow background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-blue-500/5 pointer-events-none"></div>
+
+        <div class="flex items-center gap-3 relative">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-blue-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-indigo-500/20">
+            <svg class="w-4.5 h-4.5 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-white">Conclusion — Ce que ce projet vous apporte</h3>
+            <p class="text-[10px] text-slate-400 mt-0.5">Projet GSBLAB · Migration SI · Budget 450 000 € HT · 2026-2030</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 relative">
+          <!-- Bloc budget -->
+          <div class="bg-emerald-500/8 border border-emerald-500/20 rounded-xl p-4 space-y-3">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-lg bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              </div>
+              <span class="text-[10px] font-bold text-emerald-300 uppercase tracking-wider">Maîtrise budgétaire</span>
+            </div>
+            <div class="space-y-2 text-[11px]">
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400">Total projet</span>
+                <span class="font-mono font-bold text-white">440 794 €</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400">Enveloppe DAF</span>
+                <span class="font-mono font-bold text-slate-300">450 000 €</span>
+              </div>
+              <div class="flex justify-between items-center border-t border-emerald-500/20 pt-1.5">
+                <span class="text-slate-400">Réserve disponible</span>
+                <span class="font-mono font-bold text-emerald-300">9 206 € (2 %)</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400">Économies vs VMware</span>
+                <span class="font-mono font-bold text-emerald-300">+ 65 000 €</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-slate-400">Remises négociées</span>
+                <span class="font-mono font-bold text-emerald-300">46 000 €</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc infrastructure -->
+          <div class="bg-indigo-500/8 border border-indigo-500/20 rounded-xl p-4 space-y-3">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-lg bg-indigo-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+              </div>
+              <span class="text-[10px] font-bold text-indigo-300 uppercase tracking-wider">Infrastructure cible</span>
+            </div>
+            <div class="space-y-2 text-[11px]">
+              ${[
+                ['Cluster HA','Proxmox VE · 2× R760 + 2× R730'],
+                ['Sites couverts','27 sites · 20 spokes VPN IPsec'],
+                ['Utilisateurs','380 (plateau 2028)'],
+                ['OS & messagerie','WS 2022 · Exchange Online HDS'],
+                ['Sécurité','ESET EDR · VLAN 10/20/30/40/99'],
+                ['Sauvegarde','3-2-1-1-0 PBS + OVH HDS + LTO-6'],
+              ].map(([k, v]) => `
+                <div class="flex justify-between items-start gap-2">
+                  <span class="text-slate-400 flex-shrink-0">${k}</span>
+                  <span class="font-medium text-slate-200 text-right">${v}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Bloc conformité + équipe -->
+          <div class="space-y-3">
+            <div class="bg-blue-500/8 border border-blue-500/20 rounded-xl p-4 space-y-2">
+              <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded-lg bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                  <svg class="w-3.5 h-3.5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <span class="text-[10px] font-bold text-blue-300 uppercase tracking-wider">Conformité HDS</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1 text-[9px]">
+                ${[
+                  ['Hébergement physique','✓'],
+                  ['Messagerie cloud attestée','✓'],
+                  ['Chiffrement AES-256','✓'],
+                  ['Sauvegarde 3-2-1-1-0','✓'],
+                  ['Audit & traçabilité 5 ans','✓'],
+                  ['DPA Microsoft signé','À signer'],
+                ].map(([label, status]) => `
+                  <div class="flex items-center justify-between bg-slate-900/40 rounded px-1.5 py-1">
+                    <span class="text-slate-400">${label}</span>
+                    <span class="${status === '✓' ? 'text-emerald-400' : 'text-amber-400'} font-bold">${status}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+            <div class="glass-panel rounded-xl p-3 border border-white/5 text-center">
+              <div class="text-[9px] text-slate-500 uppercase tracking-wider mb-2">Équipe Groupe 1 — Mastère 2IC</div>
+              <div class="flex justify-around">
+                ${[['R','Romain','Chiffrage PMO','emerald'],['J','Jérôme','Portail & Doc','blue'],['L','Léo','Architecture','red']].map(([i, n, r, c]) => `
+                  <div class="text-center">
+                    <div class="w-7 h-7 rounded-full bg-${c}-500/15 border border-${c}-500/30 flex items-center justify-center font-bold text-${c}-400 text-xs mx-auto">${i}</div>
+                    <div class="text-[9px] font-bold text-slate-200 mt-1">${n}</div>
+                    <div class="text-[8px] text-slate-500">${r}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message final -->
+        <div class="relative border-t border-white/5 pt-4 text-center">
+          <p class="text-sm font-semibold text-slate-200 leading-relaxed max-w-2xl mx-auto">
+            Ce projet traduit une contrainte budgétaire réelle en architecture durable — sans sacrifier la conformité HDS, la résilience ni la maîtrise des coûts sur 5 ans.
+          </p>
+          <p class="text-[10px] text-slate-500 mt-2">Merci pour votre attention — Questions ?</p>
+        </div>
+      </div>
+
     </div>
   `;
 

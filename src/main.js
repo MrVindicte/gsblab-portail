@@ -3,13 +3,13 @@
 // ==============================================================================
 import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
-import ExecutiveSummary from './components/ExecutiveSummary.js?v=4';
+import ExecutiveSummary from './components/ExecutiveSummary.js?v=5';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=6';
 import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=3';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=3';
-import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=3';
+import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=4';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=3';
-import SitesWorkspace from './components/SitesWorkspace.js?v=1';
+import SitesWorkspace from './components/SitesWorkspace.js?v=2';
 
 // Global state holding parameters
 window.appState = {
@@ -38,14 +38,14 @@ window.appState = {
 
 // ─── Presentation step configuration ────────────────────────────────────────
 // Update maxSteps when you add/remove data-pres-step elements in a component.
-const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison'];
-const PRES_MAX  = { dashboard: 13, finance: 6, tech: 4, drp: 2, pmo: 3, comparison: 3 };
+const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites'];
+const PRES_MAX  = { dashboard: 14, finance: 6, tech: 4, drp: 2, pmo: 4, comparison: 3, sites: 4 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
 let _acc = 0;
 for (const t of PRES_TABS) { PRES_OFFSET[t] = _acc; _acc += PRES_MAX[t]; }
-const PRES_TOTAL = _acc; // 31
+const PRES_TOTAL = _acc; // 37
 
 /** Convert a global step (1-based) to { tab, localStep } */
 const globalToLocal = (g) => {

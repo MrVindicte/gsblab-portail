@@ -104,7 +104,77 @@ export default function PmoWorkspace(state) {
 
   return `
     <div class="space-y-6">
-      
+
+      <!-- ── ROADMAP 2026-2030 ── -->
+      <div data-pres-step="1" data-pres-label="Roadmap 2026-2030" class="glass-panel rounded-2xl p-5 border border-white/8 space-y-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-indigo-500/20 flex items-center justify-center">
+              <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
+            <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Roadmap Projet — 2026 à 2030</span>
+          </div>
+          <div class="flex gap-3 text-[10px]">
+            <span class="bg-slate-800 border border-white/5 rounded px-2 py-1 font-mono text-slate-300">Sous-total : <strong class="text-white">400 722 €</strong></span>
+            <span class="bg-indigo-500/10 border border-indigo-500/25 rounded px-2 py-1 font-mono text-indigo-300">Enveloppe : <strong>450 000 €</strong></span>
+            <span class="bg-emerald-500/10 border border-emerald-500/25 rounded px-2 py-1 font-mono text-emerald-300">Réserve : <strong>9 206 €</strong></span>
+          </div>
+        </div>
+
+        <!-- Frise budgétaire -->
+        <div class="grid grid-cols-5 gap-2">
+          ${[
+            { year: '2026', budget: 228662, pct: 100, phase: 'Migration cœur + 5 labos', eff: 215, sites: 12, color: 'violet', events: ['Proxmox VE + 2× R760','Exchange Online','VLAN + VPN IPsec','5 labos (Toulouse…)'] },
+            { year: '2027', budget: 64508,  pct: 28,  phase: 'Centres lot 1 + switchs P2', eff: 303, sites: 20, color: 'blue',   events: ['8 centres de prélèvement','CBS250-24T (EoSL 2028)','COPIL annuel'] },
+            { year: '2028', budget: 60747,  pct: 27,  phase: 'Centres lot 2 — parc cible', eff: 380, sites: 27, color: 'cyan',   events: ['7 centres → 27 sites','380 utilisateurs atteints','Coûts au plateau'] },
+            { year: '2029', budget: 23402,  pct: 10,  phase: 'Exploitation run-rate',       eff: 380, sites: 27, color: 'emerald',events: ['Exploitation courante','LTO-6 → LTO-8 (arbitrage)','Rachat concurrent (enveloppe distincte)'] },
+            { year: '2030', budget: 23403,  pct: 10,  phase: 'Clôture projet migration',    eff: 380, sites: 27, color: 'slate',  events: ['Dernière année projet','Support Office LTSC à réévaluer','Réserve 9 206 € disponible'] },
+          ].map(y => `
+            <div class="flex flex-col gap-2">
+              <!-- Année + budget -->
+              <div class="text-center">
+                <div class="text-lg font-black text-${y.color}-300 font-mono">${y.year}</div>
+                <div class="text-[10px] font-mono font-semibold text-slate-300">${(y.budget/1000).toFixed(0)} k€</div>
+              </div>
+              <!-- Barre proportionnelle -->
+              <div class="relative h-24 bg-slate-900/60 rounded-xl overflow-hidden border border-white/5">
+                <div class="absolute bottom-0 left-0 right-0 bg-${y.color}-500/30 border-t-2 border-${y.color}-400/60 rounded-b-xl transition-all" style="height:${y.pct}%"></div>
+                <div class="absolute inset-0 flex flex-col items-center justify-center gap-0.5">
+                  <span class="text-[8px] font-bold text-slate-400">${y.eff} pers.</span>
+                  <span class="text-[8px] text-slate-500">${y.sites} sites</span>
+                </div>
+              </div>
+              <!-- Phase label -->
+              <div class="text-[9px] text-center text-slate-400 leading-tight font-medium">${y.phase}</div>
+              <!-- Événements -->
+              <div class="space-y-0.5">
+                ${y.events.map(e => `
+                  <div class="flex items-start gap-1 text-[8px] text-slate-500">
+                    <span class="text-${y.color}-500 flex-shrink-0 mt-0.5">▸</span>
+                    <span>${e}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+        <!-- Jalons clés -->
+        <div class="border-t border-white/5 pt-3 grid grid-cols-2 md:grid-cols-4 gap-2">
+          ${[
+            ['Jan 2027','⚠️ EoSL WS 2016 — migration Q4 2026','amber'],
+            ['Avr 2028','⚠️ EoSL Cisco SG350XG-24 — remplacés 2027','amber'],
+            ['2029','🏢 Rachat concurrent 150 pers. (enveloppe distincte)','blue'],
+            ['2030','✅ Clôture projet — run-rate 50 573 €/an','emerald'],
+          ].map(([date, label, color]) => `
+            <div class="flex items-start gap-2 bg-${color}-500/5 border border-${color}-500/15 rounded-lg px-2.5 py-2">
+              <span class="text-[9px] font-mono font-bold text-${color}-400 flex-shrink-0 mt-0.5">${date}</span>
+              <span class="text-[9px] text-slate-400 leading-snug">${label}</span>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
       <!-- Toggle headers -->
       <div class="flex justify-between items-center border-b border-white/5 pb-3">
         <div>
@@ -140,11 +210,11 @@ export default function PmoWorkspace(state) {
         <!-- REGISTRE DES RISQUES -->
         <div class="space-y-4">
           
-          <div data-pres-step="1" class="flex flex-wrap gap-2 no-print">
+          <div data-pres-step="2" class="flex flex-wrap gap-2 no-print">
             ${catButtons}
           </div>
 
-          <div data-pres-step="2" class="glass-panel print-card rounded-xl p-6 overflow-x-auto">
+          <div data-pres-step="3" class="glass-panel print-card rounded-xl p-6 overflow-x-auto">
             <table class="w-full text-xs text-left border-collapse">
               <thead>
                 <tr class="border-b border-white/5 text-slate-400 uppercase tracking-wider font-semibold">
@@ -165,7 +235,7 @@ export default function PmoWorkspace(state) {
           </div>
 
           <!-- Explanations -->
-          <div data-pres-step="3" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs mt-4 no-print">
+          <div data-pres-step="4" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs mt-4 no-print">
             <div class="p-3 bg-red-500/5 border border-red-500/10 rounded-lg flex gap-2">
               <svg class="w-4 h-4 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
               <div>
@@ -194,7 +264,7 @@ export default function PmoWorkspace(state) {
         <!-- MATRICE RACI -->
         <div class="space-y-4">
           
-          <div data-pres-step="1" class="glass-panel print-card rounded-xl p-6 overflow-x-auto">
+          <div data-pres-step="2" class="glass-panel print-card rounded-xl p-6 overflow-x-auto">
             <table class="w-full text-xs text-left border-collapse">
               <thead>
                 <tr class="border-b border-white/5 text-slate-400 uppercase tracking-wider font-semibold">
@@ -215,7 +285,7 @@ export default function PmoWorkspace(state) {
           </div>
 
           <!-- Legend -->
-          <div data-pres-step="2" class="flex flex-wrap gap-4 text-xs mt-2 justify-center no-print">
+          <div data-pres-step="3" class="flex flex-wrap gap-4 text-xs mt-2 justify-center no-print">
             <span class="flex items-center gap-1.5">
               <span class="w-5 py-0.5 rounded text-[10px] font-bold text-center bg-blue-500/10 border border-blue-500/25 text-blue-400">R</span>
               <span>Responsible (Réalise l'action)</span>

@@ -6,7 +6,7 @@ export default function SitesWorkspace() {
     <div class="space-y-10">
 
       <!-- PAGE HEADER -->
-      <div class="glass-panel rounded-2xl p-6 border border-white/8">
+      <div data-pres-step="1" data-pres-label="Sites — Vue d'ensemble" class="glass-panel rounded-2xl p-6 border border-white/8">
         <div class="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <div class="flex items-center gap-3 mb-2">
@@ -68,7 +68,7 @@ export default function SitesWorkspace() {
       </div>
 
       <!-- ── SECTION 1 : SIÈGE ─────────────────────────────────────────────── -->
-      <div class="space-y-4">
+      <div data-pres-step="2" data-pres-label="Siège Strasbourg DG" class="space-y-4">
         <div class="flex items-center gap-3">
           <div class="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent"></div>
           <div class="flex items-center gap-2 px-4 py-1.5 bg-violet-500/10 border border-violet-500/30 rounded-full">
@@ -293,7 +293,7 @@ export default function SitesWorkspace() {
       </div>
 
       <!-- ── SECTION 2 : LABO TYPE ─────────────────────────────────────────── -->
-      <div class="space-y-4">
+      <div data-pres-step="3" data-pres-label="Labo Type × 5 (Phase 2026)" class="space-y-4">
         <div class="flex items-center gap-3">
           <div class="h-px flex-1 bg-gradient-to-r from-blue-500/50 to-transparent"></div>
           <div class="flex items-center gap-2 px-4 py-1.5 bg-blue-500/10 border border-blue-500/30 rounded-full">
@@ -456,7 +456,7 @@ export default function SitesWorkspace() {
       </div>
 
       <!-- ── SECTION 3 : CENTRE DE PRÉLÈVEMENT ─────────────────────────────── -->
-      <div class="space-y-4">
+      <div data-pres-step="4" data-pres-label="Centres de Prélèvement × 15" class="space-y-4">
         <div class="flex items-center gap-3">
           <div class="h-px flex-1 bg-gradient-to-r from-emerald-500/50 to-transparent"></div>
           <div class="flex items-center gap-2 px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/30 rounded-full">
@@ -641,7 +641,7 @@ export default function SitesWorkspace() {
       </div>
 
       <!-- ── RÉCAPITULATIF GLOBAL ─────────────────────────────────────────── -->
-      <div class="glass-panel rounded-2xl p-6 border border-white/8">
+      <div data-pres-step="4" class="glass-panel rounded-2xl p-6 border border-white/8">
         <div class="flex items-center gap-2 mb-4">
           <div class="w-7 h-7 rounded-lg bg-slate-500/20 flex items-center justify-center">
             <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
