@@ -3,7 +3,7 @@
 // ==============================================================================
 import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
-import ExecutiveSummary from './components/ExecutiveSummary.js?v=11';
+import ExecutiveSummary from './components/ExecutiveSummary.js?v=17';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=12';
 import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=6';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=3';
@@ -40,7 +40,7 @@ window.appState = {
 // Update maxSteps when you add/remove data-pres-step elements in a component.
 const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites'];
 // Nombre de slides par onglet (Option B : slides exclusives)
-const PRES_MAX  = { dashboard: 4, finance: 2, tech: 3, drp: 2, pmo: 3, comparison: 2, sites: 3 };
+const PRES_MAX  = { dashboard: 8, finance: 2, tech: 3, drp: 2, pmo: 3, comparison: 2, sites: 3 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
@@ -90,15 +90,42 @@ const updatePresentationDOM = () => {
   document.querySelectorAll('[data-pres-slide]').forEach(el => {
     el.classList.remove('pres-slide-active');
   });
-  const activeSlide = document.querySelector(
-    `[data-pres-slide="${window.appState.presentationStep}"]`
-  );
-  if (activeSlide) activeSlide.classList.add('pres-slide-active');
+  const stepStr = String(window.appState.presentationStep);
+  const activeSlide = Array.from(document.querySelectorAll('[data-pres-slide]')).find(el => {
+    return el.getAttribute('data-pres-slide').split(',').includes(stepStr);
+  });
+  if (activeSlide) {
+    activeSlide.classList.add('pres-slide-active');
+    
+    // Révélation dynamique des sous-éléments (sans rechargement DOM)
+    activeSlide.querySelectorAll('[data-reveal-at]').forEach(el => {
+      const revealAt = parseInt(el.getAttribute('data-reveal-at'), 10);
+      if (window.appState.presentationStep >= revealAt) {
+        el.classList.remove('opacity-0');
+        el.classList.add('opacity-100');
+      } else {
+        el.classList.add('opacity-0');
+        el.classList.remove('opacity-100');
+      }
+    });
+  }
 
-  // ── Compteur ───────────────────────────────────────────────────────────────
+  // ── Compteur footer + badge slide flottant ──────────────────────────────────────
+  const g = window.appState.globalPresentationStep;
   const counterEl = document.getElementById('pres-counter-label');
   if (counterEl) {
-    counterEl.innerText = `Slide ${window.appState.globalPresentationStep} / ${PRES_TOTAL}`;
+    counterEl.innerText = `Slide ${g} / ${PRES_TOTAL}`;
+  }
+  // Badge flottant sur la slide (position fixe, hors de tout conteneur)
+  const badge = document.getElementById('pres-slide-badge');
+  if (badge) {
+    const num = String(g).padStart(2, '0');
+    const tot = String(PRES_TOTAL).padStart(2, '0');
+    badge.innerHTML = `
+      <span style="color:#f1f5f9;font-size:1.15rem;font-weight:900;line-height:1;">${num}</span>
+      <span style="color:#475569;font-size:0.85rem;font-weight:700;line-height:1;">/</span>
+      <span style="color:#64748b;font-size:0.85rem;font-weight:600;line-height:1;">${tot}</span>
+    `;
   }
 
   // ── Barre de progression ───────────────────────────────────────────────────
@@ -240,11 +267,14 @@ const renderApp = () => {
 
         <button 
           id="btn-toggle-presentation"
-          class="${isPres ? 'bg-blue-600 border-blue-500 hover:bg-blue-700' : 'bg-white/5 border-white/5 hover:bg-white/10'} border text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition"
+          class="${isPres 
+            ? 'bg-slate-800/80 border-slate-700 hover:bg-slate-700 hover:border-slate-500 text-slate-300' 
+            : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500 border-indigo-400/50 hover:border-indigo-300 shadow-[0_0_20px_rgba(99,102,241,0.5)] hover:shadow-[0_0_30px_rgba(99,102,241,0.8)] text-white transform hover:scale-105'
+          } border px-5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-widest flex items-center gap-2.5 transition-all duration-300 relative overflow-hidden"
           title="Basculer le mode présentation (Diaporama)"
         >
-          <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-          <span>${isPres ? 'Vue Globale' : 'Présentation'}</span>
+          <svg class="w-4 h-4 ${isPres ? 'text-slate-400' : 'text-white/90 animate-pulse'}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          <span>${isPres ? 'Quitter' : 'Lancer la Présentation'}</span>
         </button>
         
         <button 
@@ -372,6 +402,27 @@ const renderApp = () => {
 
   root.innerHTML = `
     ${headerHtml}
+    ${isPres ? `
+      <div id="pres-slide-badge" style="
+        position:fixed;
+        bottom:5.5rem;
+        left:50%;
+        transform:translateX(-50%);
+        z-index:9999;
+        display:flex;
+        align-items:baseline;
+        gap:0.4rem;
+        background:rgba(8,9,12,0.85);
+        border:1px solid rgba(255,255,255,0.10);
+        backdrop-filter:blur(12px);
+        padding:0.4rem 1.1rem;
+        border-radius:99px;
+        font-family:'JetBrains Mono',monospace;
+        pointer-events:none;
+        box-shadow:0 4px 24px rgba(0,0,0,0.6);
+        letter-spacing:0.05em;
+      "></div>
+    ` : ''}
     <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
       ${sidebarHtml}
       <main class="flex-1 p-6 md:p-8 ${mainClasses}">

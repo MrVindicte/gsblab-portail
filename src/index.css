@@ -43,7 +43,7 @@
 
 @keyframes fillDial {
   from { stroke-dashoffset: 94.2; }
-  to { stroke-dashoffset: 4.7; }
+  to { stroke-dashoffset: 0; }
 }
 
 .animate-dial {

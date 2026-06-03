@@ -29,7 +29,7 @@ export default function ExecutiveSummary(state) {
     },
     {
       label: 'Conformité HDS',
-      value: '95 %',
+      value: '100 %',
       sub:   'Certifié · Activités 1-6',
       color: 'blue',
       icon:  '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
@@ -173,10 +173,10 @@ export default function ExecutiveSummary(state) {
                     <circle cx="18" cy="18" r="15" class="stroke-slate-800" stroke-width="3.5" fill="transparent"/>
                     <circle cx="18" cy="18" r="15" class="stroke-emerald-500 animate-dial" style="filter:drop-shadow(0 0 2px rgba(16,185,129,0.5))" stroke-width="3.5" fill="transparent" stroke-dasharray="94.2" stroke-dashoffset="94.2"/>
                   </svg>
-                  <span class="absolute text-[7px] font-bold text-emerald-400 font-mono z-10 select-none">95%</span>
+                  <span class="absolute text-[7px] font-bold text-emerald-400 font-mono z-10 select-none">100%</span>
                 </div>
                 <div>
-                  <div style="font-size:clamp(20px,2.4vw,32px);" class="font-mono font-extrabold text-emerald-400 leading-none">95%</div>
+                  <div style="font-size:clamp(20px,2.4vw,32px);" class="font-mono font-extrabold text-emerald-400 leading-none">100%</div>
                   <div class="text-[8px] text-emerald-500 uppercase tracking-wider mt-0.5">HDS v2</div>
                 </div>
               </div>
@@ -317,61 +317,160 @@ export default function ExecutiveSummary(state) {
   // MODE PRÉSENTATION : DÉCOUPAGE MINIMALISTE EN 4 SLIDES
   // ════════════════════════════════════════════════════════════════════════════
 
-  // Slide 2 : KPIs
-  const presSlide2 = `
-    <div data-pres-slide="2" data-pres-label="Périmètre du Projet" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-16">
-      <div class="text-center space-y-4">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Périmètre du Projet</h2>
-        <div class="w-16 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full"></div>
+  const presSlide2to6 = `
+    <div data-pres-slide="2,3,4,5,6" data-pres-label="Périmètre du Projet"
+         class="flex-1 min-h-0 flex flex-col justify-center py-2">
+      
+      <div class="w-full max-w-3xl mx-auto flex flex-col gap-8">
+
+        <!-- ── TITRE ─────────────────────────────────────────────────────────── -->
+        <div class="text-center space-y-2.5">
+          <h2 class="text-3xl font-extrabold text-white tracking-tight leading-tight">
+            Périmètre du Projet
+          </h2>
+          <div class="w-16 h-[2px] mx-auto bg-slate-700 rounded-full"></div>
+        </div>
+
+        <!-- ── CORPS : AVANT / FLÈCHE / APRÈS ───────────────────────────────── -->
+        <div class="flex items-stretch gap-10 w-full">
+
+          <!-- AVANT -->
+          <div class="flex-1 flex flex-col gap-4">
+            <!-- Column Header -->
+            <div class="flex items-center gap-2 border-b border-white/10 pb-2.5">
+              <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Situation 2022</span>
+              <span class="ml-auto text-[10px] font-bold tracking-wider uppercase" style="color: #f87171">Dette Technique</span>
+            </div>
+
+            <div class="flex flex-col gap-4 py-2">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-black text-slate-100 font-mono">130</span>
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">collaborateurs</span>
+                </div>
+                <div class="text-[11px] text-slate-500 leading-normal">1 laboratoire principal &middot; 6 centres en Alsace</div>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-black text-slate-100 font-mono">7</span>
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">sites</span>
+                </div>
+                <div class="text-[11px] text-slate-500 leading-normal">Réseau flat &middot; Aucun cloisonnement VLAN</div>
+              </div>
+
+              <div class="flex flex-col gap-1">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-black text-red-400/90 font-mono">0%</span>
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">données HDS</span>
+                </div>
+                <div class="text-[11px] text-red-400/70 leading-normal font-medium">Non-conformité réglementaire &middot; Risque légal</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TRANSITION INDICATOR (MIDDLE) -->
+          <div class="flex-shrink-0 flex flex-col items-center justify-center gap-3 px-2">
+            <div class="flex-1 w-px bg-white/10"></div>
+            <div class="flex flex-col items-center gap-1.5 select-none">
+              <div class="w-7 h-7 rounded-full border border-white/10 bg-slate-900/60 flex items-center justify-center text-slate-400">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/>
+                </svg>
+              </div>
+              <span class="text-[8px] font-bold text-slate-500 uppercase tracking-widest text-center leading-tight">2 ans</span>
+            </div>
+            <div class="flex-1 w-px bg-white/10"></div>
+          </div>
+
+          <!-- APRÈS -->
+          <div class="flex-1 flex flex-col gap-4">
+            <!-- Column Header -->
+            <div class="flex items-center gap-2 border-b border-white/10 pb-2.5">
+              <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">Cible 2028</span>
+              <span class="ml-auto text-[10px] font-bold tracking-wider uppercase" style="color: #34d399">HDS Certifié</span>
+            </div>
+
+            <div class="flex flex-col gap-4 py-2">
+              <div data-reveal-at="3" class="flex flex-col gap-1 transition-all duration-700 opacity-0">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-black text-white font-mono">380</span>
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">collaborateurs</span>
+                </div>
+                <div class="text-[11px] text-emerald-400 leading-normal font-medium">+192% &middot; 5 laboratoires &middot; 15 relais</div>
+              </div>
+
+              <div data-reveal-at="4" class="flex flex-col gap-1 transition-all duration-700 opacity-0">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-black text-white font-mono">27</span>
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">sites</span>
+                </div>
+                <div class="text-[11px] text-emerald-400 leading-normal font-medium font-medium">VPN IPsec maillé &middot; Routeurs FortiGate HA</div>
+              </div>
+
+              <div data-reveal-at="5" class="flex flex-col gap-1 transition-all duration-700 opacity-0">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-3xl font-black text-emerald-400 font-mono">100%</span>
+                  <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">données HDS</span>
+                </div>
+                <div class="text-[11px] text-emerald-400 leading-normal font-medium">Stockage intégralement certifié HDS v2</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ── BARRE CONTRAINTES BAS ──────────────────────────────────────────── -->
+        <div data-reveal-at="6"
+             class="grid grid-cols-3 gap-6 opacity-0 transition-opacity duration-700 pt-4 border-t border-white/10">
+          
+          <div class="flex items-center gap-3">
+            <div class="text-amber-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-200">450 000 € HT</div>
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5 font-medium">Budget DAF &middot; Plafond strict</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="text-blue-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-200">HDS v2 &middot; RGPD</div>
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5 font-medium">Obligation légale &middot; ANS</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="text-purple-400">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div>
+              <div class="text-sm font-bold text-slate-200">2026 → 2028</div>
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5 font-medium">Horizon projet &middot; 3 équipiers</div>
+            </div>
+          </div>
+
+        </div>
+
       </div>
-      <div class="grid grid-cols-2 gap-8 w-full max-w-4xl">
-        <div class="glass-panel rounded-3xl p-10 flex items-center gap-8 shadow-xl">
-          <div class="w-20 h-20 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0">
-            <svg class="w-10 h-10 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          </div>
-          <div>
-            <div class="text-6xl font-mono font-extrabold text-white leading-none">${state.usersCount}</div>
-            <div class="text-sm text-slate-500 uppercase tracking-widest mt-2.5 font-bold">Utilisateurs</div>
-          </div>
-        </div>
-        <div class="glass-panel rounded-3xl p-10 flex items-center gap-8 shadow-xl">
-          <div class="w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0">
-            <svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          </div>
-          <div>
-            <div class="text-6xl font-mono font-extrabold text-white leading-none">${state.sitesCount}</div>
-            <div class="text-sm text-slate-500 uppercase tracking-widest mt-2.5 font-bold">Sites (Spokes)</div>
-          </div>
-        </div>
-        <div class="glass-panel rounded-3xl p-10 flex items-center gap-8 shadow-xl">
-          <div class="w-20 h-20 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center flex-shrink-0">
-            <svg class="w-10 h-10 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
-          </div>
-          <div>
-            <div class="text-6xl font-mono font-extrabold text-white leading-none">${state.serversCount}</div>
-            <div class="text-sm text-slate-500 uppercase tracking-widest mt-2.5 font-bold">Serveurs HA</div>
-          </div>
-        </div>
-        <div class="glass-panel rounded-3xl p-10 flex items-center gap-8 shadow-xl relative overflow-hidden">
-          <div class="w-20 h-20 relative flex-shrink-0 flex items-center justify-center">
-            <svg class="w-20 h-20 -rotate-90 absolute" viewBox="0 0 36 36">
-              <circle cx="18" cy="18" r="15" class="stroke-slate-800" stroke-width="3.5" fill="transparent"/>
-              <circle cx="18" cy="18" r="15" class="stroke-emerald-500 animate-dial" style="filter:drop-shadow(0 0 4px rgba(16,185,129,0.5))" stroke-width="3.5" fill="transparent" stroke-dasharray="94.2" stroke-dashoffset="94.2"/>
-            </svg>
-            <span class="absolute text-sm font-bold text-emerald-400 font-mono z-10 select-none">95%</span>
-          </div>
-          <div>
-            <div class="text-6xl font-mono font-extrabold text-emerald-400 leading-none" style="text-shadow: 0 0 20px rgba(16,185,129,0.2)">95%</div>
-            <div class="text-sm text-emerald-500 uppercase tracking-widest mt-2.5 font-bold">HDS v2</div>
-          </div>
-        </div>
-      </div>
+
     </div>
   `;
 
-  // Slide 3 : Matrice
-  const presSlide3 = `
-    <div data-pres-slide="3" data-pres-label="Stratégie de Transformation" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12">
+  // Slide 7 : Matrice (anciennement 4)
+  const presSlide7 = `
+    <div data-pres-slide="7" data-pres-label="Stratégie de Transformation" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12">
       <div class="text-center space-y-4">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Stratégie de Transformation</h2>
         <p class="text-xl text-slate-400 font-medium">Dette Technique vs. Architecture Cible HDS</p>
@@ -400,9 +499,9 @@ export default function ExecutiveSummary(state) {
     </div>
   `;
 
-  // Slide 4 : TCO
-  const presSlide4 = `
-    <div data-pres-slide="4" data-pres-label="Impact Budgétaire" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12">
+  // Slide 8 : TCO (anciennement 5)
+  const presSlide8 = `
+    <div data-pres-slide="8" data-pres-label="Impact Budgétaire" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12">
       <div class="text-center space-y-4">
         <h2 class="text-4xl md:text-5xl font-extrabold text-emerald-400 tracking-tight">Impact Budgétaire</h2>
         <p class="text-xl text-slate-400 font-medium">Total Cost of Ownership sur 5 ans</p>
@@ -440,5 +539,5 @@ export default function ExecutiveSummary(state) {
     </div>
   `;
 
-  return `${slide1}${presSlide2}${presSlide3}${presSlide4}`;
+  return `${slide1}${presSlide2to6}${presSlide7}${presSlide8}`;
 }
