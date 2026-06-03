@@ -405,6 +405,32 @@ export default function SitesWorkspace() {
               </div>
             </div>
 
+            <!-- Segmentation VLAN -->
+            <div class="bg-slate-900/60 border border-white/5 rounded-xl p-4">
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider mb-3 font-semibold">Segmentation VLAN — ex. Labo S10 (adresse : 10.S.V.0/24)</div>
+              <div class="space-y-1.5">
+                ${[
+                  ['10','Admin / Serveurs','10.10.10.0/24','10.10.10.254','Tunnel VPN → Siège (aucun serveur local)','blue'],
+                  ['20','Postes admin','10.10.20.0/24','10.10.20.254','10 PC fixes + 2 laptops HP ProDesk/250','indigo'],
+                  ['30','Analyse HDS ★','10.10.30.0/24','10.10.30.254','ISOLÉ STRICT — VLAN 40 BLOQUÉ, VLAN 20 filtré','emerald'],
+                  ['40','Wi-Fi invités','10.10.40.0/24','10.10.40.254','Ubiquiti U6+ · Internet only · BLOQUÉ vers VLAN 30','amber'],
+                  ['99','Management','10.10.99.0/24','10.10.99.254','CBS250-24T + FortiGate 40F (hors-bande)','slate'],
+                ].map(([id, name, subnet, gw, note, color]) => `
+                  <div class="flex items-center gap-2 text-[9px]">
+                    <span class="w-10 flex-shrink-0 text-center font-mono font-bold bg-${color}-500/15 border border-${color}-500/25 text-${color}-300 rounded px-1 py-0.5">V${id}</span>
+                    <span class="w-28 flex-shrink-0 font-semibold text-slate-300">${name}</span>
+                    <span class="w-28 flex-shrink-0 font-mono text-slate-400">${subnet}</span>
+                    <span class="w-24 flex-shrink-0 font-mono text-slate-500">gw .254</span>
+                    <span class="text-slate-500">${note}</span>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="mt-3 flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2 text-[9px] text-emerald-300">
+                <svg class="w-3 h-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span><b>Cloisonnement VLAN 30 HDS</b> — ACL FortiGate : VLAN 40 → VLAN 30 <b>DROP</b> · VLAN 20 → VLAN 30 <b>PERMIT flux métier uniquement</b> (SolarWinds, PBS) · toute autre source <b>BLOQUÉE</b></span>
+              </div>
+            </div>
+
             <!-- Sécurité -->
             <div>
               <div class="text-[10px] text-slate-500 uppercase tracking-wider mb-2 font-semibold">Protection & Conformité HDS</div>
@@ -624,16 +650,38 @@ export default function SitesWorkspace() {
                 </div>
                 <div class="flex items-start gap-1.5">
                   <span class="text-indigo-400 mt-0.5 flex-shrink-0">→</span>
-                  <span>17 spokes actifs au plateau (5 labos + 12 centres existants + 15 nouveaux centres → 27 sites)</span>
-                </div>
-                <div class="flex items-start gap-1.5">
-                  <span class="text-indigo-400 mt-0.5 flex-shrink-0">→</span>
-                  <span>VLAN 20 (admin) + VLAN 30 (HDS isolé) + VLAN 40 (Wi-Fi)</span>
+                  <span>27 spokes au plateau (5 labos + 22 centres dont 15 nouveaux)</span>
                 </div>
                 <div class="flex items-start gap-1.5">
                   <span class="text-emerald-400 mt-0.5 flex-shrink-0">✓</span>
                   <span>Sauvegarde centralisée PBS Strasbourg via tunnel chiffré</span>
                 </div>
+              </div>
+            </div>
+
+            <!-- Segmentation VLAN Centre -->
+            <div class="bg-slate-900/60 border border-white/5 rounded-xl p-4">
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider mb-3 font-semibold">Segmentation VLAN — ex. Centre S20 (adresse : 10.S.V.0/24)</div>
+              <div class="space-y-1.5">
+                ${[
+                  ['10','Admin / Serveurs','—','Via VPN hub','Routé vers Siège uniquement (pas de serveurs locaux)','blue'],
+                  ['20','Postes admin','10.20.20.0/24','10.20.20.254','5 PC fixes + 1 laptop','indigo'],
+                  ['30','Analyse HDS ★','10.20.30.0/24','10.20.30.254','ISOLÉ STRICT — VLAN 40 BLOQUÉ, VLAN 20 filtré','emerald'],
+                  ['40','Wi-Fi invités','10.20.40.0/24','10.20.40.254','Ubiquiti U6+ · Internet only · BLOQUÉ vers VLAN 30','amber'],
+                  ['99','Management','10.20.99.0/24','10.20.99.254','CBS250-16T + FortiGate 40F (hors-bande)','slate'],
+                ].map(([id, name, subnet, gw, note, color]) => `
+                  <div class="flex items-center gap-2 text-[9px]">
+                    <span class="w-10 flex-shrink-0 text-center font-mono font-bold bg-${color}-500/15 border border-${color}-500/25 text-${color}-300 rounded px-1 py-0.5">V${id}</span>
+                    <span class="w-28 flex-shrink-0 font-semibold text-slate-300">${name}</span>
+                    <span class="w-28 flex-shrink-0 font-mono text-slate-400">${subnet}</span>
+                    <span class="w-24 flex-shrink-0 font-mono text-slate-500">${gw}</span>
+                    <span class="text-slate-500">${note}</span>
+                  </div>
+                `).join('')}
+              </div>
+              <div class="mt-3 flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2 text-[9px] text-emerald-300">
+                <svg class="w-3 h-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span><b>Cloisonnement VLAN 30 HDS</b> — ACL FortiGate : VLAN 40 → VLAN 30 <b>DROP</b> · VLAN 20 → VLAN 30 <b>PERMIT flux métier uniquement</b> · VLAN 10 routé via VPN (aucun serveur local)</span>
               </div>
             </div>
           </div>

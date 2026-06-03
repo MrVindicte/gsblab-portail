@@ -9,7 +9,7 @@ import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorksp
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=3';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=4';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=3';
-import SitesWorkspace from './components/SitesWorkspace.js?v=2';
+import SitesWorkspace from './components/SitesWorkspace.js?v=3';
 
 // Global state holding parameters
 window.appState = {
