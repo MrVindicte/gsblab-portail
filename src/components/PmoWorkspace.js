@@ -168,10 +168,10 @@ export default function PmoWorkspace(state) {
         <!-- Jalons clés -->
         <div class="border-t border-white/5 pt-3 grid grid-cols-2 md:grid-cols-4 gap-2">
           ${[
-            ['Jan 2027','⚠️ EoSL WS 2016 — migration Q4 2026','amber'],
-            ['Avr 2028','⚠️ EoSL Cisco SG350XG-24 — remplacés 2027','amber'],
-            ['2029','🏢 Rachat concurrent 150 pers. (enveloppe distincte)','blue'],
-            ['2030','✅ Clôture projet — run-rate 50 573 €/an','emerald'],
+            ['Jan 2027','EoSL WS 2016 — migration Q4 2026','amber'],
+            ['Avr 2028','EoSL Cisco SG350XG-24 — remplacés 2027','amber'],
+            ['2029','Rachat concurrent 150 pers. (enveloppe distincte)','blue'],
+            ['2030','Clôture projet — run-rate 50 573 €/an','emerald'],
           ].map(([date, label, color]) => `
             <div class="flex items-start gap-2 bg-${color}-500/5 border border-${color}-500/15 rounded-lg px-2.5 py-2">
               <span class="text-[9px] font-mono font-bold text-${color}-400 flex-shrink-0 mt-0.5">${date}</span>

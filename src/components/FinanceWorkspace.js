@@ -420,10 +420,9 @@ const updateValues = (state) => {
 
     if (isPres) {
       // Mode présentation : 5 lignes clés seulement, format compact grid
-      const row = (label, labelIcon, proxmox, vmware, cloud, isHighlight) => `
+      const row = (label, proxmox, vmware, cloud, isHighlight) => `
         <div class="grid grid-cols-4 px-8 py-5 items-center ${isHighlight ? 'bg-slate-800/80 font-bold' : 'hover:bg-white/3 transition-colors'}">
           <div class="flex items-center gap-3 ${isHighlight ? 'text-white text-base uppercase tracking-widest' : 'text-slate-300 text-base'}">
-            <span class="text-xl">${labelIcon}</span>
             ${label}
           </div>
           <div class="text-right font-mono ${isHighlight ? 'text-blue-400 text-xl' : 'text-slate-200 text-base'}">${proxmox}</div>
@@ -432,11 +431,11 @@ const updateValues = (state) => {
         </div>
       `;
       tableBody.innerHTML = `
-        ${row('Total CapEx (Investissement Initial)', '🏗️', formatEuro(data.proxmox.capex.total), formatEuro(data.vmware.capex.total), formatEuro(data.cloud.capex.total), false)}
-        ${row('Total OpEx (Fonctionnement An 1)', '🔄', formatEuro(data.proxmox.opex.total), formatEuro(data.vmware.opex.total), formatEuro(data.cloud.opex.total), false)}
+        ${row('Total CapEx (Investissement Initial)', formatEuro(data.proxmox.capex.total), formatEuro(data.vmware.capex.total), formatEuro(data.cloud.capex.total), false)}
+        ${row('Total OpEx (Fonctionnement An 1)', formatEuro(data.proxmox.opex.total), formatEuro(data.vmware.opex.total), formatEuro(data.cloud.opex.total), false)}
         <div class="h-px bg-white/10 mx-8"></div>
-        ${row('TCO Cumulé à 3 ans', '📅', formatEuro(projections[2].proxmoxTco), formatEuro(projections[2].vmwareTco), formatEuro(projections[2].cloudTco), false)}
-        ${row('TCO CUMULÉ À 5 ANS', '🏆', formatEuro(finalTcoProxmox), formatEuro(finalTcoVmware), formatEuro(finalTcoCloud), true)}
+        ${row('TCO Cumulé à 3 ans', formatEuro(projections[2].proxmoxTco), formatEuro(projections[2].vmwareTco), formatEuro(projections[2].cloudTco), false)}
+        ${row('TCO CUMULÉ À 5 ANS', formatEuro(finalTcoProxmox), formatEuro(finalTcoVmware), formatEuro(finalTcoCloud), true)}
       `;
     } else {
       // Mode dashboard : tableau complet

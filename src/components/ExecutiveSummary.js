@@ -10,13 +10,14 @@ export default function ExecutiveSummary(state) {
   ];
 
   const hdsItems = [
-    ['Hébergement physique', '✓',        'emerald'],
-    ['Chiffrement AES-256',  '✓',        'emerald'],
-    ['Sauvegarde 3-2-1-1-0', '✓',        'emerald'],
-    ['Messagerie HDS',       '✓',        'emerald'],
-    ['Audit & traçabilité',  '✓',        'emerald'],
+    ['Hébergement physique', 'OK',       'emerald'],
+    ['Chiffrement AES-256',  'OK',       'emerald'],
+    ['Sauvegarde 3-2-1-1-0', 'OK',       'emerald'],
+    ['Messagerie HDS',       'OK',       'emerald'],
+    ['Audit & traçabilité',  'OK',       'emerald'],
     ['DPA Microsoft',        'À signer', 'amber'  ],
   ];
+
 
   const footerMetrics = [
     {
@@ -193,7 +194,7 @@ export default function ExecutiveSummary(state) {
                     <div class="text-[8px] font-bold text-${p.color}-400 uppercase tracking-widest leading-none">${p.num} · ${p.label}</div>
                     <div class="space-y-1.5 mt-auto">
                       <div class="text-[9px] text-red-400 flex items-center gap-1 leading-none">
-                        <span class="font-bold text-red-500 flex-shrink-0">✕</span>
+                        <span class="font-bold text-red-500 flex-shrink-0">&#x2715;</span>
                         <span class="truncate">${p.before}</span>
                       </div>
                       <div style="font-size:clamp(10px,1.1vw,13px);" class="font-bold text-white flex items-center gap-1 group-hover:text-${p.color}-300 transition-colors leading-none">
@@ -279,7 +280,7 @@ export default function ExecutiveSummary(state) {
                   <span class="w-0.5 h-3 bg-blue-400 rounded-full flex-shrink-0"></span>
                   <span class="text-[8px] font-bold text-blue-300 uppercase tracking-widest">Conformité HDS v2 · Activités 1 à 6</span>
                 </div>
-                <span class="text-[8px] text-emerald-400 font-mono font-bold">Certifié ✓</span>
+                <span class="text-[8px] text-emerald-400 font-mono font-bold">Certifié</span>
               </div>
               <div class="grid grid-cols-3 gap-1">
                 ${hdsItems.map(([l, s, c]) => `
@@ -385,7 +386,7 @@ export default function ExecutiveSummary(state) {
             </div>
             <div class="space-y-4">
               <div class="text-xl text-red-400 flex items-center gap-4">
-                <span class="font-bold text-red-500 text-3xl flex-shrink-0">✕</span>
+                <span class="font-bold text-red-500 text-3xl flex-shrink-0">&#x2715;</span>
                 <span class="truncate line-through opacity-70">${p.before}</span>
               </div>
               <div class="text-3xl font-extrabold text-white flex items-center gap-4">

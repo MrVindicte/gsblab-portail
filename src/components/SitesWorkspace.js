@@ -112,7 +112,7 @@ export default function SitesWorkspace() {
               </div>
               <div class="flex items-center justify-between text-xs py-1.5">
                 <span class="text-slate-400">Conformité</span>
-                <span class="text-emerald-400 font-semibold">HDS ✓</span>
+                <span class="text-emerald-400 font-semibold">HDS</span>
               </div>
             </div>
             <!-- VLANs -->
@@ -412,7 +412,7 @@ export default function SitesWorkspace() {
                 ${[
                   ['10','Admin / Serveurs','10.10.10.0/24','10.10.10.254','Tunnel VPN → Siège (aucun serveur local)','blue'],
                   ['20','Postes admin','10.10.20.0/24','10.10.20.254','10 PC fixes + 2 laptops HP ProDesk/250','indigo'],
-                  ['30','Analyse HDS ★','10.10.30.0/24','10.10.30.254','ISOLÉ STRICT — VLAN 40 BLOQUÉ, VLAN 20 filtré','emerald'],
+                  ['30','Analyse HDS','10.10.30.0/24','10.10.30.254','ISOLÉ STRICT — VLAN 40 BLOQUÉ, VLAN 20 filtré','emerald'],
                   ['40','Wi-Fi invités','10.10.40.0/24','10.10.40.254','Ubiquiti U6+ · Internet only · BLOQUÉ vers VLAN 30','amber'],
                   ['99','Management','10.10.99.0/24','10.10.99.254','CBS250-24T + FortiGate 40F (hors-bande)','slate'],
                 ].map(([id, name, subnet, gw, note, color]) => `
@@ -653,7 +653,7 @@ export default function SitesWorkspace() {
                   <span>27 spokes au plateau (5 labos + 22 centres dont 15 nouveaux)</span>
                 </div>
                 <div class="flex items-start gap-1.5">
-                  <span class="text-emerald-400 mt-0.5 flex-shrink-0">✓</span>
+                  <span class="text-emerald-400 mt-0.5 flex-shrink-0">OK</span>
                   <span>Sauvegarde centralisée PBS Strasbourg via tunnel chiffré</span>
                 </div>
               </div>
@@ -666,7 +666,7 @@ export default function SitesWorkspace() {
                 ${[
                   ['10','Admin / Serveurs','—','Via VPN hub','Routé vers Siège uniquement (pas de serveurs locaux)','blue'],
                   ['20','Postes admin','10.20.20.0/24','10.20.20.254','5 PC fixes + 1 laptop','indigo'],
-                  ['30','Analyse HDS ★','10.20.30.0/24','10.20.30.254','ISOLÉ STRICT — VLAN 40 BLOQUÉ, VLAN 20 filtré','emerald'],
+                  ['30','Analyse HDS','10.20.30.0/24','10.20.30.254','ISOLÉ STRICT — VLAN 40 BLOQUÉ, VLAN 20 filtré','emerald'],
                   ['40','Wi-Fi invités','10.20.40.0/24','10.20.40.254','Ubiquiti U6+ · Internet only · BLOQUÉ vers VLAN 30','amber'],
                   ['99','Management','10.20.99.0/24','10.20.99.254','CBS250-16T + FortiGate 40F (hors-bande)','slate'],
                 ].map(([id, name, subnet, gw, note, color]) => `
