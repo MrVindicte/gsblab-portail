@@ -1,4 +1,6 @@
 export default function TechnicalWorkspace(state) {
+  const isPres = state.presentationMode;
+
   // Strasbourg Hub position (SVG coordinates)
   const hubX = 250;
   const hubY = 180;
@@ -37,32 +39,31 @@ export default function TechnicalWorkspace(state) {
   `).join('');
 
   const svgNodes = spokesWithCoords.map(spoke => `
-    <g class="spoke-node-group" data-spoke-id="${spoke.id}">
+    <g class="spoke-node-group cursor-pointer group" data-spoke-id="${spoke.id}">
       <circle
         cx="${spoke.x}"
         cy="${spoke.y}"
-        r="10"
+        r="12"
         fill="#131b2e"
         stroke="#1e293b"
         stroke-width="2"
-        class="cursor-pointer hover:stroke-emerald-400 transition"
+        class="group-hover:stroke-emerald-400 group-hover:fill-emerald-900/40 transition-all duration-300"
       />
       <text 
         x="${spoke.x}" 
-        y="${spoke.y + 20}" 
+        y="${spoke.y + 24}" 
         text-anchor="middle" 
         fill="#64748b" 
-        font-size="7" 
-        class="pointer-events-none font-sans"
+        font-size="8" 
+        font-weight="bold"
+        class="pointer-events-none font-sans group-hover:fill-emerald-400 transition-colors"
       >
         ${spoke.name.replace('Labo Expansion ', 'E-').replace('Strasbourg ', 'S-').split(' ')[0]}
       </text>
     </g>
   `).join('');
 
-  return `
-    <div class="space-y-6">
-      
+  const dashboardHTML = `
       <!-- Title -->
       <div>
         <h2 class="text-2xl font-bold tracking-tight text-white">
@@ -77,14 +78,13 @@ export default function TechnicalWorkspace(state) {
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <!-- Network Diagram SVG -->
-        <div data-pres-step="1" class="lg:col-span-2 glass-panel rounded-xl p-6 flex flex-col justify-between">
+        <div class="lg:col-span-2 glass-panel rounded-xl p-6 flex flex-col justify-between">
           <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-2">
             Topologie Réseau Hub & Spoke (Interactif)
           </h3>
           
-          <div class="bg-slate-950/60 rounded-lg p-4 flex items-center justify-center overflow-x-auto">
+          <div class="bg-slate-950/60 rounded-lg p-4 flex items-center justify-center overflow-x-auto relative">
             <svg width="500" height="360" viewBox="0 0 500 360" class="w-full max-w-[500px]">
-              
               <!-- Draw lines -->
               ${svgLines}
 
@@ -93,31 +93,30 @@ export default function TechnicalWorkspace(state) {
                 id="hub-node"
                 cx="${hubX}"
                 cy="${hubY}"
-                r="24"
+                r="28"
                 fill="#1e293b"
                 stroke="#3b82f6"
                 stroke-width="3"
-                class="cursor-pointer hover:stroke-blue-400 transition"
+                class="cursor-pointer hover:stroke-blue-400 hover:fill-blue-900/30 transition-all duration-300"
               />
-              <text x="${hubX}" y="${hubY + 4}" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" class="pointer-events-none font-sans">
+              <text x="${hubX}" y="${hubY + 4}" text-anchor="middle" fill="#fff" font-size="11" font-weight="bold" class="pointer-events-none font-sans">
                 HUB
               </text>
-              <text x="${hubX}" y="${hubY + 38}" text-anchor="middle" fill="#94a3b8" font-size="8" font-weight="semibold" class="pointer-events-none font-sans">
+              <text x="${hubX}" y="${hubY + 38}" text-anchor="middle" fill="#94a3b8" font-size="9" font-weight="semibold" class="pointer-events-none font-sans">
                 Strasbourg
               </text>
 
               <!-- Spoke Nodes -->
               ${svgNodes}
-
             </svg>
           </div>
-          <div class="text-[10px] text-slate-500 mt-2 text-center">
+          <div class="text-[10px] text-slate-500 mt-3 text-center">
             * Survolez un nœud du schéma pour inspecter ses configurations de pare-feu et d'adressage IP.
           </div>
         </div>
 
         <!-- Details Column -->
-        <div data-pres-step="2" class="lg:col-span-1 glass-panel rounded-xl p-6 flex flex-col justify-between" id="site-details-panel">
+        <div class="lg:col-span-1 glass-panel rounded-xl p-6 flex flex-col justify-between" id="site-details-panel">
           <!-- Populated in bind -->
         </div>
 
@@ -127,7 +126,7 @@ export default function TechnicalWorkspace(state) {
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         <!-- Resources gauges -->
-        <div data-pres-step="3" class="lg:col-span-1 glass-panel rounded-xl p-6 space-y-5 flex flex-col justify-between">
+        <div class="lg:col-span-1 glass-panel rounded-xl p-6 space-y-5 flex flex-col justify-between">
           <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider border-b border-white/5 pb-2">
             Ressources du Cluster Proxmox
           </h3>
@@ -173,7 +172,7 @@ export default function TechnicalWorkspace(state) {
         </div>
 
         <!-- Code Viewer Panel -->
-        <div data-pres-step="4" class="lg:col-span-2 glass-panel rounded-xl p-6 flex flex-col justify-between">
+        <div class="lg:col-span-2 glass-panel rounded-xl p-6 flex flex-col justify-between">
           <div class="flex justify-between items-center border-b border-white/5 pb-2 mb-4">
             <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider">
               Déploiement Automatisé (PoC IaC)
@@ -206,9 +205,165 @@ export default function TechnicalWorkspace(state) {
         </div>
 
       </div>
+  `;
 
+  if (!isPres) {
+    return `<div data-pres-slide="1" class="space-y-6 h-full overflow-y-auto pr-2 pb-10">${dashboardHTML}</div>`;
+  }
+
+  // ════════════════════════════════════════════════════════════════════════════
+  // MODE PRÉSENTATION : 3 SLIDES GÉANTES
+  // ════════════════════════════════════════════════════════════════════════════
+  
+  const presSlide1 = `
+    <div data-pres-slide="1" data-pres-label="Architecture Globale" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-8 w-full max-w-7xl mx-auto h-full py-4">
+      <div class="text-center space-y-4 w-full mb-6">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Topologie Réseau & SD-WAN</h2>
+        <div class="w-16 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+      </div>
+      
+      <div class="grid grid-cols-3 gap-12 w-full flex-1 min-h-0">
+        
+        <!-- Network Diagram SVG -->
+        <div class="col-span-2 glass-panel rounded-3xl p-10 flex flex-col justify-center items-center shadow-2xl relative bg-slate-900/60">
+          <div class="w-full flex items-center justify-center h-[500px]">
+            <svg width="100%" height="100%" viewBox="0 0 500 360" preserveAspectRatio="xMidYMid meet">
+              ${svgLines}
+              <circle
+                id="hub-node"
+                cx="${hubX}"
+                cy="${hubY}"
+                r="35"
+                fill="#1e293b"
+                stroke="#3b82f6"
+                stroke-width="4"
+                class="cursor-pointer hover:stroke-blue-400 hover:fill-blue-900/30 transition-all duration-300"
+              />
+              <text x="${hubX}" y="${hubY + 6}" text-anchor="middle" fill="#fff" font-size="14" font-weight="extrabold" class="pointer-events-none font-sans">
+                HUB
+              </text>
+              <text x="${hubX}" y="${hubY + 50}" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="bold" class="pointer-events-none font-sans">
+                Strasbourg
+              </text>
+              ${svgNodes}
+            </svg>
+          </div>
+          <div class="absolute bottom-6 left-0 right-0 text-center text-sm text-slate-400 font-semibold tracking-wide">
+            Survolez un nœud du schéma pour inspecter ses configurations de pare-feu
+          </div>
+        </div>
+
+        <!-- Details Column -->
+        <div class="col-span-1 glass-panel rounded-3xl p-10 shadow-2xl bg-slate-900/60 flex flex-col justify-center" id="site-details-panel">
+          <!-- Populated in bind -->
+        </div>
+
+      </div>
     </div>
   `;
+
+  const presSlide2 = `
+    <div data-pres-slide="2" data-pres-label="Cluster Proxmox" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12 w-full max-w-5xl mx-auto h-full py-4">
+      <div class="text-center space-y-4 w-full mb-8">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Capacité du Cluster Proxmox HA</h2>
+        <div class="w-16 h-1.5 bg-emerald-500 mx-auto rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+        <p class="text-xl text-slate-400 mt-4">Ressources allouées sur le Hub centralisé (${state.serversCount} Nœuds physiques)</p>
+      </div>
+
+      <div class="w-full glass-panel rounded-3xl p-12 space-y-12 shadow-2xl bg-slate-900/60">
+        
+        <!-- CPU -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-end">
+            <span class="text-2xl font-bold text-slate-300 flex items-center gap-3">
+              <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><rect x="9" y="9" width="6" height="6"></rect><line x1="9" y1="1" x2="9" y2="4"></line><line x1="15" y1="1" x2="15" y2="4"></line><line x1="9" y1="20" x2="9" y2="23"></line><line x1="15" y1="20" x2="15" y2="23"></line><line x1="20" y1="9" x2="23" y2="9"></line><line x1="20" y1="14" x2="23" y2="14"></line><line x1="1" y1="9" x2="4" y2="9"></line><line x1="1" y1="14" x2="4" y2="14"></line></svg>
+              Processeur (vCœurs)
+            </span>
+            <span class="text-3xl font-mono font-extrabold text-blue-400">${allocatedCores} / ${totalCores} <span class="text-xl text-slate-500">(${pctCores}%)</span></span>
+          </div>
+          <div class="h-6 w-full bg-slate-950 rounded-full overflow-hidden shadow-inner border border-white/5">
+            <div class="h-full bg-gradient-to-r from-blue-600 to-blue-400 rounded-full" style="width: ${pctCores}%"></div>
+          </div>
+        </div>
+
+        <!-- RAM -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-end">
+            <span class="text-2xl font-bold text-slate-300 flex items-center gap-3">
+              <svg class="w-8 h-8 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect><line x1="4" y1="9" x2="20" y2="9"></line><line x1="4" y1="15" x2="20" y2="15"></line><line x1="10" y1="4" x2="10" y2="20"></line></svg>
+              Mémoire RAM (Go)
+            </span>
+            <span class="text-3xl font-mono font-extrabold text-indigo-400">${allocatedRam} / ${totalRam} <span class="text-xl text-slate-500">(${pctRam}%)</span></span>
+          </div>
+          <div class="h-6 w-full bg-slate-950 rounded-full overflow-hidden shadow-inner border border-white/5">
+            <div class="h-full bg-gradient-to-r from-indigo-600 to-indigo-400 rounded-full" style="width: ${pctRam}%"></div>
+          </div>
+        </div>
+
+        <!-- Ceph Storage -->
+        <div class="space-y-4">
+          <div class="flex justify-between items-end">
+            <span class="text-2xl font-bold text-slate-300 flex items-center gap-3">
+              <svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+              Pool Ceph (Utile NVMe)
+            </span>
+            <span class="text-3xl font-mono font-extrabold text-emerald-400">1.2 TB / 6.0 TB <span class="text-xl text-slate-500">(20%)</span></span>
+          </div>
+          <div class="h-6 w-full bg-slate-950 rounded-full overflow-hidden shadow-inner border border-white/5">
+            <div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width: 20%"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  const presSlide3 = `
+    <div data-pres-slide="3" data-pres-label="Déploiement IaC" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-8 w-full max-w-6xl mx-auto h-full py-4">
+      <div class="text-center space-y-4 w-full mb-4">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Déploiement Automatisé (IaC)</h2>
+        <div class="w-16 h-1.5 bg-blue-500 mx-auto rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
+        <p class="text-xl text-slate-400 mt-4">Infrastructure-as-Code pour un provisionning reproductible</p>
+      </div>
+
+      <div class="w-full glass-panel rounded-3xl p-8 flex flex-col shadow-2xl bg-slate-900/80 flex-1 min-h-0">
+        <div class="flex justify-between items-center border-b border-white/10 pb-6 mb-6 flex-shrink-0">
+          <div class="flex bg-slate-950 p-2 rounded-xl border border-white/10 text-lg">
+            <button
+              id="btn-code-terraform"
+              class="px-6 py-2 rounded-lg font-bold transition bg-blue-600/20 text-blue-400"
+            >
+              Terraform (VMs)
+            </button>
+            <button
+              id="btn-code-ansible"
+              class="px-6 py-2 rounded-lg font-bold transition text-slate-400 hover:text-slate-200"
+            >
+              Ansible (Hardening)
+            </button>
+          </div>
+          <div class="flex items-center gap-3 text-emerald-400 font-bold bg-emerald-500/10 px-4 py-2 rounded-xl border border-emerald-500/20">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Pipeline Validé
+          </div>
+        </div>
+
+        <div class="bg-[#0d1117] rounded-2xl p-8 font-mono text-base text-slate-300 overflow-y-auto flex-1 border border-white/10 shadow-inner" id="code-content-box">
+          <!-- Populated -->
+        </div>
+        
+        <div class="flex justify-between items-center text-sm font-semibold text-slate-500 mt-6 border-t border-white/10 pt-4 flex-shrink-0">
+          <span id="code-file-path" class="flex items-center gap-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg>
+            /Scripts/03_Proxmox_Provisioning.tf
+          </span>
+          <span class="text-slate-600">Projet GSBLAB - Repository Interne</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  return `${presSlide1}${presSlide2}${presSlide3}`;
 }
 
 const codeTerraform = `# ==============================================================================
@@ -255,48 +410,62 @@ const codeAnsible = `# =========================================================
         - { regexp: '^MaxAuthTries', line: 'MaxAuthTries 3' }
       notify: Redemarrer SSH`;
 
-const renderDetails = (site) => {
+const renderDetails = (site, isPres) => {
   const isHub = site.id === '1';
+  
+  // Custom sizing based on mode
+  const titleClass = isPres ? "text-xl font-bold text-slate-300 uppercase tracking-wider border-b border-white/10 pb-4 mb-6" : "text-sm font-semibold text-slate-300 uppercase tracking-wider border-b border-white/5 pb-2";
+  const rowClass = isPres ? "flex justify-between items-center text-lg" : "flex justify-between text-xs";
+  const labelClass = isPres ? "text-slate-400 font-medium" : "text-slate-500";
+  const valueClass = isPres ? "font-bold text-white text-xl" : "font-bold text-white text-xs";
+  const monoValueClass = isPres ? "font-mono font-bold text-slate-300 text-xl" : "font-mono font-semibold text-slate-300 text-xs";
+  const ipClass = isPres ? "font-mono font-bold text-blue-400 text-xl" : "font-mono font-semibold text-blue-400 text-xs";
+  const statusClass = isPres ? "font-bold flex items-center gap-2 text-emerald-400 text-xl" : "font-semibold flex items-center gap-1 text-emerald-400 text-xs";
+  
+  const boxClass = isPres ? "bg-slate-950/80 rounded-2xl p-6 space-y-3" : "bg-slate-900/50 rounded-lg p-3 space-y-2";
+  const boxTitleClass = isPres ? "text-sm font-extrabold text-blue-400 uppercase tracking-widest" : "text-[10px] font-bold text-blue-400 uppercase";
+  const boxTextClass = isPres ? "text-base text-slate-400 leading-relaxed font-medium" : "text-[10px] text-slate-500 leading-relaxed";
+
   return `
-    <div class="space-y-4 animate-fade-in">
-      <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider border-b border-white/5 pb-2">
+    <div class="space-y-6 animate-fade-in w-full">
+      <h3 class="${titleClass}">
         Détails du Site Sélectionné
       </h3>
       
-      <div class="space-y-3">
-        <div class="flex justify-between">
-          <span class="text-xs text-slate-500">Nom du site :</span>
-          <span class="text-xs font-bold text-white">${site.name}</span>
+      <div class="${isPres ? 'space-y-5' : 'space-y-3'} w-full">
+        <div class="${rowClass}">
+          <span class="${labelClass}">Nom du site :</span>
+          <span class="${valueClass}">${site.name}</span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-xs text-slate-500">Zone / Région :</span>
-          <span class="text-xs font-semibold text-slate-300">${site.region}</span>
+        <div class="${rowClass}">
+          <span class="${labelClass}">Zone / Région :</span>
+          <span class="${valueClass} text-slate-300">${site.region}</span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-xs text-slate-500">Postes Connectés :</span>
-          <span class="text-xs font-mono font-semibold text-slate-300">${site.usersCount} clients</span>
+        <div class="${rowClass}">
+          <span class="${labelClass}">Postes Connectés :</span>
+          <span class="${monoValueClass}">${site.usersCount} clients</span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-xs text-slate-500">IP Passerelle WAN :</span>
-          <span class="text-xs font-mono font-semibold text-blue-400">${site.wanIP}</span>
+        <div class="${rowClass}">
+          <span class="${labelClass}">IP Passerelle WAN :</span>
+          <span class="${ipClass}">${site.wanIP}</span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-xs text-slate-500">Statut Tunnel VPN IPsec :</span>
-          <span class="text-xs font-semibold flex items-center gap-1 text-emerald-400">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <div class="${rowClass}">
+          <span class="${labelClass}">Statut Tunnel VPN IPsec :</span>
+          <span class="${statusClass}">
+            <svg class="${isPres ? 'w-6 h-6' : 'w-3.5 h-3.5'}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
             ${isHub ? 'LOCAL (HUB)' : 'CONNECTÉ'}
           </span>
         </div>
-        <div class="flex justify-between">
-          <span class="text-xs text-slate-500">Modèle Pare-feu Cible :</span>
-          <span class="text-xs font-mono font-semibold text-slate-300">${site.firewallModel}</span>
+        <div class="${rowClass}">
+          <span class="${labelClass}">Modèle Pare-feu :</span>
+          <span class="${monoValueClass}">${site.firewallModel}</span>
         </div>
       </div>
 
-      <div class="border-t border-white/5 pt-4 mt-6">
-        <div class="bg-slate-900/50 rounded-lg p-3 space-y-2">
-          <div class="text-[10px] font-bold text-blue-400 uppercase">Architecture de sécurité</div>
-          <p class="text-[10px] text-slate-500 leading-relaxed">
+      <div class="border-t ${isPres ? 'border-white/10 pt-8 mt-8' : 'border-white/5 pt-4 mt-6'}">
+        <div class="${boxClass}">
+          <div class="${boxTitleClass}">Architecture de sécurité</div>
+          <p class="${boxTextClass}">
             Chaque spoke est cloisonné. Les flux cliniques (VLAN 10) et d'administration (VLAN 99) transitent de manière chiffrée par VPN IPsec SD-WAN, interdisant tout accès latéral inter-laboratoires.
           </p>
         </div>
@@ -306,15 +475,20 @@ const renderDetails = (site) => {
 };
 
 export function bindTechEvents(state) {
+  const isPres = state.presentationMode;
   const detailsPanel = document.getElementById('site-details-panel');
   
   // Set default details (Strasbourg Hub)
-  detailsPanel.innerHTML = renderDetails(state.spokesList[0]);
+  if (detailsPanel) {
+    detailsPanel.innerHTML = renderDetails(state.spokesList[0], isPres);
+  }
 
   // Code content default
   const codeBox = document.getElementById('code-content-box');
   const codePath = document.getElementById('code-file-path');
-  codeBox.innerHTML = `<pre>${codeTerraform}</pre>`;
+  if (codeBox) {
+    codeBox.innerHTML = `<pre class="language-hcl"><code>${codeTerraform}</code></pre>`;
+  }
 
   // Mouse hover listeners on spoke SVG groups
   const groups = document.querySelectorAll('.spoke-node-group');
@@ -327,19 +501,14 @@ export function bindTechEvents(state) {
       const line = document.getElementById(`line-${siteId}`);
       if (line) {
         line.setAttribute('stroke', '#10b981');
-        line.setAttribute('stroke-width', '2');
+        line.setAttribute('stroke-width', isPres ? '3' : '2');
         line.setAttribute('stroke-dasharray', 'none');
       }
 
-      // Highlight SVG circle node
-      const circle = group.querySelector('circle');
-      if (circle) {
-        circle.setAttribute('fill', '#10b981');
-        circle.setAttribute('stroke', '#fff');
-      }
-
       // Update Details panel
-      detailsPanel.innerHTML = renderDetails(site);
+      if (detailsPanel) {
+        detailsPanel.innerHTML = renderDetails(site, isPres);
+      }
     });
 
     group.addEventListener('mouseleave', () => {
@@ -352,37 +521,39 @@ export function bindTechEvents(state) {
         line.setAttribute('stroke-width', '1');
         line.setAttribute('stroke-dasharray', '4,4');
       }
-
-      // Reset circle style
-      const circle = group.querySelector('circle');
-      if (circle) {
-        circle.setAttribute('fill', '#131b2e');
-        circle.setAttribute('stroke', '#1e293b');
-      }
     });
   });
 
   // Hover central Hub
   const hubNode = document.getElementById('hub-node');
-  hubNode.addEventListener('mouseenter', () => {
-    detailsPanel.innerHTML = renderDetails(state.spokesList[0]);
-  });
+  if (hubNode) {
+    hubNode.addEventListener('mouseenter', () => {
+      if (detailsPanel) {
+        detailsPanel.innerHTML = renderDetails(state.spokesList[0], isPres);
+      }
+    });
+  }
 
   // Code Tab toggles
   const btnTf = document.getElementById('btn-code-terraform');
   const btnAn = document.getElementById('btn-code-ansible');
 
-  btnTf.addEventListener('click', () => {
-    btnTf.className = "px-3 py-1 rounded-md font-medium transition bg-blue-600/10 text-blue-400";
-    btnAn.className = "px-3 py-1 rounded-md font-medium transition text-slate-400";
-    codeBox.innerHTML = `<pre>${codeTerraform}</pre>`;
-    codePath.innerText = "Chemin : /Scripts/03_Proxmox_Provisioning.tf";
-  });
+  if (btnTf && btnAn && codeBox && codePath) {
+    const btnActiveClass = isPres ? "px-6 py-2 rounded-lg font-bold transition bg-blue-600/20 text-blue-400" : "px-3 py-1 rounded-md font-medium transition bg-blue-600/10 text-blue-400";
+    const btnInactiveClass = isPres ? "px-6 py-2 rounded-lg font-bold transition text-slate-400 hover:text-slate-200" : "px-3 py-1 rounded-md font-medium transition text-slate-400";
 
-  btnAn.addEventListener('click', () => {
-    btnAn.className = "px-3 py-1 rounded-md font-medium transition bg-blue-600/10 text-blue-400";
-    btnTf.className = "px-3 py-1 rounded-md font-medium transition text-slate-400";
-    codeBox.innerHTML = `<pre>${codeAnsible}</pre>`;
-    codePath.innerText = "Chemin : /Scripts/04_Server_Hardening.yml";
-  });
+    btnTf.addEventListener('click', () => {
+      btnTf.className = btnActiveClass;
+      btnAn.className = btnInactiveClass;
+      codeBox.innerHTML = `<pre class="language-hcl"><code>${codeTerraform}</code></pre>`;
+      codePath.innerHTML = `<svg class="${isPres ? 'w-5 h-5' : 'hidden'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> /Scripts/03_Proxmox_Provisioning.tf`;
+    });
+
+    btnAn.addEventListener('click', () => {
+      btnAn.className = btnActiveClass;
+      btnTf.className = btnInactiveClass;
+      codeBox.innerHTML = `<pre class="language-yaml"><code>${codeAnsible}</code></pre>`;
+      codePath.innerHTML = `<svg class="${isPres ? 'w-5 h-5' : 'hidden'}" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg> /Scripts/04_Server_Hardening.yml`;
+    });
+  }
 }

@@ -3,9 +3,9 @@
 // ==============================================================================
 import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
-import ExecutiveSummary from './components/ExecutiveSummary.js?v=6';
-import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=7';
-import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=3';
+import ExecutiveSummary from './components/ExecutiveSummary.js?v=11';
+import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=12';
+import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=6';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=3';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=4';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=3';
@@ -39,7 +39,8 @@ window.appState = {
 // ─── Presentation step configuration ────────────────────────────────────────
 // Update maxSteps when you add/remove data-pres-step elements in a component.
 const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites'];
-const PRES_MAX  = { dashboard: 14, finance: 6, tech: 4, drp: 2, pmo: 4, comparison: 3, sites: 4 };
+// Nombre de slides par onglet (Option B : slides exclusives)
+const PRES_MAX  = { dashboard: 4, finance: 2, tech: 3, drp: 2, pmo: 3, comparison: 2, sites: 3 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
@@ -85,64 +86,30 @@ const navigatePresentation = (direction) => {
 
 
 const updatePresentationDOM = () => {
-  const elements = document.querySelectorAll('[data-pres-step]');
-  const steps = Array.from(elements).map(el => parseInt(el.getAttribute('data-pres-step')));
-  const maxStep = steps.length > 0 ? Math.max(...steps) : 1;
-  
-  if (window.appState.presentationStep > maxStep) {
-    window.appState.presentationStep = maxStep;
-  }
-  
-  elements.forEach(el => {
-    const stepVal = parseInt(el.getAttribute('data-pres-step'));
-    if (stepVal <= window.appState.presentationStep) {
-      el.classList.add('pres-revealed');
-    } else {
-      el.classList.remove('pres-revealed');
-    }
+  // ── Slides : désactiver toutes, activer la courante ────────────────────────
+  document.querySelectorAll('[data-pres-slide]').forEach(el => {
+    el.classList.remove('pres-slide-active');
   });
+  const activeSlide = document.querySelector(
+    `[data-pres-slide="${window.appState.presentationStep}"]`
+  );
+  if (activeSlide) activeSlide.classList.add('pres-slide-active');
 
-  // --- Intro slide / Dashboard visibility swap ---
-  const introSlide = document.getElementById('pres-intro-slide');
-  const dashboard  = document.getElementById('pres-dashboard');
-  if (introSlide && dashboard) {
-    if (window.appState.presentationStep <= 1) {
-      // Show intro, hide dashboard
-      introSlide.classList.remove('hidden');
-      introSlide.classList.add('flex');
-      dashboard.classList.add('hidden');
-      dashboard.classList.remove('space-y-6', 'pb-2');
-      // Calculate exact chrome height for scrollbar-free fit
-      const header = document.querySelector('header');
-      const footer = document.querySelector('footer');
-      const chromeH = (header ? header.offsetHeight : 72) + (footer ? footer.offsetHeight : 48);
-      document.documentElement.style.setProperty('--layout-chrome', chromeH + 'px');
-    } else {
-      // Hide intro, show dashboard
-      introSlide.classList.add('hidden');
-      introSlide.classList.remove('flex');
-      dashboard.classList.remove('hidden');
-      dashboard.classList.add('space-y-6', 'pb-2');
-      document.documentElement.style.removeProperty('--layout-chrome');
-    }
-  }
-  
+  // ── Compteur ───────────────────────────────────────────────────────────────
   const counterEl = document.getElementById('pres-counter-label');
   if (counterEl) {
-    counterEl.innerText = `Étape ${window.appState.globalPresentationStep} / ${PRES_TOTAL}`;
+    counterEl.innerText = `Slide ${window.appState.globalPresentationStep} / ${PRES_TOTAL}`;
   }
 
-  // --- Progress bar (replaces dots) ---
+  // ── Barre de progression ───────────────────────────────────────────────────
   const pillsContainer = document.getElementById('pres-step-pills');
   if (pillsContainer) {
     const g   = window.appState.globalPresentationStep;
     const pct = ((g - 1) / Math.max(PRES_TOTAL - 1, 1)) * 100;
 
-    // Tab boundary positions as % (between tabs)
     const boundaryPcts = PRES_TABS.slice(1).map(t =>
-      (PRES_OFFSET[t] / (PRES_TOTAL)) * 100
+      (PRES_OFFSET[t] / PRES_TOTAL) * 100
     );
-
     const ticks = boundaryPcts.map(p =>
       `<div style="position:absolute;top:-4px;left:${p}%;width:2px;height:14px;background:#475569;border-radius:1px;transform:translateX(-50%);pointer-events:none;"></div>`
     ).join('');
@@ -155,14 +122,13 @@ const updatePresentationDOM = () => {
       </div>
     `;
 
-    // Click anywhere on the bar to jump to that global step
     pillsContainer.onclick = (e) => {
-      const rect = pillsContainer.getBoundingClientRect();
-      const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const rect   = pillsContainer.getBoundingClientRect();
+      const ratio  = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
       const target = Math.max(1, Math.min(PRES_TOTAL, Math.round(ratio * (PRES_TOTAL - 1)) + 1));
       const { tab, localStep } = globalToLocal(target);
       window.appState.globalPresentationStep = target;
-      window.appState.presentationStep = localStep;
+      window.appState.presentationStep       = localStep;
       if (tab !== window.appState.activeTab) {
         window.appState.activeTab = tab;
         renderApp();
@@ -172,11 +138,10 @@ const updatePresentationDOM = () => {
     };
   }
 
-  // --- Step contextual label ---
+  // ── Label contextuel de la slide active ────────────────────────────────────
   const stepLabelEl = document.getElementById('pres-step-label');
   if (stepLabelEl) {
-    const labelEls = document.querySelectorAll(`[data-pres-step="${window.appState.presentationStep}"][data-pres-label]`);
-    const label = labelEls.length > 0 ? labelEls[0].getAttribute('data-pres-label') : '';
+    const label = activeSlide ? activeSlide.getAttribute('data-pres-label') : '';
     if (label) {
       stepLabelEl.textContent = '· ' + label;
       stepLabelEl.classList.remove('hidden');
@@ -184,27 +149,21 @@ const updatePresentationDOM = () => {
       stepLabelEl.classList.add('hidden');
     }
   }
-  
+
+  // ── État des boutons Préc / Suiv ───────────────────────────────────────────
   const btnPrev = document.getElementById('btn-pres-prev');
   const btnNext = document.getElementById('btn-pres-next');
-  
   if (btnPrev) {
-    if (window.appState.globalPresentationStep <= 1) {
-      btnPrev.classList.add('opacity-30', 'cursor-not-allowed');
-      btnPrev.setAttribute('disabled', 'true');
-    } else {
-      btnPrev.classList.remove('opacity-30', 'cursor-not-allowed');
-      btnPrev.removeAttribute('disabled');
-    }
+    const atStart = window.appState.globalPresentationStep <= 1;
+    btnPrev.classList.toggle('opacity-30', atStart);
+    btnPrev.classList.toggle('cursor-not-allowed', atStart);
+    atStart ? btnPrev.setAttribute('disabled', 'true') : btnPrev.removeAttribute('disabled');
   }
   if (btnNext) {
-    if (window.appState.globalPresentationStep >= PRES_TOTAL) {
-      btnNext.classList.add('opacity-30', 'cursor-not-allowed');
-      btnNext.setAttribute('disabled', 'true');
-    } else {
-      btnNext.classList.remove('opacity-30', 'cursor-not-allowed');
-      btnNext.removeAttribute('disabled');
-    }
+    const atEnd = window.appState.globalPresentationStep >= PRES_TOTAL;
+    btnNext.classList.toggle('opacity-30', atEnd);
+    btnNext.classList.toggle('cursor-not-allowed', atEnd);
+    atEnd ? btnNext.setAttribute('disabled', 'true') : btnNext.removeAttribute('disabled');
   }
 };
 
@@ -229,7 +188,7 @@ const renderApp = () => {
         <div>
           <div class="flex items-center gap-2.5">
             <h1 class="text-base font-bold tracking-tight bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
-              GSBLAB &mdash; PORTAIL DÉCISIONNEL
+              GSBLAB — Projet de Migration SI
             </h1>
             <span class="hidden sm:flex items-center bg-blue-500/10 border border-blue-500/20 px-2 py-0.5 rounded-full text-[9px] font-mono font-bold tracking-widest text-blue-400 flex-shrink-0">
               MASTÈRE 2IC &nbsp;·&nbsp; GRP.01
@@ -399,12 +358,24 @@ const renderApp = () => {
   `;
 
   // Inject structural HTML
+  const isDash = state.activeTab === 'dashboard';
+
+  // En mode présentation : container de slides (position:relative, enfants absolus)
+  // En mode normal dashboard : flex-col overflow-hidden fit-viewport
+  // En mode normal autres onglets : scroll vertical classique
+  const mainClasses    = isPres || isDash ? 'overflow-hidden flex flex-col' : 'overflow-y-auto';
+  const wrapperClasses = isPres
+    ? 'pres-slides-container flex-1 min-h-0 max-w-7xl mx-auto w-full relative'
+    : isDash
+      ? 'flex-1 min-h-0 max-w-7xl mx-auto w-full flex flex-col'
+      : 'max-w-7xl mx-auto space-y-8';
+
   root.innerHTML = `
     ${headerHtml}
     <div class="flex-1 flex flex-col md:flex-row overflow-hidden">
       ${sidebarHtml}
-      <main class="flex-1 p-6 md:p-8 overflow-y-auto">
-        <div class="max-w-7xl mx-auto space-y-8 tab-enter">
+      <main class="flex-1 p-6 md:p-8 ${mainClasses}">
+        <div class="${wrapperClasses} tab-enter">
           ${mainContentHtml}
         </div>
       </main>
@@ -414,10 +385,20 @@ const renderApp = () => {
 
   // --- BIND EVENT LISTENERS ---
   
-  // Print button
+  // Print button (header)
   document.getElementById('btn-global-print').addEventListener('click', () => {
     window.print();
   });
+
+  // Export Livrable button (synthèse only)
+  const btnExportLivrable = document.getElementById('btn-export-livrable');
+  if (btnExportLivrable) {
+    btnExportLivrable.addEventListener('click', () => {
+      document.body.classList.add('livrable-export-mode');
+      window.print();
+      document.body.classList.remove('livrable-export-mode');
+    });
+  }
 
   // Toggle Presentation Mode button
   document.getElementById('btn-toggle-presentation').addEventListener('click', () => {
