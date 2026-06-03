@@ -114,9 +114,15 @@ export default function PmoWorkspace(state) {
             </div>
             <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Roadmap Projet — 2026 à 2030</span>
           </div>
-          <div class="flex gap-3 text-[10px]">
+          <div class="flex flex-wrap gap-2 text-[10px] items-center">
             <span class="bg-slate-800 border border-white/5 rounded px-2 py-1 font-mono text-slate-300">Sous-total : <strong class="text-white">400 722 €</strong></span>
-            <span class="bg-indigo-500/10 border border-indigo-500/25 rounded px-2 py-1 font-mono text-indigo-300">Enveloppe : <strong>450 000 €</strong></span>
+            <span class="text-slate-600 font-bold">+</span>
+            <span class="bg-amber-500/10 border border-amber-500/25 rounded px-2 py-1 font-mono text-amber-300">Marge 10 % : <strong>40 072 €</strong></span>
+            <span class="text-slate-600 font-bold">=</span>
+            <span class="bg-slate-700 border border-white/10 rounded px-2 py-1 font-mono text-white font-bold">Total : 440 794 €</span>
+            <span class="text-slate-600 font-bold">·</span>
+            <span class="bg-indigo-500/10 border border-indigo-500/25 rounded px-2 py-1 font-mono text-indigo-300">Plafond : <strong>450 000 €</strong></span>
+            <span class="text-slate-600 font-bold">→</span>
             <span class="bg-emerald-500/10 border border-emerald-500/25 rounded px-2 py-1 font-mono text-emerald-300">Réserve : <strong>9 206 €</strong></span>
           </div>
         </div>
