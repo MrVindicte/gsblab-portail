@@ -2,13 +2,14 @@
 // CORE ORCHESTRATOR - PORTAIL GSBLAB ES6 NATIVE
 // ==============================================================================
 import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
-import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=3';
+import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=4';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=6';
 import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=3';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=3';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=3';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=3';
+import SitesWorkspace from './components/SitesWorkspace.js?v=1';
 
 // Global state holding parameters
 window.appState = {
@@ -321,6 +322,9 @@ const renderApp = () => {
     case 'comparison':
       mainContentHtml = BeforeAfterSlider(state);
       break;
+    case 'sites':
+      mainContentHtml = SitesWorkspace(state);
+      break;
   }
 
   const footerHtml = isPres ? `
@@ -336,6 +340,7 @@ const renderApp = () => {
           <option value="drp" ${state.activeTab === 'drp' ? 'selected' : ''}>Simulateur PRA / DRP</option>
           <option value="pmo" ${state.activeTab === 'pmo' ? 'selected' : ''}>PMO : Risques & RACI</option>
           <option value="comparison" ${state.activeTab === 'comparison' ? 'selected' : ''}>Dette : Avant / Après</option>
+          <option value="sites" ${state.activeTab === 'sites' ? 'selected' : ''}>Présentation des Sites</option>
         </select>
       </div>
 
@@ -436,7 +441,7 @@ const renderApp = () => {
     });
     document.getElementById('pres-page-select').addEventListener('change', (e) => {
       const selectedTab = e.target.value;
-      const globalStart = PRES_OFFSET[selectedTab] + 1;
+      const globalStart = (PRES_OFFSET[selectedTab] !== undefined) ? PRES_OFFSET[selectedTab] + 1 : 1;
       window.appState.activeTab = selectedTab;
       window.appState.globalPresentationStep = globalStart;
       window.appState.presentationStep = 1;
