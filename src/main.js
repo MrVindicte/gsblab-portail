@@ -3,8 +3,8 @@
 // ==============================================================================
 import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
-import ExecutiveSummary from './components/ExecutiveSummary.js?v=5';
-import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=6';
+import ExecutiveSummary from './components/ExecutiveSummary.js?v=6';
+import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=7';
 import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=3';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=3';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=4';

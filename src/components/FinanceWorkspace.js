@@ -138,8 +138,8 @@ export default function FinanceWorkspace(state) {
               <span class="ml-auto text-[9px] font-bold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2 py-0.5 rounded-full uppercase tracking-wider">PRESET</span>
             </div>
             <div class="grid grid-cols-3 gap-1.5 text-[9px]">
-              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Utilisateurs</span><span class="text-indigo-300 font-bold font-mono">321</span></div>
-              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Spokes</span><span class="text-indigo-300 font-bold font-mono">14</span></div>
+              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Utilisateurs</span><span class="text-indigo-300 font-bold font-mono">380</span></div>
+              <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Spokes</span><span class="text-indigo-300 font-bold font-mono">27</span></div>
               <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Serveurs</span><span class="text-indigo-300 font-bold font-mono">4</span></div>
               <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">VMware/cœur</span><span class="text-red-400 font-bold font-mono">300€</span></div>
               <div class="bg-slate-900/60 rounded px-2 py-1 text-center"><span class="text-slate-500 block">Cloud HDS</span><span class="text-amber-400 font-bold font-mono">4 500€</span></div>
@@ -637,7 +637,7 @@ export function bindFinanceEvents(state, renderApp) {
   });
 
   // Preset Cas Projet GSBLAB (après showMsg pour éviter TDZ)
-  const PRESET_GSBLAB = { usersCount: 321, sitesCount: 14, serversCount: 4, vmwareCorePrice: 300, cloudMonthlyCost: 4500, inflationRate: 0.05 };
+  const PRESET_GSBLAB = { usersCount: 380, sitesCount: 27, serversCount: 4, vmwareCorePrice: 300, cloudMonthlyCost: 4500, inflationRate: 0.05 };
   document.getElementById('btn-preset-gsblab').addEventListener('click', () => {
     Object.assign(state, PRESET_GSBLAB);
     document.getElementById('sld-users').value     = PRESET_GSBLAB.usersCount;

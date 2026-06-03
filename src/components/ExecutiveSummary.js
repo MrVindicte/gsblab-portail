@@ -448,7 +448,7 @@ export default function ExecutiveSummary(state) {
               </div>
               <div class="flex justify-between items-center">
                 <span class="text-slate-400">Remises négociées</span>
-                <span class="font-mono font-bold text-emerald-300">46 000 €</span>
+                <span class="font-mono font-bold text-emerald-300">49 532 €</span>
               </div>
             </div>
           </div>
