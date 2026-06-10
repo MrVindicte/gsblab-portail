@@ -64,10 +64,10 @@ GSBLAB = entreprise de santé fictive, 27 laboratoires (1 hub Strasbourg + 26 sp
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | Point d'entrée — config Tailwind custom, CDN, `main.js?v=32` |
-| `src/main.js` | Orchestrateur — `window.appState`, `renderApp()`, système présentation (28 slides) |
+| `index.html` | Point d'entrée — config Tailwind custom, CDN, `main.js?v=36` |
+| `src/main.js` | Orchestrateur — `window.appState`, `renderApp()`, système présentation (34 slides) |
 | `src/index.css` | Styles custom (`?v=2`) — `.glass-panel`, animations, `@media print`, `.livrable-export-mode` |
-| `src/components/ExecutiveSummary.js` | Synthèse — 11 slides présentation (v20) |
+| `src/components/ExecutiveSummary.js` | Synthèse — 14 slides présentation (v21) |
 | `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, Chart.js, 2 slides (v12) |
 | `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, IaC, 3 slides (v6) |
 | `src/components/DrpSimulator.js` | Simulateur PRA — ransomware + sinistre, 1 slide/3 reveals (v5) |
@@ -101,12 +101,12 @@ Mécanisme à deux niveaux (tous les onglets sont passés sur ce système) :
 Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélecteur
 « Espace : » (`pres-page-select`, footer) pour sauter directement à un onglet.
 
-`PRES_MAX = { dashboard:11, finance:2, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
-→ **PRES_TOTAL = 31 slides/étapes**
+`PRES_MAX = { dashboard:14, finance:2, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
+→ **PRES_TOTAL = 34 slides/étapes**
 
 | Onglet | N | Détail |
 |---|---|---|
-| dashboard | 11 | 1 Équipe · 2-6 Synthèse + Périmètre du Projet (reveal 3→6) · 7-10 Stratégie de Transformation (4 piliers révélés un par un) · 11 Impact budgétaire |
+| dashboard | 14 | 1 Équipe · 2-6 Synthèse + Périmètre du Projet (reveal 3→6) · 7-10 Stratégie de Transformation (4 piliers révélés un par un) · 11-14 Impact Budgétaire (hero "+329 500 €" puis 3 preuves TCO/ROI/Budget révélées une par une) |
 | finance | 2 | 1 Analyse TCO · 2 Comparatif budgétaire |
 | tech | 3 | 1 Architecture globale · 2 Cluster Proxmox · 3 Déploiement IaC |
 | drp | 3 | 1 slide « PRA » : KPIs fixes → scénarios (reveal 2) → chaîne PBS (reveal 3) |
@@ -128,6 +128,28 @@ Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélect
 ---
 
 ## Ce qui a été fait
+
+### Session 2026-06-10 (suite 2) — Slide "Impact Budgétaire" repensée (clôture)
+
+Dernière slide du dashboard (étape locale 11, ex-bloc TCO statique sans
+reveal). Refonte dans le même gabarit que "Périmètre du Projet" /
+"Stratégie de Transformation", avec un angle "marketing" assumé pour la
+clôture de la présentation :
+
+- **Hero chiffre choc**, visible dès l'arrivée sur la slide :
+  `+ 329 500 €` (`text-6xl md:text-7xl font-mono font-black text-emerald-400`)
+  + sous-titre "économisés sur 5 ans · TCO global du projet".
+- Puis **3 lignes-preuves révélées une par une** (`data-reveal-at`),
+  même style `font-mono` avant→après que les piliers :
+  1. `01 · TCO 5 ans` — `441,5k€` (barré) → `112,0k€`
+  2. `02 · ROI` — `< 12 mois` · `-74% licences`
+  3. `03 · Budget` — `450 000€` → `440 794€` (réserve 2%)
+
+La slide passe de **1 à 4 étapes locales** (11→11,12,13,14).
+
+Impact : `PRES_MAX.dashboard` 11 → **14**, `PRES_TOTAL` 31 → **34**.
+
+Versions : `index.html` → `main.js?v=36` · `ExecutiveSummary.js?v=21`
 
 ### Session 2026-06-10 (suite) — Slide "Stratégie de Transformation" repensée
 

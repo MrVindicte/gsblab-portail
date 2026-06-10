@@ -129,16 +129,16 @@ vient d'être refaite dans ce style et **validée** par l'utilisateur
 
 ---
 
-## 4. Statut d'avancement (31 étapes)
+## 4. Statut d'avancement (34 étapes)
 
-`PRES_MAX = { dashboard:11, finance:2, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
+`PRES_MAX = { dashboard:14, finance:2, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
 
 | Onglet | Étapes locales | Slide | Statut |
 |---|---|---|---|
 | dashboard | 1 | Présentation de l'équipe | 🔵 Couverture — style intro différent, à juger séparément |
 | dashboard | 2-6 | Synthèse Générale + Périmètre du Projet | ✅ **Référence du gabarit** (déjà conforme) |
 | dashboard | 7-10 | Stratégie de Transformation | ✅ **FAIT** (session 2026-06-10) — 4 piliers révélés un par un |
-| dashboard | 11 | Impact Budgétaire | ⏳ À retravailler (actuellement bloc TCO statique, pas de reveal) |
+| dashboard | 11-14 | Impact Budgétaire | ✅ **FAIT** (session 2026-06-10) — hero "+329 500 €" puis 3 preuves (TCO/ROI/Budget) révélées une par une |
 | finance | 1 | Analyse TCO | ⏳ À retravailler |
 | finance | 2 | Comparatif Budgétaire | ⏳ À retravailler |
 | tech | 1 | Architecture Globale | ⏳ À retravailler |
@@ -168,6 +168,5 @@ avec Romain avant de retravailler la slide DRP.
 
 1. Lire ce fichier + `ETAT_PROJET.md`.
 2. Demander à l'utilisateur quelle slide attaquer (sinon suivre l'ordre du
-   tableau §4 : finance → tech → drp/pmo/comparison/sites → Impact
-   Budgétaire → Équipe).
+   tableau §4 : finance → tech → drp/pmo/comparison/sites → Équipe).
 3. Appliquer la méthodologie §3 et le gabarit §2.

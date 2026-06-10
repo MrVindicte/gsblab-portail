@@ -511,42 +511,77 @@ export default function ExecutiveSummary(state) {
     </div>
   `;
 
-  // Slide 8 : TCO (anciennement 5)
+  // Slide "Impact Budgétaire" (étapes locales 11→14) : chiffre choc en hero
+  // (visible direct), puis 3 lignes-preuves révélées une par une (TCO, ROI,
+  // Budget) — même gabarit mono que "Périmètre du Projet" / "Stratégie de
+  // Transformation".
   const presSlide8 = `
-    <div data-pres-slide="11" data-pres-label="Impact Budgétaire" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12">
-      <div class="text-center space-y-4">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-emerald-400 tracking-tight">Impact Budgétaire</h2>
-        <p class="text-xl text-slate-400 font-medium">Total Cost of Ownership sur 5 ans</p>
-        <div class="w-16 h-1.5 bg-emerald-500 mx-auto rounded-full mt-2 shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
-      </div>
+    <div data-pres-slide="11,12,13,14" data-pres-label="Impact Budgétaire"
+         class="flex-1 min-h-0 flex flex-col justify-center py-2">
 
-      <div class="w-full max-w-4xl glass-panel rounded-[2rem] p-12 border-t-4 border-emerald-500 relative overflow-hidden shadow-[0_10px_50px_rgba(16,185,129,0.08)]">
-        <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div>
-        
-        <div class="flex items-center justify-between mb-16 relative">
-          <div class="flex items-center gap-3">
-            <span class="w-1.5 h-8 bg-emerald-500 rounded-full"></span>
-            <span class="text-lg font-bold text-emerald-400 uppercase tracking-widest">Comparatif TCO 5 ans</span>
-          </div>
-          <span class="text-sm bg-emerald-500/10 border border-emerald-500/20 px-4 py-2 rounded-full font-mono font-bold text-emerald-400">−74 % sur les licences</span>
+      <div class="w-full max-w-5xl mx-auto flex flex-col gap-10">
+
+        <!-- ── TITRE ─────────────────────────────────────────────────────────── -->
+        <div class="text-center space-y-2.5">
+          <h2 class="text-3xl font-extrabold text-white tracking-tight leading-tight">
+            Impact Budgétaire
+          </h2>
+          <div class="w-16 h-[2px] mx-auto bg-slate-700 rounded-full"></div>
         </div>
 
-        <div class="flex items-end justify-between px-6 relative">
-          <div class="text-center w-5/12">
-            <div class="text-sm text-slate-500 uppercase font-bold mb-4 tracking-wider">Statu quo VMware</div>
-            <div class="text-6xl font-mono font-extrabold text-red-400 leading-none opacity-90">441,5k€</div>
+        <!-- ── HERO : chiffre choc, visible direct (étape 11) ────────────────── -->
+        <div class="text-center space-y-2">
+          <div class="text-6xl md:text-7xl font-mono font-black text-emerald-400 tracking-tight whitespace-nowrap"
+               style="text-shadow: 0 0 25px rgba(16,185,129,0.35)">
+            + 329 500 €
           </div>
-          <div class="pb-2 text-slate-600 font-bold text-4xl w-2/12 text-center opacity-50">→</div>
-          <div class="text-center w-5/12">
-            <div class="text-sm text-slate-500 uppercase font-bold mb-4 tracking-wider">Cible Proxmox</div>
-            <div class="text-[5.5rem] font-mono font-extrabold text-emerald-400 leading-none" style="text-shadow: 0 0 25px rgba(16,185,129,0.25)">112,0k€</div>
+          <div class="text-xs md:text-sm font-bold text-slate-400 uppercase tracking-widest">
+            économisés sur 5 ans · TCO global du projet
           </div>
         </div>
 
-        <div class="mt-16 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-8 text-center relative mx-auto w-4/5">
-          <div class="text-5xl font-mono font-extrabold text-emerald-300">+ 329 500 €</div>
-          <div class="text-sm text-emerald-400/80 mt-3 uppercase tracking-widest font-mono font-bold">Gain net direct · ROI &lt; 12 mois</div>
+        <!-- ── 3 LIGNES-PREUVES — révélées une par une (étapes 12→14) ────────── -->
+        <div class="flex flex-col gap-7 mx-auto w-fit">
+
+          <div data-reveal-at="12" class="opacity-0 transition-all duration-700 flex items-center gap-8">
+            <div class="w-56 flex-shrink-0 flex items-center gap-2.5">
+              <span class="w-6 h-1 bg-emerald-500/50 rounded-full inline-block flex-shrink-0"></span>
+              <span class="text-xs font-bold text-emerald-400 uppercase tracking-widest">01 · TCO 5 ans</span>
+            </div>
+            <div class="flex items-baseline gap-3 flex-1 min-w-0 flex-wrap">
+              <span class="text-lg md:text-xl font-mono font-bold text-slate-500 line-through decoration-2 whitespace-nowrap">441,5k€</span>
+              <span class="text-slate-600 text-xl flex-shrink-0">→</span>
+              <span class="text-xl md:text-2xl font-mono font-black text-white whitespace-nowrap" style="text-shadow: 0 0 15px rgba(255,255,255,0.1)">112,0k€</span>
+            </div>
+          </div>
+
+          <div data-reveal-at="13" class="opacity-0 transition-all duration-700 flex items-center gap-8">
+            <div class="w-56 flex-shrink-0 flex items-center gap-2.5">
+              <span class="w-6 h-1 bg-blue-500/50 rounded-full inline-block flex-shrink-0"></span>
+              <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">02 · ROI</span>
+            </div>
+            <div class="flex items-baseline gap-3 flex-1 min-w-0 flex-wrap">
+              <span class="text-xl md:text-2xl font-mono font-black text-white whitespace-nowrap" style="text-shadow: 0 0 15px rgba(255,255,255,0.1)">&lt; 12 mois</span>
+              <span class="text-slate-600 text-xl flex-shrink-0">·</span>
+              <span class="text-lg md:text-xl font-mono font-bold text-slate-500 whitespace-nowrap">-74% licences</span>
+            </div>
+          </div>
+
+          <div data-reveal-at="14" class="opacity-0 transition-all duration-700 flex items-center gap-8">
+            <div class="w-56 flex-shrink-0 flex items-center gap-2.5">
+              <span class="w-6 h-1 bg-purple-500/50 rounded-full inline-block flex-shrink-0"></span>
+              <span class="text-xs font-bold text-purple-400 uppercase tracking-widest">03 · Budget</span>
+            </div>
+            <div class="flex items-baseline gap-3 flex-1 min-w-0 flex-wrap">
+              <span class="text-lg md:text-xl font-mono font-bold text-slate-500 whitespace-nowrap">450 000€</span>
+              <span class="text-slate-600 text-xl flex-shrink-0">→</span>
+              <span class="text-xl md:text-2xl font-mono font-black text-white whitespace-nowrap" style="text-shadow: 0 0 15px rgba(255,255,255,0.1)">440 794€</span>
+              <span class="text-lg md:text-xl font-mono font-bold text-slate-500 whitespace-nowrap">(réserve 2%)</span>
+            </div>
+          </div>
+
         </div>
+
       </div>
     </div>
   `;
