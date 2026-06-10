@@ -49,12 +49,12 @@ export default function TechnicalWorkspace(state) {
         stroke-width="2"
         class="group-hover:stroke-emerald-400 group-hover:fill-emerald-900/40 transition-all duration-300"
       />
-      <text 
-        x="${spoke.x}" 
-        y="${spoke.y + 24}" 
-        text-anchor="middle" 
-        fill="#64748b" 
-        font-size="8" 
+      <text
+        x="${spoke.x}"
+        y="${spoke.y + 24}"
+        text-anchor="middle"
+        fill="#64748b"
+        font-size="8"
         font-weight="bold"
         class="pointer-events-none font-sans group-hover:fill-emerald-400 transition-colors"
       >
@@ -62,6 +62,56 @@ export default function TechnicalWorkspace(state) {
       </text>
     </g>
   `).join('');
+
+  // ── Carte de France (slide présentation "Topologie Réseau — Carte de France") ──
+  // Silhouette stylisée de l'Hexagone (29 points), viewBox 0 0 480 445
+  const franceMapPath = "M255,12 L320,28 L372,50 L425,92 L455,142 L440,192 L428,242 L445,292 L468,342 L438,388 L385,410 L328,424 L270,430 L213,424 L163,408 L128,384 L85,362 L53,332 L38,278 L33,218 L45,168 L16,142 L5,98 L35,73 L60,48 L90,33 L108,12 L160,24 L210,13 Z";
+  const mapHub = { x: 390, y: 165 };
+  // Positions reparties sur l'ensemble du territoire (placeholder visuel —
+  // les coordonnees reelles des 27 sites nationaux seront fournies par Romain)
+  const mapPositions = [
+    { x: 220, y: 60 },   // Hauts-de-France
+    { x: 110, y: 90 },   // Normandie
+    { x: 70, y: 180 },   // Bretagne
+    { x: 90, y: 230 },   // Pays de la Loire
+    { x: 180, y: 200 },  // Centre-Val de Loire
+    { x: 230, y: 140 },  // Ile-de-France
+    { x: 300, y: 110 },  // Grand Est (Reims)
+    { x: 320, y: 220 },  // Bourgogne-Franche-Comte
+    { x: 370, y: 240 },  // Franche-Comte / Jura
+    { x: 320, y: 300 },  // Auvergne-Rhone-Alpes (Lyon)
+    { x: 220, y: 300 },  // Auvergne (Clermont-Ferrand)
+    { x: 110, y: 320 },  // Nouvelle-Aquitaine (Bordeaux)
+    { x: 210, y: 370 },  // Occitanie (Toulouse)
+    { x: 300, y: 380 },  // Occitanie (Montpellier)
+    { x: 370, y: 360 },  // PACA (Marseille)
+    { x: 420, y: 340 }   // PACA (Nice)
+  ];
+  const mapSpokes = spokesList.slice(1).map((site, index) => ({
+    ...site,
+    x: mapPositions[index].x,
+    y: mapPositions[index].y
+  }));
+
+  const franceMapLines = mapSpokes.map(spoke => `
+    <line id="map-line-${spoke.id}" x1="${mapHub.x}" y1="${mapHub.y}" x2="${spoke.x}" y2="${spoke.y}" stroke="#1e293b" stroke-width="1" stroke-dasharray="3,3" class="transition-all duration-200" />
+  `).join('');
+
+  const franceMapMarkers = mapSpokes.map(spoke => `
+    <g class="france-map-marker cursor-pointer" data-map-site-id="${spoke.id}">
+      <circle cx="${spoke.x}" cy="${spoke.y}" r="11" fill="transparent" />
+      <circle class="map-marker-dot" cx="${spoke.x}" cy="${spoke.y}" r="5" fill="#10b981" stroke="#0d1117" stroke-width="1.5" style="transition: r 0.2s ease, fill 0.2s ease;" />
+    </g>
+  `).join('');
+
+  const franceMapHub = `
+    <g class="france-map-marker cursor-pointer" data-map-site-id="${spokesList[0].id}">
+      <circle cx="${mapHub.x}" cy="${mapHub.y}" r="14" fill="#3b82f6" fill-opacity="0.18" class="animate-ping" style="transform-origin:${mapHub.x}px ${mapHub.y}px;" />
+      <circle cx="${mapHub.x}" cy="${mapHub.y}" r="20" fill="transparent" />
+      <circle class="map-marker-dot" cx="${mapHub.x}" cy="${mapHub.y}" r="7" fill="#3b82f6" stroke="#0d1117" stroke-width="2" style="transition: r 0.2s ease;" />
+    </g>
+    <text x="${mapHub.x}" y="${mapHub.y - 26}" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="800" class="font-sans uppercase tracking-wider pointer-events-none">Strasbourg · Siège</text>
+  `;
 
   const dashboardHTML = `
       <!-- Title -->
@@ -216,48 +266,52 @@ export default function TechnicalWorkspace(state) {
   // ════════════════════════════════════════════════════════════════════════════
   
   const presSlide1 = `
-    <div data-pres-slide="1" data-pres-label="Architecture Globale" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-8 w-full max-w-7xl mx-auto h-full py-4">
-      <div class="text-center space-y-4 w-full mb-6">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Topologie Réseau & SD-WAN</h2>
+    <div data-pres-slide="1" data-pres-label="Topologie Réseau — Carte de France" class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
+
+      <!-- Title -->
+      <div class="text-center space-y-3 w-full flex-shrink-0">
+        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Carte de France — Réseau National</h2>
         <div class="w-16 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
       </div>
-      
-      <div class="grid grid-cols-3 gap-12 w-full flex-1 min-h-0">
-        
-        <!-- Network Diagram SVG -->
-        <div class="col-span-2 glass-panel rounded-3xl p-10 flex flex-col justify-center items-center shadow-2xl relative bg-slate-900/60">
-          <div class="w-full flex items-center justify-center h-[500px]">
-            <svg width="100%" height="100%" viewBox="0 0 500 360" preserveAspectRatio="xMidYMid meet">
-              ${svgLines}
-              <circle
-                id="hub-node"
-                cx="${hubX}"
-                cy="${hubY}"
-                r="35"
-                fill="#1e293b"
-                stroke="#3b82f6"
-                stroke-width="4"
-                class="cursor-pointer hover:stroke-blue-400 hover:fill-blue-900/30 transition-all duration-300"
-              />
-              <text x="${hubX}" y="${hubY + 6}" text-anchor="middle" fill="#fff" font-size="14" font-weight="extrabold" class="pointer-events-none font-sans">
-                HUB
-              </text>
-              <text x="${hubX}" y="${hubY + 50}" text-anchor="middle" fill="#94a3b8" font-size="11" font-weight="bold" class="pointer-events-none font-sans">
-                Strasbourg
-              </text>
-              ${svgNodes}
-            </svg>
-          </div>
-          <div class="absolute bottom-6 left-0 right-0 text-center text-sm text-slate-400 font-semibold tracking-wide">
-            Survolez un nœud du schéma pour inspecter ses configurations de pare-feu
-          </div>
-        </div>
 
-        <!-- Details Column -->
-        <div class="col-span-1 glass-panel rounded-3xl p-10 shadow-2xl bg-slate-900/60 flex flex-col justify-center" id="site-details-panel">
-          <!-- Populated in bind -->
+      <!-- KPI Banner -->
+      <div class="flex items-center justify-center gap-10 md:gap-20 flex-shrink-0">
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-mono font-black text-white">27</div>
+          <div class="text-[10px] md:text-xs uppercase tracking-widest text-slate-400 font-bold mt-1">Sites</div>
         </div>
+        <div class="w-px h-10 bg-white/10"></div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-mono font-black text-white">333</div>
+          <div class="text-[10px] md:text-xs uppercase tracking-widest text-slate-400 font-bold mt-1">Utilisateurs</div>
+        </div>
+        <div class="w-px h-10 bg-white/10"></div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-mono font-black text-emerald-400">20</div>
+          <div class="text-[10px] md:text-xs uppercase tracking-widest text-slate-400 font-bold mt-1">Tunnels VPN IPsec</div>
+        </div>
+      </div>
 
+      <!-- Map -->
+      <div class="relative flex-1 min-h-0 w-full flex flex-col items-center justify-center gap-3">
+        <div id="france-map-container" class="relative glass-panel rounded-3xl p-6 md:p-8 shadow-2xl bg-slate-900/60 h-full max-h-[480px] max-w-full aspect-[480/445]">
+          <svg viewBox="0 0 480 445" class="w-full h-full" preserveAspectRatio="xMidYMid meet">
+            <defs>
+              <linearGradient id="franceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#1e293b" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#0b0f19" stop-opacity="0.95" />
+              </linearGradient>
+            </defs>
+            <path d="${franceMapPath}" fill="url(#franceGrad)" stroke="#3b82f6" stroke-width="1.5" stroke-opacity="0.5" class="drop-shadow-[0_0_25px_rgba(59,130,246,0.25)]" />
+            ${franceMapLines}
+            ${franceMapMarkers}
+            ${franceMapHub}
+          </svg>
+          <div id="france-map-tooltip" class="absolute opacity-0 pointer-events-none transition-opacity duration-150 z-20"></div>
+        </div>
+        <div class="text-sm text-slate-400 font-semibold tracking-wide flex-shrink-0">
+          * Survolez un site pour afficher ses informations réseau
+        </div>
       </div>
     </div>
   `;
@@ -474,6 +528,26 @@ const renderDetails = (site, isPres) => {
   `;
 };
 
+// Tooltip flottant pour la carte de France (slide "Topologie Réseau — Carte de France")
+const renderMapTooltip = (site, isHub) => `
+  <div class="bg-[#0d0e13]/95 backdrop-blur-md border border-white/10 rounded-xl px-4 py-3 shadow-2xl w-56 space-y-1.5">
+    <div class="flex items-center justify-between gap-2 border-b border-white/10 pb-1.5 mb-1">
+      <span class="text-sm font-extrabold text-white truncate">${site.name}</span>
+      ${isHub ? '<span class="text-[9px] font-bold text-blue-400 bg-blue-500/10 border border-blue-500/20 rounded px-1.5 py-0.5 uppercase tracking-wider flex-shrink-0">Hub</span>' : ''}
+    </div>
+    <div class="flex justify-between text-xs"><span class="text-slate-400">Région</span><span class="font-semibold text-slate-200">${site.region}</span></div>
+    <div class="flex justify-between text-xs"><span class="text-slate-400">Postes</span><span class="font-mono font-semibold text-slate-200">${site.usersCount}</span></div>
+    <div class="flex justify-between text-xs"><span class="text-slate-400">Pare-feu</span><span class="font-mono font-semibold text-slate-200">${site.firewallModel}</span></div>
+    <div class="flex justify-between items-center text-xs">
+      <span class="text-slate-400">VPN IPsec</span>
+      <span class="font-bold text-emerald-400 flex items-center gap-1">
+        ${isHub ? 'LOCAL' : 'ACTIF'}
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+    </div>
+  </div>
+`;
+
 export function bindTechEvents(state) {
   const isPres = state.presentationMode;
   const detailsPanel = document.getElementById('site-details-panel');
@@ -531,6 +605,65 @@ export function bindTechEvents(state) {
       if (detailsPanel) {
         detailsPanel.innerHTML = renderDetails(state.spokesList[0], isPres);
       }
+    });
+  }
+
+  // Carte de France : tooltip flottant au survol des sites
+  const mapContainer = document.getElementById('france-map-container');
+  const mapTooltip = document.getElementById('france-map-tooltip');
+  if (mapContainer && mapTooltip) {
+    mapContainer.querySelectorAll('.france-map-marker').forEach(marker => {
+      const dot = marker.querySelector('.map-marker-dot');
+      const baseR = dot.getAttribute('r');
+
+      marker.addEventListener('mouseenter', () => {
+        const siteId = marker.getAttribute('data-map-site-id');
+        const site = state.spokesList.find(s => s.id === siteId);
+        const isHub = siteId === '1';
+
+        dot.setAttribute('r', String(Number(baseR) + 2));
+
+        const line = document.getElementById(`map-line-${siteId}`);
+        if (line) {
+          line.setAttribute('stroke', '#10b981');
+          line.setAttribute('stroke-width', '2');
+          line.setAttribute('stroke-dasharray', 'none');
+        }
+
+        mapTooltip.innerHTML = renderMapTooltip(site, isHub);
+
+        const dotRect = dot.getBoundingClientRect();
+        const containerRect = mapContainer.getBoundingClientRect();
+        const cx = dotRect.left + dotRect.width / 2 - containerRect.left;
+        const cy = dotRect.top + dotRect.height / 2 - containerRect.top;
+        const onRightHalf = cx > containerRect.width / 2;
+
+        mapTooltip.style.top = `${cy}px`;
+        if (onRightHalf) {
+          mapTooltip.style.left = `${cx - 14}px`;
+          mapTooltip.style.transform = 'translate(-100%, -50%)';
+        } else {
+          mapTooltip.style.left = `${cx + 14}px`;
+          mapTooltip.style.transform = 'translate(0, -50%)';
+        }
+        mapTooltip.classList.remove('opacity-0');
+        mapTooltip.classList.add('opacity-100');
+      });
+
+      marker.addEventListener('mouseleave', () => {
+        const siteId = marker.getAttribute('data-map-site-id');
+        dot.setAttribute('r', baseR);
+
+        const line = document.getElementById(`map-line-${siteId}`);
+        if (line) {
+          line.setAttribute('stroke', '#1e293b');
+          line.setAttribute('stroke-width', '1');
+          line.setAttribute('stroke-dasharray', '3,3');
+        }
+
+        mapTooltip.classList.add('opacity-0');
+        mapTooltip.classList.remove('opacity-100');
+      });
     });
   }
 

@@ -69,7 +69,7 @@ GSBLAB = entreprise de santé fictive, 27 laboratoires (1 hub Strasbourg + 26 sp
 | `src/index.css` | Styles custom (`?v=2`) — `.glass-panel`, animations, `@media print`, `.livrable-export-mode` |
 | `src/components/ExecutiveSummary.js` | Synthèse — 14 slides présentation (v21) |
 | `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, "Facture Comparée" + Comparatif Budgétaire, 5 slides présentation (v14) |
-| `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, IaC, 3 slides (v6) |
+| `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, carte de France, IaC, 3 slides (v7) |
 | `src/components/DrpSimulator.js` | Simulateur PRA — ransomware + sinistre, 1 slide/3 reveals (v5) |
 | `src/components/PmoWorkspace.js` | PMO — risques, roadmap 2026-2030, 2 slides/5 reveals (v6) |
 | `src/components/BeforeAfterSlider.js` | Comparaison avant/après, 1 slide/2 reveals (v5) |
