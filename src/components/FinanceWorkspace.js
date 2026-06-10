@@ -339,45 +339,20 @@ export default function FinanceWorkspace(state) {
   `;
 
   const presSlide2 = `
-    <div data-pres-slide="5" data-pres-label="Comparatif Budgétaire" class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
-      <div class="text-center space-y-3 w-full">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Comparatif Budgétaire</h2>
-        <div class="w-16 h-1.5 bg-gradient-to-r from-blue-500 to-emerald-500 mx-auto rounded-full"></div>
+    <div data-pres-slide="5,6,7" data-pres-label="Comparatif Budgétaire" class="flex-1 min-h-0 flex flex-col justify-center items-center w-full h-full py-6 px-10 relative">
+      
+      <!-- Background Glows -->
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div class="text-center space-y-2 mb-2 w-full relative z-10 -mt-4">
+        <h2 class="text-3xl font-extrabold text-white tracking-tight leading-tight">Comparatif Budgétaire</h2>
+        <div class="w-16 h-[2px] mx-auto bg-slate-700 rounded-full"></div>
       </div>
 
-      <!-- Mini KPIs -->
-      <div class="grid grid-cols-2 gap-6 w-full">
-        <div class="glass-panel rounded-2xl p-5 border-l-[5px] border-l-emerald-500 flex justify-between items-center bg-slate-900/60 shadow-xl">
-          <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Économie Nette 5 ans</span>
-          <div class="text-3xl font-mono font-extrabold text-emerald-400" id="kpi-savings-2">-- €</div>
-        </div>
-        <div class="glass-panel rounded-2xl p-5 border-l-[5px] border-l-red-500 flex justify-between items-center bg-slate-900/60 shadow-xl">
-          <span class="text-sm font-bold text-slate-400 uppercase tracking-widest">Surcoût VMware Broadcom</span>
-          <div class="text-3xl font-mono font-extrabold text-red-400" id="kpi-pct-vmware-2">--%</div>
-        </div>
-      </div>
-
-      <!-- Synthèse budgétaire compacte -->
-      <div class="w-full glass-panel rounded-3xl overflow-hidden shadow-2xl bg-slate-900/80 flex-1 min-h-0 flex flex-col">
-        <!-- Header -->
-        <div class="px-8 py-5 bg-slate-950/80 border-b border-white/10 flex items-center gap-4 flex-shrink-0">
-          <span class="w-2.5 h-9 bg-blue-500 rounded-full"></span>
-          <h3 class="text-xl font-extrabold text-white uppercase tracking-widest">Synthèse des Coûts (HT)</h3>
-          <span class="ml-auto text-sm text-slate-500 font-medium italic">Lignes clés — détail disponible en vue tableau</span>
-        </div>
-
-        <!-- Table header -->
-        <div class="grid grid-cols-4 px-8 py-4 border-b border-white/10 bg-slate-900/60 flex-shrink-0">
-          <div class="text-sm font-bold text-slate-400 uppercase tracking-widest">Rubrique</div>
-          <div class="text-sm font-bold text-blue-400 uppercase tracking-widest text-right">Proxmox VE</div>
-          <div class="text-sm font-bold text-red-500 uppercase tracking-widest text-right">VMware</div>
-          <div class="text-sm font-bold text-amber-400 uppercase tracking-widest text-right">Cloud HDS</div>
-        </div>
-
-        <!-- Rows -->
-        <div id="budget-table-body" class="flex-1 min-h-0 flex flex-col divide-y divide-white/5">
-          <!-- Populated by JS -->
-        </div>
+      <!-- Pricing Cards Container -->
+      <div id="budget-cards-container" class="grid grid-cols-3 gap-3 w-full max-w-[60rem] mx-auto relative z-10 items-center">
+        <!-- Populated by JS -->
       </div>
     </div>
   `;
@@ -441,32 +416,121 @@ const updateValues = (state) => {
     }
   }
 
-  // Actualisation tableau
+  // Actualisation tableau / cartes
   const tableBody = document.getElementById('budget-table-body');
-  if (tableBody) {
-    // Détecter si on est en mode présentation (le conteneur est un div flex, pas une table)
-    const isPres = tableBody.tagName === 'DIV';
+  const cardsContainer = document.getElementById('budget-cards-container');
 
-    if (isPres) {
-      // Mode présentation : 5 lignes clés seulement, format compact grid
-      const row = (label, proxmox, vmware, cloud, isHighlight) => `
-        <div class="grid grid-cols-4 px-8 py-5 items-center ${isHighlight ? 'bg-slate-800/80 font-bold' : 'hover:bg-white/3 transition-colors'}">
-          <div class="flex items-center gap-3 ${isHighlight ? 'text-white text-base uppercase tracking-widest' : 'text-slate-300 text-base'}">
-            ${label}
+  if (cardsContainer) {
+    // Mode présentation : SaaS Pricing Cards
+    const createCard = (title, badge, colorClass, borderClass, shadowClass, capex, opex, tco3, tco5, isHighlight, features = [], revealAt) => {
+      if (isHighlight) {
+        return `
+          <div data-reveal-at="${revealAt}" class="opacity-0 transition-all duration-700 relative flex flex-col rounded-[2rem] p-[3px] border-2 border-emerald-400 shadow-[0_0_60px_rgba(16,185,129,0.3)] bg-gradient-to-br from-emerald-400 via-emerald-600 to-teal-900 z-20 overflow-hidden group">
+            
+            <!-- Animated background shine effect -->
+            <div class="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.1)_50%,transparent_75%,transparent_100%)] bg-[length:250%_250%,100%_100%] bg-[position:-100%_0,0_0] bg-no-repeat group-hover:transition-[background-position_0s_ease] group-hover:bg-[position:200%_0,0_0] group-hover:duration-[1500ms]"></div>
+
+            <div class="absolute -right-12 top-6 w-48 py-1.5 bg-white text-emerald-900 text-[9px] font-black uppercase tracking-widest text-center rotate-45 shadow-lg z-10">Scénario Validé</div>
+
+            <div class="bg-slate-900/95 rounded-[1.75rem] p-4 h-full flex flex-col relative z-0">
+              <div class="text-center mb-3">
+                <h3 class="text-xl font-black text-white tracking-wide uppercase drop-shadow-md">${title}</h3>
+              </div>
+
+              <div class="bg-gradient-to-br from-emerald-900/40 to-slate-900/80 rounded-2xl p-4 mb-4 border border-emerald-500/30 shadow-[inset_0_2px_20px_rgba(16,185,129,0.15)] text-center relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+                <p class="text-emerald-100/70 text-[11px] uppercase font-bold tracking-widest mb-1 relative z-10">TCO Cumulé 5 ans</p>
+                <div class="text-3xl font-mono font-black text-white drop-shadow-[0_0_10px_rgba(16,185,129,0.8)] relative z-10">${tco5}</div>
+                <div class="mt-2 inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-500 text-white rounded-full text-[10px] font-bold shadow-lg shadow-emerald-500/30 relative z-10">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> ROI &lt; 12 mois
+                </div>
+              </div>
+
+              <div class="flex-1 space-y-3">
+                <div class="flex justify-between items-center text-sm bg-white/5 px-3 py-2 rounded-xl border border-white/5">
+                  <span class="text-emerald-100/70 font-medium">CapEx Initial</span>
+                  <span class="font-mono font-bold text-emerald-300">${capex}</span>
+                </div>
+                <div class="flex justify-between items-center text-sm bg-white/5 px-3 py-2 rounded-xl border border-white/5">
+                  <span class="text-emerald-100/70 font-medium">OpEx (An 1)</span>
+                  <span class="font-mono font-bold text-emerald-300">${opex}</span>
+                </div>
+                <div class="flex justify-between items-center text-sm bg-white/5 px-3 py-2 rounded-xl border border-white/5">
+                  <span class="text-emerald-100/70 font-medium">TCO 3 ans</span>
+                  <span class="font-mono font-bold text-emerald-300">${tco3}</span>
+                </div>
+                
+                ${features.length > 0 ? `
+                <div class="pt-4 mt-4 space-y-2.5">
+                  ${features.map(f => `
+                    <div class="flex items-start gap-3 text-xs">
+                      <div class="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5 border border-emerald-500/30">
+                        <svg class="w-3 h-3 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                      </div>
+                      <span class="font-bold text-white leading-tight text-xs">${f}</span>
+                    </div>
+                  `).join('')}
+                </div>
+                ` : ''}
+              </div>
+            </div>
           </div>
-          <div class="text-right font-mono ${isHighlight ? 'text-blue-400 text-xl' : 'text-slate-200 text-base'}">${proxmox}</div>
-          <div class="text-right font-mono ${isHighlight ? 'text-red-400 text-xl' : 'text-red-300/80 text-base'}">${vmware}</div>
-          <div class="text-right font-mono ${isHighlight ? 'text-amber-400 text-xl' : 'text-amber-300/80 text-base'}">${cloud}</div>
+        `;
+      }
+
+      // Default card for Statu Quo / Alternative
+      return `
+        <div data-reveal-at="${revealAt}" class="opacity-0 transition-all duration-700 relative flex flex-col glass-panel rounded-3xl p-6 border border-white/10 ${shadowClass} bg-slate-900/60 overflow-hidden">
+          
+          <div class="text-center mb-4 relative">
+            <h3 class="text-xl font-black text-slate-300 tracking-wide uppercase opacity-90">${title}</h3>
+            <p class="text-[10px] font-bold ${colorClass} mt-1.5 uppercase tracking-widest">${badge}</p>
+          </div>
+
+          <div class="text-center mb-6 pb-4 border-b border-white/5 relative">
+            <p class="text-slate-500 text-[10px] uppercase font-bold tracking-widest mb-1">TCO Cumulé 5 ans</p>
+            <div class="text-3xl font-mono font-bold text-slate-300">${tco5}</div>
+          </div>
+
+          <div class="flex-1 space-y-3 relative">
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-slate-500 font-medium">CapEx Initial</span>
+              <span class="font-mono font-medium text-slate-400">${capex}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-slate-500 font-medium">OpEx (An 1)</span>
+              <span class="font-mono font-medium text-slate-400">${opex}</span>
+            </div>
+            <div class="flex justify-between items-center text-sm">
+              <span class="text-slate-500 font-medium">TCO 3 ans</span>
+              <span class="font-mono font-medium text-slate-400">${tco3}</span>
+            </div>
+            
+            ${features.length > 0 ? `
+            <div class="pt-4 mt-4 border-t border-white/5 space-y-2.5">
+              ${features.map(f => `
+                <div class="flex items-start gap-2 text-xs text-slate-400 opacity-80">
+                  <svg class="w-3.5 h-3.5 text-slate-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                  <span class="leading-tight">${f}</span>
+                </div>
+              `).join('')}
+            </div>
+            ` : ''}
+          </div>
         </div>
       `;
-      tableBody.innerHTML = `
-        ${row('Total CapEx (Investissement Initial)', formatEuro(data.proxmox.capex.total), formatEuro(data.vmware.capex.total), formatEuro(data.cloud.capex.total), false)}
-        ${row('Total OpEx (Fonctionnement An 1)', formatEuro(data.proxmox.opex.total), formatEuro(data.vmware.opex.total), formatEuro(data.cloud.opex.total), false)}
-        <div class="h-px bg-white/10 mx-8"></div>
-        ${row('TCO Cumulé à 3 ans', formatEuro(projections[2].proxmoxTco), formatEuro(projections[2].vmwareTco), formatEuro(projections[2].cloudTco), false)}
-        ${row('TCO CUMULÉ À 5 ANS', formatEuro(finalTcoProxmox), formatEuro(finalTcoVmware), formatEuro(finalTcoCloud), true)}
-      `;
-    } else {
+    };
+
+    cardsContainer.innerHTML = `
+      ${createCard('VMware Broadcom', 'Statu Quo', 'text-red-400', 'border-red-500/50', 'shadow-[0_0_30px_rgba(239,68,68,0.05)]', formatEuro(data.vmware.capex.total), formatEuro(data.vmware.opex.total), formatEuro(projections[2].vmwareTco), formatEuro(finalTcoVmware), false, ['Licensing par cœur coûteux', 'Forte hausse des OpEx', 'Verrouillage constructeur'], 5)}
+      
+      ${createCard('Proxmox VE HA', 'Cible Validée', 'text-emerald-400', 'border-emerald-500/60', 'shadow-[0_0_50px_rgba(16,185,129,0.25)] ring-2 ring-emerald-500/30', formatEuro(data.proxmox.capex.total), formatEuro(data.proxmox.opex.total), formatEuro(projections[2].proxmoxTco), formatEuro(finalTcoProxmox), true, ['Sans licence par cœur (-74%)', 'Cluster Ceph HA intégré inclus', 'Indépendance matérielle'], 7)}
+      
+      ${createCard('Cloud Public HDS', 'Alternative', 'text-amber-400', 'border-amber-400/50', 'shadow-[0_0_30px_rgba(245,158,11,0.05)]', formatEuro(data.cloud.capex.total), formatEuro(data.cloud.opex.total), formatEuro(projections[2].cloudTco), formatEuro(finalTcoCloud), false, ['Abonnement mensuel onéreux', 'Forte dépendance réseau (WAN)', 'Garantie de souveraineté HDS'], 6)}
+    `;
+    // Re-sync les opacités avec l'étape courante (fix rollback)
+    if (window.updatePresentationDOM) window.updatePresentationDOM();
+  } else if (tableBody) {
       // Mode dashboard : tableau complet
       tableBody.innerHTML = `
         <!-- CAPEX -->
@@ -557,7 +621,6 @@ const updateValues = (state) => {
         </tr>
       `;
     }
-  }
 
   // Actualisation graphique
   if (chartInstance) {

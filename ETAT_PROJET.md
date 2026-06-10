@@ -64,11 +64,11 @@ GSBLAB = entreprise de santé fictive, 27 laboratoires (1 hub Strasbourg + 26 sp
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | Point d'entrée — config Tailwind custom, CDN, `main.js?v=37` |
+| `index.html` | Point d'entrée — config Tailwind custom, CDN, `main.js?v=38` |
 | `src/main.js` | Orchestrateur — `window.appState`, `renderApp()`, système présentation (37 slides) |
 | `src/index.css` | Styles custom (`?v=2`) — `.glass-panel`, animations, `@media print`, `.livrable-export-mode` |
 | `src/components/ExecutiveSummary.js` | Synthèse — 14 slides présentation (v21) |
-| `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, "Facture Comparée" + Comparatif Budgétaire, 5 slides présentation (v13) |
+| `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, "Facture Comparée" + Comparatif Budgétaire, 5 slides présentation (v14) |
 | `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, IaC, 3 slides (v6) |
 | `src/components/DrpSimulator.js` | Simulateur PRA — ransomware + sinistre, 1 slide/3 reveals (v5) |
 | `src/components/PmoWorkspace.js` | PMO — risques, roadmap 2026-2030, 2 slides/5 reveals (v6) |
@@ -161,22 +161,17 @@ présentation de l'onglet finance — `bindFinanceEvents` détruit proprement
 `chartInstance` (et le remet à `null`) si le canvas est absent, pour éviter
 toute fuite mémoire en navigant entre slides.
 
-⚠️ **Incohérence référentielle découverte** (non bloquante, signalée par
-commentaire dans le code de `presSlide1`) : avec l'état par défaut du
-calculateur interactif (333 users / 27 sites / 4 serveurs / 300€ core /
-4500€ cloud / 5% inflation), `financialMath.js` donne un **CapEx Proxmox
-seul de 237 580€** — déjà supérieur au TCO Proxmox 5 ans "officiel"
-(112,0k€) utilisé sur cette slide et sur "Impact Budgétaire". Le calculateur
-live et les chiffres officiels du deck utilisent deux référentiels non
-réconciliés. Décision : conserver les chiffres officiels (112,0k€/441,5k€/
-+329 500 €, sourcés `ETAT_PROJET.md`) sur les slides de présentation, ne pas
-inventer de ventilation de raccordement. Point ouvert de même nature que
-l'incohérence RTO/RPO (cf. GUIDE_SLIDES.md §5).
+⚠️ **Incohérence référentielle résolue** (Option C retenue) : la slide 5 "Comparatif
+Budgétaire" affiche désormais un badge explicite "Simulateur Interactif Live"
+et une note de bas de page précisant que les valeurs calculées dynamiquement
+peuvent différer du scénario officiel (TCO 112,0k€). Cela clarifie la transition
+avec la slide "Analyse TCO" qui, elle, affiche les chiffres figés de l'ETAT_PROJET.md.
+Point ouvert de même nature que l'incohérence RTO/RPO (cf. GUIDE_SLIDES.md §5).
 
 Impact : `PRES_MAX.finance` 2 → **5**, slide "Comparatif Budgétaire" décalée
 de l'étape locale 2 → 5, `PRES_TOTAL` 34 → **37**.
 
-Versions : `index.html` → `main.js?v=37` · `FinanceWorkspace.js?v=13`
+Versions : `index.html` → `main.js?v=52` · `FinanceWorkspace.js?v=28`
 
 ### Session 2026-06-10 (suite 2) — Slide "Impact Budgétaire" repensée (clôture)
 

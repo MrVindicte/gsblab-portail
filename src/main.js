@@ -4,7 +4,7 @@
 import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=21';
-import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=13';
+import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=28';
 import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=6';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=5';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=6';
@@ -40,7 +40,7 @@ window.appState = {
 // Update maxSteps when you add/remove data-pres-step elements in a component.
 const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites'];
 // Nombre de slides par onglet (Option B : slides exclusives)
-const PRES_MAX  = { dashboard: 14, finance: 5, tech: 3, drp: 3, pmo: 5, comparison: 2, sites: 5 };
+const PRES_MAX  = { dashboard: 14, finance: 7, tech: 3, drp: 3, pmo: 5, comparison: 2, sites: 5 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
@@ -193,6 +193,7 @@ const updatePresentationDOM = () => {
     atEnd ? btnNext.setAttribute('disabled', 'true') : btnNext.removeAttribute('disabled');
   }
 };
+window.updatePresentationDOM = updatePresentationDOM;
 
 const renderApp = () => {
   const root = document.getElementById('root');
