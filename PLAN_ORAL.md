@@ -9,6 +9,18 @@
 
 ---
 
+## 0. Réponses directes aux questions initiales
+
+| Question posée | Verdict | Détail |
+|---|---|---|
+| **"Analyse TCO & Économies" est-elle suffisante ?** | ✅ Oui, telle que refondue (session 2026-06-10, "Facture Comparée") | Couvre Proxmox vs VMware. Le scénario Cloud HDS est traité séparément en scène 6 "Comparatif Budgétaire" (§3) — pas besoin de l'ajouter ici. |
+| **"Périmètre du Projet" suffit-il ?** | ✅ Oui — c'est le gabarit de référence (validé) | Couvre 130→380 collab., 7→27 sites, 0→100% HDS, budget/contraintes. Rien de `01_Introduction_et_Contexte.md` n'en est absent. |
+| **"Stratégie de Transformation" suffit-elle ?** | ✅ Oui | Les 4 piliers (Virtualisation/Stockage/Sécurité/Sauvegardes) couvrent `02_Audit` + `03_Objectifs_SI_Cible` au niveau stratégique. Le détail technique (HA, règle 3-2-1-1-0, MFA, pentest — `04_Architecture_PRA_et_Securite.md`) est approfondi dans la scène 8 "Cluster Proxmox" et la refonte PRA (§4.2.B) — pas de doublon nécessaire ici. |
+| **"Impact Budgétaire" suffit-il ?** | ✅ Oui | Porte le chiffre clé (+329 500€) + 3 preuves. Le détail multi-scénarios (incl. Cloud HDS) est en scène 6 "Comparatif Budgétaire" — complémentaire, pas redondant (sous réserve de régler §1.1). |
+| **De nouvelles slides sont-elles nécessaires ?** | ✅ Oui — 3 ciblées (sélection "ciblée 2-3 slides" validée) | §4.2 : **A)** Anomalies du Cahier des Charges · **B)** Refonte PRA/BIA 3 niveaux · **C)** Conduite du Changement & Bascule Messagerie. |
+
+---
+
 ## ⚠️ 1. Points bloquants à trancher avant l'oral
 
 Deux incohérences chiffrées, visibles par un jury qui clique séquentiellement
@@ -28,6 +40,17 @@ slide — sinon elles se retrouveront aussi dans le contenu ajouté.
 - **Conséquence concrète** : en cliquant `→` de l'étape locale 4 à 5 (finance),
   le jury voit deux totaux "TCO 5 ans Proxmox" différents pour le même
   scénario, sur deux slides consécutives.
+
+**Piste de diagnostic (trouvée dans `Rendus/Calculateur_TCO.html`)** : ce
+calculateur autonome — même logique CapEx-identique/OpEx-divergent que
+`financialMath.js` — a pour paramètre par défaut **17 sites**, alors que le
+périmètre actuel du projet est de **27 sites** (cf. "Périmètre du Projet").
+Hypothèse à vérifier en premier par Romain : les chiffres "officiels"
+112,0k€/441,5k€ proviendraient d'un calcul fait sur l'ancien périmètre à 17
+sites, tandis que `financialMath.js`/"Comparatif Budgétaire" calculent
+désormais sur le périmètre actuel à 27 sites — ce qui expliquerait l'écart
+sans remettre en cause la formule elle-même (orienterait plutôt vers
+l'option A : recalculer/republier les totaux officiels à 27 sites).
 
 **Options de résolution (à trancher, pas de chiffre à inventer ici)** :
 
@@ -211,6 +234,8 @@ numérique) pour répondre aux questions, sans slide dédiée :
 | `12_Planning_Detaille_2026.md` / `13_Diagramme_Gantt.md` / `GSBLAB_Planning_Migration_3pers.gan` | Planning semaine par semaine (S23-S38) | La "Roadmap 2026-2030" (pmo) couvre la vision stratégique ; le détail d'exécution est trop fin pour l'oral |
 | `08_Politique_Securite_SI_PSSI.md` | Classification données, MFA, chiffrement, notif. CNIL 72h | Le KPI "Conformité HDS 95%" en synthèse sert de proxy ; détail en annexe |
 | `06_Architecture_IP_Nommage.md` | Convention de nommage, plan IP/VLAN détaillé site par site | L'archi logique (sites/tech) montre le principe ; le détail IP est une annexe technique |
+| `04_Architecture_PRA_et_Securite.md` | HA Proxmox/Live Migration, règle de sauvegarde 3-2-1-1-0 (PBS local → OVH HDS → LTO air-gap), MFA M365/Entra ID, pentest à chaque déploiement VLAN | Contenu déjà diffusé dans la scène 8 "Cluster Proxmox", la refonte PRA (§4.2.B, scénario ransomware/PBS) et le KPI "Conformité HDS" — sert de référence si le jury demande le détail |
+| `05_Planning_et_Deploiement.md` (+ `GSBLAB_Planning_Migration_3pers.gan`) | Macro-planning Phase 0-5 (mai-sept 2026) | Distinct de "Roadmap 2026-2030" (vision pluriannuelle commerciale) ; comme 12/13, niveau de détail d'exécution trop fin pour l'oral |
 
 ---
 
@@ -227,3 +252,39 @@ numérique) pour répondre aux questions, sans slide dédiée :
 4. Caler les 4 démos avec Léo (§4.3).
 5. Répétition chronométrée : valider le minutage réel de §3 (oral blanc) puis
    de §4 (oral final), ajuster si dépassement.
+
+---
+
+## 7. Audit de complétude (2026-06-10)
+
+Vérification croisée effectuée sur les 3 dossiers sources avant de figer ce
+plan (`Documents_Fournis/`, `Livrables_Documentation/`, `Rendus/`).
+
+- **18 livrables `.md` métier** dans `Livrables_Documentation/` (01, 02, 02b,
+  03, **04**, 05, 06, 07, 08, 09, 09b, 10, 11, 12, 12b, 13, 14, 15) — **tous
+  référencés** dans ce plan (§0, §1, §3, §4 ou §5). `04_Architecture_PRA_et_Securite.md`
+  et `05_Planning_et_Deploiement.md` ont été ajoutés au backlog §5 suite à cet
+  audit (seuls fichiers qui n'avaient pas encore de destination explicite).
+- `Portail_GSBLAB_Architecture_Plan.md` (Livrables_Documentation) et
+  `Rendus/Portail_GSBLAB/` : ébauche antérieure du portail en stack React/Vite,
+  **différente de l'implémentation actuelle** (vanilla JS + K8s, cf.
+  `CLAUDE.md`). À ignorer pendant la préparation de l'oral — ne pas confondre
+  avec le portail réellement déployé.
+- **5 PDF de `Documents_Fournis/`** (cahier des charges client) : recherche
+  exhaustive (durée, jury, grille d'évaluation, nombre de slides imposé, démo
+  obligatoire) → **aucune occurrence**. La contrainte 20 min/30 min de ce plan
+  est donc une donnée externe (consigne du formateur), pas écrite dans le
+  sujet — à garder en tête si le format venait à être précisé/modifié par
+  ailleurs.
+- `Rendus/` : pas de plan oral préexistant, pas de slides déjà préparées
+  ailleurs — ce document est la première formalisation du déroulé oral. Le
+  dossier contient surtout les sources du chiffrage (`GSBLAB_Chiffrage_v9.docx`,
+  le plus récent, modifié le jour même) et du planning
+  (`GSBLAB_Planning_Migration_3pers.gan`, source de `13_Diagramme_Gantt.md`).
+- `Rendus/Calculateur_TCO.html` : voir piste de diagnostic ajoutée en §1.1
+  (paramètre "17 sites" par défaut vs 27 sites du périmètre actuel).
+
+**Conclusion** : aucun trou de couverture restant. Le plan §0-§6 peut être
+considéré comme complet vis-à-vis de l'ensemble des documents/livrables du
+projet ; les seuls points encore ouverts sont les arbitrages chiffrés §1.1/§1.2
+(à trancher avec Romain) et les validations d'emplacement avec Léo (§4.3).
