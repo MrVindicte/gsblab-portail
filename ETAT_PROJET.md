@@ -1,7 +1,10 @@
 # GSBLAB Portail — État du projet
 
-> Document de référence mis à jour au **2026-06-03**.
+> Document de référence mis à jour au **2026-06-10**.
 > À conserver dans le repo. Mettre à jour après chaque session de travail significative.
+
+> 🎯 **Refonte des slides en cours** → voir [`GUIDE_SLIDES.md`](./GUIDE_SLIDES.md)
+> pour la méthodologie, le gabarit visuel validé et le statut slide par slide.
 
 ---
 
@@ -61,25 +64,59 @@ GSBLAB = entreprise de santé fictive, 27 laboratoires (1 hub Strasbourg + 26 sp
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | Point d'entrée — config Tailwind custom, CDN, `main.js?v=12` |
-| `src/main.js` | Orchestrateur — `window.appState`, `renderApp()`, système présentation |
-| `src/index.css` | Styles custom — `.glass-panel`, animations, `@media print` |
-| `src/components/ExecutiveSummary.js` | Synthèse — slide PowerPoint, 8 steps (v7) |
-| `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, Chart.js (v7) |
-| `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, IaC (v3) |
-| `src/components/DrpSimulator.js` | Simulateur PRA — ransomware + incendie (v3) |
-| `src/components/PmoWorkspace.js` | PMO — risques, roadmap 2026-2030 (v4) |
-| `src/components/BeforeAfterSlider.js` | Comparaison avant/après — slider (v3) |
-| `src/components/SitesWorkspace.js` | 27 sites — phases de déploiement (v3) |
+| `index.html` | Point d'entrée — config Tailwind custom, CDN, `main.js?v=32` |
+| `src/main.js` | Orchestrateur — `window.appState`, `renderApp()`, système présentation (28 slides) |
+| `src/index.css` | Styles custom (`?v=2`) — `.glass-panel`, animations, `@media print`, `.livrable-export-mode` |
+| `src/components/ExecutiveSummary.js` | Synthèse — 11 slides présentation (v20) |
+| `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, Chart.js, 2 slides (v12) |
+| `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, IaC, 3 slides (v6) |
+| `src/components/DrpSimulator.js` | Simulateur PRA — ransomware + sinistre, 1 slide/3 reveals (v5) |
+| `src/components/PmoWorkspace.js` | PMO — risques, roadmap 2026-2030, 2 slides/5 reveals (v6) |
+| `src/components/BeforeAfterSlider.js` | Comparaison avant/après, 1 slide/2 reveals (v5) |
+| `src/components/SitesWorkspace.js` | 27 sites — phases de déploiement, 2 slides/5 reveals (v5) |
+| `src/components/Sidebar.js` | Navigation latérale (v4) |
 | `src/config/defaultData.js` | Données — 27 spokes, liste risques (v3) |
 | `src/utils/financialMath.js` | Calculs TCO/ROI 3 scénarios |
 
 ### Système de présentation (mode PowerPoint)
 
-- `PRES_MAX = { dashboard:8, finance:6, tech:4, drp:2, pmo:4, comparison:3, sites:4 }` → **31 steps total**
-- Navigation : `Espace` / `→` avance · `←` recule · `Échap` quitte
-- Chaque élément HTML avec `data-pres-step="N"` est révélé progressivement
-- `data-pres-label="..."` affiche le nom de l'étape dans le footer de présentation
+Mécanisme à deux niveaux (tous les onglets sont passés sur ce système) :
+
+1. **Sélection de slide** — `data-pres-slide="N"` (ou liste `"N,M,..."`) sur le
+   conteneur racine de chaque vue présentation. `N` est l'**étape LOCALE à
+   l'onglet** (1 à `PRES_MAX[onglet]`, remise à 1 à chaque changement
+   d'onglet — cf. `globalToLocal()` dans `main.js`), **pas** l'étape globale
+   (1 à `PRES_TOTAL`, qui sert uniquement au compteur/à la barre de
+   progression). `updatePresentationDOM()` active (`pres-slide-active`) la
+   slide dont la liste contient `appState.presentationStep` (= étape locale
+   courante).
+   ⚠️ Exemple : onglet `finance` → `PRES_OFFSET.finance = 11` → son étape
+   locale 1 correspond à l'étape globale 12, mais le HTML porte bien
+   `data-pres-slide="1"` (jamais `"12"`).
+2. **Révélation progressive** — `data-reveal-at="N"` sur des sous-éléments
+   *à l'intérieur* de la slide active : `opacity-100` dès que
+   `presentationStep >= N` (N = étape **locale**), sinon `opacity-0`.
+3. `data-pres-label="..."` affiche le nom de la slide dans le footer.
+
+Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélecteur
+« Espace : » (`pres-page-select`, footer) pour sauter directement à un onglet.
+
+`PRES_MAX = { dashboard:11, finance:2, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
+→ **PRES_TOTAL = 31 slides/étapes**
+
+| Onglet | N | Détail |
+|---|---|---|
+| dashboard | 11 | 1 Équipe · 2-6 Synthèse + Périmètre du Projet (reveal 3→6) · 7-10 Stratégie de Transformation (4 piliers révélés un par un) · 11 Impact budgétaire |
+| finance | 2 | 1 Analyse TCO · 2 Comparatif budgétaire |
+| tech | 3 | 1 Architecture globale · 2 Cluster Proxmox · 3 Déploiement IaC |
+| drp | 3 | 1 slide « PRA » : KPIs fixes → scénarios (reveal 2) → chaîne PBS (reveal 3) |
+| pmo | 5 | Slides 1-3 « Roadmap 2026-2030 » (2026 fixe → +2027/28 reveal 2 → +2029/30 reveal 3) · Slides 4-5 « Risques critiques » (top2 fixes → risques 3-4 reveal 5) |
+| comparison | 2 | 1 slide « Avant/Après » : avant seul → delta+après (reveal 2) |
+| sites | 5 | Slides 1-3 « Architecture 27 sites » (Siège fixe → Labos reveal 2 → Centres reveal 3) · Slides 4-5 « Connectivité réseau » (Topo fixe → palette VLAN reveal 5) |
+
+> Note : des blocs `data-pres-step="N"` (ancien mécanisme) subsistent dans le
+> rendu **mode normal** de SitesWorkspace/PmoWorkspace — ils n'ont aucun effet
+> en mode présentation (ignorés par `main.js`), à nettoyer à l'occasion.
 
 ### Tailwind config custom (dans index.html)
 
@@ -90,9 +127,59 @@ GSBLAB = entreprise de santé fictive, 27 laboratoires (1 hub Strasbourg + 26 sp
 
 ---
 
-## Ce qui a été fait (session 2026-06-03)
+## Ce qui a été fait
 
-### Page Synthèse — Refonte complète
+### Session 2026-06-10 (suite) — Slide "Stratégie de Transformation" repensée
+
+L'ancienne slide 7 (grille 2×2 de cartes glass-panel, statique) était jugée
+générique et trop dense pour l'oral. Refonte dans le style "Périmètre du
+Projet" (même fond/fonctionnement) :
+
+- Titre centré + barre, puis les 4 piliers (Virtualisation, Stockage,
+  Sécurité, Sauvegardes) affichés en grandes lignes `font-mono font-black`
+  (`AVANT` barré gris → `APRÈS` en blanc/gras).
+- Révélation **un pilier à la fois** via `data-reveal-at` : le 1er est visible
+  d'entrée, les 3 suivants apparaissent aux clics suivants. À la fin, les 4
+  lignes empilées forment la synthèse pour le jury.
+- La slide passe de **1 à 4 étapes locales** (7→8,9,10).
+
+Impact : `PRES_MAX.dashboard` 8 → **11**, slide "Impact Budgétaire" décalée de
+l'étape locale 8 → 11, `PRES_TOTAL` 28 → **31**.
+
+Versions : `index.html` → `main.js?v=35` · `ExecutiveSummary.js?v=20`
+
+> Ajustement : `truncate` retiré (texte coupé sur "Bandes LTO Manuelles →
+> PBS Immuable (DRP)"), conteneur `max-w-4xl→max-w-5xl`, police légèrement
+> réduite (`text-lg/xl` avant, `text-xl/2xl` après) + `whitespace-nowrap`.
+
+### Session 2026-06-10 — Mode présentation : DRP, Comparison, PMO, Sites
+
+Les 4 onglets restants (qui utilisaient l'ancien mécanisme `data-pres-step`,
+cassé en mode présentation) sont passés au format slide plein écran
+`data-pres-slide`, dans le style Synthèse/Finance/Tech :
+
+- **DrpSimulator** : 1 slide — KPIs RTO/RPO/27 sites + 2 cartes scénarios
+  (ransomware / sinistre physique) + chaîne de sauvegarde PBS
+- **BeforeAfterSlider** : 1 slide — comparatif 3 colonnes avant / delta / après
+- **PmoWorkspace** : 2 slides — roadmap 5 phases (2026→2030) + top-4 risques critiques
+- **SitesWorkspace** : 2 slides — vue d'ensemble 27 sites + topologie hub-and-spoke/VLAN
+
+Puis ajout de la révélation progressive (`data-reveal-at`) sur ces 4 onglets,
+même mécanisme que le bloc « Périmètre du Projet » de la Synthèse.
+
+`PRES_MAX` : 19 → **28 slides/étapes au total** (drp 1→3, pmo 2→5,
+comparison 1→2, sites 2→5).
+
+Versions : `index.html` → `main.js?v=32` · `BeforeAfterSlider.js?v=5` ·
+`DrpSimulator.js?v=5` · `PmoWorkspace.js?v=6` · `SitesWorkspace.js?v=5`
+
+> ⚠️ **Incohérence à vérifier** : la nouvelle slide DRP affiche
+> **RTO 4h / RPO 1h**, alors que le tableau "Chiffres clés" de ce document
+> indique **RTO < 5 min / RPO < 1h**. À trancher avec Romain (chiffrage)
+> avant l'oral — la valeur retenue doit être identique partout (slide,
+> 09_PRA_PCA_BIA, 09b_DRP_Runbook).
+
+### Session 2026-06-03 — Page Synthèse — Refonte complète
 
 Problèmes résolus :
 - **Ne tenait pas sur une page** → layout `flex-col h-full` avec `overflow-hidden` sur `<main>`
@@ -155,13 +242,16 @@ Sans ça, le navigateur sert l'ancienne version même après Ctrl+F5.
 ## Backlog — Ce qui reste à faire
 
 ### Court terme
-- [ ] Tester le fit-to-viewport sur résolution 1280×800 (laptops)
-- [ ] Vérifier le rendu en mode présentation sur projecteur 1080p
-- [ ] Mode Export livrable complet : rendu dédié "document A4" (état `appState.exportMode`)
+- [ ] Résoudre l'incohérence RTO/RPO (slide DRP "4h/1h" vs tableau "<5min/<1h", cf. session 2026-06-10)
+- [ ] Tester le parcours complet des 28 slides sur projecteur 1080p (timing des `data-reveal-at`)
+- [x] Appliquer le même traitement PowerPoint / fit-to-viewport aux 7 onglets (fait 2026-06-10)
+- [ ] Mode Export livrable : actuellement bouton "Export PDF" (`btn-export-livrable` /
+      `.livrable-export-mode`) limité à la Synthèse — étendre aux autres onglets si besoin
 - [ ] Améliorer la transition intro slide → dashboard (actuellement instantanée)
 
-### Autres onglets (à traiter)
-- [ ] Appliquer le même traitement PowerPoint / fit-to-viewport aux autres tabs
+### Nettoyage
+- [ ] Retirer les blocs `data-pres-step="N"` obsolètes (mode normal de
+      SitesWorkspace, PmoWorkspace) — sans effet depuis le passage à `data-pres-slide`
 - [ ] SitesWorkspace : vérifier la cohérence des 27 sites avec les données réelles
 
 ### Infrastructure

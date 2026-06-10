@@ -468,40 +468,52 @@ export default function ExecutiveSummary(state) {
     </div>
   `;
 
-  // Slide 7 : Matrice (anciennement 4)
+  // Slide 7 : Stratégie de Transformation — reveal mot-clé par mot-clé (étapes locales 7→10)
+  // Même fond/fonctionnement que la slide "Périmètre du Projet" : titre + barre,
+  // lignes font-mono font-black, accumulation via data-reveal-at.
   const presSlide7 = `
-    <div data-pres-slide="7" data-pres-label="Stratégie de Transformation" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12">
-      <div class="text-center space-y-4">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Stratégie de Transformation</h2>
-        <p class="text-xl text-slate-400 font-medium">Dette Technique vs. Architecture Cible HDS</p>
-        <div class="w-16 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto rounded-full mt-2"></div>
-      </div>
-      <div class="grid grid-cols-2 grid-rows-2 gap-8 w-full max-w-5xl">
-        ${pillars.map(p => `
-          <div class="glass-panel border-l-[6px] border-l-${p.color}-500 rounded-2xl p-8 flex flex-col justify-between group shadow-xl">
-            <div class="text-base font-bold text-${p.color}-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-              <span class="w-6 h-1 bg-${p.color}-500/50 rounded-full inline-block"></span>
-              ${p.label}
-            </div>
-            <div class="space-y-4">
-              <div class="text-xl text-red-400 flex items-center gap-4">
-                <span class="font-bold text-red-500 text-3xl flex-shrink-0">&#x2715;</span>
-                <span class="truncate line-through opacity-70">${p.before}</span>
+    <div data-pres-slide="7,8,9,10" data-pres-label="Stratégie de Transformation"
+         class="flex-1 min-h-0 flex flex-col justify-center py-2">
+
+      <div class="w-full max-w-5xl mx-auto flex flex-col gap-10">
+
+        <!-- ── TITRE ─────────────────────────────────────────────────────────── -->
+        <div class="text-center space-y-2.5">
+          <h2 class="text-3xl font-extrabold text-white tracking-tight leading-tight">
+            Stratégie de Transformation
+          </h2>
+          <div class="w-16 h-[2px] mx-auto bg-slate-700 rounded-full"></div>
+        </div>
+
+        <!-- ── 4 PILIERS — révélés un par un (étapes 7→10) ──────────────────── -->
+        <div class="flex flex-col gap-7 mx-auto w-fit">
+          ${pillars.map((p, i) => {
+            const step = 7 + i;
+            const reveal = i === 0 ? '' : `data-reveal-at="${step}" `;
+            const hidden = i === 0 ? '' : 'opacity-0 transition-all duration-700 ';
+            return `
+            <div ${reveal}class="${hidden}flex items-center gap-8">
+              <div class="w-56 flex-shrink-0 flex items-center gap-2.5">
+                <span class="w-6 h-1 bg-${p.color}-500/50 rounded-full inline-block flex-shrink-0"></span>
+                <span class="text-xs font-bold text-${p.color}-400 uppercase tracking-widest">${p.num} · ${p.label}</span>
               </div>
-              <div class="text-3xl font-extrabold text-white flex items-center gap-4">
-                <span class="text-emerald-400 font-bold text-4xl flex-shrink-0">→</span>
-                <span class="truncate" style="text-shadow: 0 0 15px rgba(255,255,255,0.1)">${p.after}</span>
+              <div class="flex items-baseline gap-3 flex-1 min-w-0 flex-wrap">
+                <span class="text-lg md:text-xl font-mono font-bold text-slate-500 line-through decoration-2 whitespace-nowrap">${p.before}</span>
+                <span class="text-slate-600 text-xl flex-shrink-0">→</span>
+                <span class="text-xl md:text-2xl font-mono font-black text-white whitespace-nowrap" style="text-shadow: 0 0 15px rgba(255,255,255,0.1)">${p.after}</span>
               </div>
             </div>
-          </div>
-        `).join('')}
+            `;
+          }).join('')}
+        </div>
+
       </div>
     </div>
   `;
 
   // Slide 8 : TCO (anciennement 5)
   const presSlide8 = `
-    <div data-pres-slide="8" data-pres-label="Impact Budgétaire" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12">
+    <div data-pres-slide="11" data-pres-label="Impact Budgétaire" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12">
       <div class="text-center space-y-4">
         <h2 class="text-4xl md:text-5xl font-extrabold text-emerald-400 tracking-tight">Impact Budgétaire</h2>
         <p class="text-xl text-slate-400 font-medium">Total Cost of Ownership sur 5 ans</p>
