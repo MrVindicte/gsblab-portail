@@ -64,28 +64,32 @@ export default function TechnicalWorkspace(state) {
   `).join('');
 
   // ── Carte de France (slide présentation "Topologie Réseau — Carte de France") ──
-  // Silhouette stylisée de l'Hexagone (29 points), viewBox 0 0 480 445
-  const franceMapPath = "M255,12 L320,28 L372,50 L425,92 L455,142 L440,192 L428,242 L445,292 L468,342 L438,388 L385,410 L328,424 L270,430 L213,424 L163,408 L128,384 L85,362 L53,332 L38,278 L33,218 L45,168 L16,142 L5,98 L35,73 L60,48 L90,33 L108,12 L160,24 L210,13 Z";
-  const mapHub = { x: 390, y: 165 };
-  // Positions reparties sur l'ensemble du territoire (placeholder visuel —
-  // les coordonnees reelles des 27 sites nationaux seront fournies par Romain)
+  // Silhouette de l'Hexagone (30 points), x=(lon+4.8)*36.9, y=(51.1-lat)*50.6
+  // — formule appliquee a la fois aux sommets du contour (cotes/frontieres
+  // reelles) et aux villes ci-dessous, pour garantir un alignement coherent
+  // entre la forme et les marqueurs. viewBox 0 0 480 445
+  const franceMapPath = "M271,1 L332,40 L391,81 L472,106 L478,108 L463,128 L454,178 L418,228 L403,248 L431,267 L425,314 L456,359 L454,370 L421,396 L376,395 L314,390 L294,438 L235,435 L112,391 L122,385 L131,326 L126,258 L96,193 L53,169 L0,154 L30,132 L122,127 L117,74 L181,81 L227,53 Z";
+  const mapHub = { x: 452, y: 133 };
+  // Positions des 16 villes calculees avec la meme formule lon/lat -> x,y
+  // (placeholder visuel — les coordonnees reelles des 27 sites nationaux
+  // seront fournies par Romain)
   const mapPositions = [
-    { x: 220, y: 60 },   // Hauts-de-France
-    { x: 110, y: 90 },   // Normandie
-    { x: 70, y: 180 },   // Bretagne
-    { x: 90, y: 230 },   // Pays de la Loire
-    { x: 180, y: 200 },  // Centre-Val de Loire
-    { x: 230, y: 140 },  // Ile-de-France
-    { x: 300, y: 110 },  // Grand Est (Reims)
-    { x: 320, y: 220 },  // Bourgogne-Franche-Comte
-    { x: 370, y: 240 },  // Franche-Comte / Jura
-    { x: 320, y: 300 },  // Auvergne-Rhone-Alpes (Lyon)
-    { x: 220, y: 300 },  // Auvergne (Clermont-Ferrand)
-    { x: 110, y: 320 },  // Nouvelle-Aquitaine (Bordeaux)
-    { x: 210, y: 370 },  // Occitanie (Toulouse)
-    { x: 300, y: 380 },  // Occitanie (Montpellier)
-    { x: 370, y: 360 },  // PACA (Marseille)
-    { x: 420, y: 340 }   // PACA (Nice)
+    { x: 308, y: 50 },   // Hauts-de-France (Lille)
+    { x: 164, y: 97 },   // Normandie (Caen)
+    { x: 115, y: 151 },  // Bretagne (Rennes)
+    { x: 120, y: 196 },  // Pays de la Loire (Nantes)
+    { x: 203, y: 188 },  // Centre-Val de Loire (Tours)
+    { x: 264, y: 114 },  // Ile-de-France (Paris)
+    { x: 326, y: 93 },   // Grand Est (Reims)
+    { x: 363, y: 191 },  // Bourgogne-Franche-Comte (Dijon)
+    { x: 399, y: 195 },  // Franche-Comte (Besancon)
+    { x: 356, y: 270 },  // Auvergne-Rhone-Alpes (Lyon)
+    { x: 291, y: 269 },  // Auvergne (Clermont-Ferrand)
+    { x: 156, y: 317 },  // Nouvelle-Aquitaine (Bordeaux)
+    { x: 230, y: 380 },  // Occitanie (Toulouse)
+    { x: 318, y: 372 },  // Occitanie (Montpellier)
+    { x: 368, y: 382 },  // PACA (Marseille)
+    { x: 440, y: 365 }   // PACA (Nice)
   ];
   const mapSpokes = spokesList.slice(1).map((site, index) => ({
     ...site,
@@ -110,7 +114,7 @@ export default function TechnicalWorkspace(state) {
       <circle cx="${mapHub.x}" cy="${mapHub.y}" r="20" fill="transparent" />
       <circle class="map-marker-dot" cx="${mapHub.x}" cy="${mapHub.y}" r="7" fill="#3b82f6" stroke="#0d1117" stroke-width="2" style="transition: r 0.2s ease;" />
     </g>
-    <text x="${mapHub.x}" y="${mapHub.y - 26}" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="800" class="font-sans uppercase tracking-wider pointer-events-none">Strasbourg · Siège</text>
+    <text x="${mapHub.x + 10}" y="${mapHub.y + 30}" text-anchor="end" fill="#93c5fd" font-size="12" font-weight="800" class="font-sans uppercase tracking-wider pointer-events-none">Strasbourg · Siège</text>
   `;
 
   const dashboardHTML = `
@@ -270,7 +274,7 @@ export default function TechnicalWorkspace(state) {
 
       <!-- Title -->
       <div class="text-center space-y-3 w-full flex-shrink-0">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Carte de France — Réseau National</h2>
+        <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Carte de France — Réseau National</h2>
         <div class="w-16 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 mx-auto rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
       </div>
 

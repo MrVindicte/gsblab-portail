@@ -69,7 +69,7 @@ GSBLAB = entreprise de santé fictive, 27 laboratoires (1 hub Strasbourg + 26 sp
 | `src/index.css` | Styles custom (`?v=2`) — `.glass-panel`, animations, `@media print`, `.livrable-export-mode` |
 | `src/components/ExecutiveSummary.js` | Synthèse — 14 slides présentation (v21) |
 | `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, "Facture Comparée" + Comparatif Budgétaire, 5 slides présentation (v14) |
-| `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, carte de France, IaC, 3 slides (v7) |
+| `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, carte de France, IaC, 3 slides (v8) |
 | `src/components/DrpSimulator.js` | Simulateur PRA — ransomware + sinistre, 1 slide/3 reveals (v5) |
 | `src/components/PmoWorkspace.js` | PMO — risques, roadmap 2026-2030, 2 slides/5 reveals (v6) |
 | `src/components/BeforeAfterSlider.js` | Comparaison avant/après, 1 slide/2 reveals (v5) |
@@ -108,7 +108,7 @@ Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélect
 |---|---|---|
 | dashboard | 14 | 1 Équipe · 2-6 Synthèse + Périmètre du Projet (reveal 3→6) · 7-10 Stratégie de Transformation (4 piliers révélés un par un) · 11-14 Impact Budgétaire (hero "+329 500 €" puis 3 preuves TCO/ROI/Budget révélées une par une) |
 | finance | 5 | 1-4 Analyse TCO & Économies, « Facture Comparée » 2 colonnes VMware/Proxmox (CapEx identique reveal 2 → OpEx divergent reveal 3 → TOTAL 441,5k€ vs 112,0k€ + écart "+329 500 €" reveal 4) · 5 Comparatif budgétaire |
-| tech | 3 | 1 Architecture globale · 2 Cluster Proxmox · 3 Déploiement IaC |
+| tech | 3 | 1 Carte de France — Réseau National · 2 Cluster Proxmox · 3 Déploiement IaC |
 | drp | 3 | 1 slide « PRA » : KPIs fixes → scénarios (reveal 2) → chaîne PBS (reveal 3) |
 | pmo | 5 | Slides 1-3 « Roadmap 2026-2030 » (2026 fixe → +2027/28 reveal 2 → +2029/30 reveal 3) · Slides 4-5 « Risques critiques » (top2 fixes → risques 3-4 reveal 5) |
 | comparison | 2 | 1 slide « Avant/Après » : avant seul → delta+après (reveal 2) |
@@ -128,6 +128,93 @@ Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélect
 ---
 
 ## Ce qui a été fait
+
+### Session 2026-06-10 (suite 4) — Slide "Topologie Réseau & SD-WAN" (tech, slide 1) repensée en "Carte de France"
+
+Ancienne slide 1 de l'onglet `tech` ("Architecture Globale") : layout
+grid-cols-3 avec schéma SVG hub-spoke générique + panneau de détails au
+clic. Demande explicite : scinder cette slide en 3 slides présentation
+distinctes — (1) carte de France avec les sites et tooltip au survol,
+(2) focus animé sur le siège social, (3) focus animé sur un centre de
+prélèvement. Slides 2 et 3 sont du travail futur (différé) ; les données
+réseau du siège/centre de prélèvement sont en cours de préparation par
+Romain — cette session ne traite que **la slide 1 (carte de France)**, en
+mode "design uniquement".
+
+Concept retenu (parmi 3 propositions soumises via `AskUserQuestion`) :
+**carte plein cadre + tooltip flottant** — silhouette stylisée de
+l'Hexagone (SVG, viewBox 480×445) en fond de carte, avec :
+
+- Bandeau KPI (27 sites · 333 utilisateurs · 20 tunnels VPN IPsec, chiffres
+  officiels ETAT_PROJET.md).
+- Hub Strasbourg (siège) marqué en bleu avec halo `animate-ping`, label
+  "Strasbourg · Siège", positionné dans le quart nord-est de la carte
+  (position géographique réelle de l'Alsace).
+- 16 marqueurs de sites au survol (`mouseenter`/`mouseleave`) : connecteur
+  mis en évidence (vert émeraude), point agrandi, tooltip flottant
+  positionné dynamiquement (`getBoundingClientRect`, bascule gauche/droite
+  selon la moitié de la carte) affichant nom, région, postes, modèle
+  pare-feu et statut VPN IPsec du site.
+
+Itérations (vérifiées via capture d'écran headless Chrome, faute de
+Playwright/chromium-cli disponibles dans l'environnement) :
+1. V1 — 16 marqueurs sur un cercle de rayon 30px autour du hub (zone Alsace
+   uniquement) → trop serrés, hover impossible à cibler individuellement.
+2. V2 — cercle élargi (rayon 58px) → marqueurs distincts mais carte limitée
+   au coin Alsace, peu lisible comme "carte de France".
+3. V3 — retour utilisateur : "j'aurais aimé avoir une carte de la France
+   entière, pas uniquement l'Alsace". Les 16 marqueurs sont répartis sur
+   l'ensemble du territoire (une position par grande région : Hauts-de-
+   France, Normandie, Bretagne, Pays de la Loire, Centre-Val de Loire,
+   Île-de-France, Grand Est, Bourgogne-Franche-Comté, Auvergne-Rhône-Alpes,
+   Nouvelle-Aquitaine, Occitanie, PACA), reliés au hub Strasbourg par des
+   connecteurs en pointillés traversant la carte.
+4. V4 — retour utilisateur : la silhouette elle-même ("Hexagone" V1-V3,
+   29 points arbitraires) ne ressemblait pas à la France ("c'est la map de
+   l'Alsace, pas de la France"). Tracé refait à partir de coordonnées
+   géographiques approximatives (lon/lat converties en x/y, 28 points) pour
+   faire apparaître les éléments reconnaissables : pointe de la Bretagne,
+   presqu'île du Cotentin, encoche des Alpes, golfe du Lion, frontière
+   pyrénéenne, "nez" alsacien. Hub Strasbourg repositionné sur ce nez
+   (450,135) ; les 16 marqueurs repositionnés sur des villes repères (Lille,
+   Caen, Rennes, Nantes, Tours, Paris, Reims, Dijon, Besançon, Lyon,
+   Clermont-Ferrand, Bordeaux, Toulouse, Montpellier, Marseille, Nice).
+5. **V5 (retenue)** — retour utilisateur : la forme V4 est validée ("c'est
+   bien") mais "les villes sont mal placées". Cause : le contour V4 et les
+   positions des villes utilisaient des coordonnées lon/lat estimées de
+   façon incohérente l'un par rapport à l'autre. Refonte complète avec une
+   **formule unique et cohérente** `x = (lon + 4.8) * 36.9`,
+   `y = (51.1 - lat) * 50.6` (bbox France lon -4.8°→8.2°, lat 42.3°→51.1°),
+   appliquée à la fois :
+   - au contour (30 points, repris à partir de repères géographiques réels :
+     Dunkerque, frontière belge, Ardennes, Alsace/Lauterbourg, Bâle, Jura,
+     Genève, Mont-Blanc, Briançon, Tende, Menton, Saint-Tropez, Marseille,
+     golfe du Lion, Cerbère, Andorre, Hendaye, Bayonne, Arcachon, Île de Ré,
+     Saint-Nazaire, Lorient, pointe du Raz, Brest, Mont-Saint-Michel,
+     Cherbourg, Caen/Le Havre, baie de Somme) ;
+   - aux 16 marqueurs villes (mêmes coordonnées lon/lat que V4, recalculées
+     avec la formule commune) et au hub Strasbourg, repositionné (452,133).
+   Légers ajustements manuels pour les villes côtières (Marseille, Nice,
+   Montpellier) afin qu'elles restent à l'intérieur du tracé, et pour Lille
+   (308,50) dont la position calculée tombait juste au nord du contour
+   (signalé par l'utilisateur : "il y a un point hors de la France, au
+   nord"). Vérifié par captures d'écran headless Chrome (vue normale +
+   hover sur un marqueur) : la carte est maintenant géographiquement
+   cohérente (Lille au nord, Paris nord-centre, Bordeaux/Nantes côte
+   atlantique, Lyon/Marseille/Nice sud-est, Toulouse/Montpellier sud,
+   Strasbourg sur le "nez" alsacien à l'est).
+
+⚠️ **Placeholder assumé** : les 16 sites de `defaultData.js` (actuellement
+tous en Alsace) sont affichés à ces positions nationales pour la maquette —
+le contenu du tooltip (nom/région) ne correspond donc pas encore à la
+position géographique du marqueur. Quand Romain fournira la liste des 27
+sites nationaux avec coordonnées réelles, il suffira de remplacer le
+tableau `mapPositions` (et `defaultData.js`) en conséquence.
+
+`presSlide2` (Cluster Proxmox) et `presSlide3` (Déploiement IaC) inchangées,
+`PRES_MAX.tech` reste à **3** (édition en place de la slide 1).
+
+Versions : `index.html` → `main.js?v=54` · `TechnicalWorkspace.js?v=8`
 
 ### Session 2026-06-10 (suite 3) — Slide "Analyse TCO & Économies" repensée en "Facture Comparée"
 
