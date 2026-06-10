@@ -5,11 +5,12 @@ import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=21';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=28';
-import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=9';
+import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=14';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=5';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=6';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=5';
 import SitesWorkspace from './components/SitesWorkspace.js?v=5';
+import ConclusionWorkspace from './components/ConclusionWorkspace.js?v=1';
 
 // Global state holding parameters
 window.appState = {
@@ -38,9 +39,9 @@ window.appState = {
 
 // ─── Presentation step configuration ────────────────────────────────────────
 // Update maxSteps when you add/remove data-pres-step elements in a component.
-const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites'];
+const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites', 'conclusion'];
 // Nombre de slides par onglet (Option B : slides exclusives)
-const PRES_MAX  = { dashboard: 14, finance: 7, tech: 3, drp: 3, pmo: 5, comparison: 2, sites: 5 };
+const PRES_MAX  = { dashboard: 14, finance: 7, tech: 9, drp: 3, pmo: 5, comparison: 2, sites: 5, conclusion: 1 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
@@ -315,6 +316,9 @@ const renderApp = () => {
     case 'sites':
       mainContentHtml = SitesWorkspace(state);
       break;
+    case 'conclusion':
+      mainContentHtml = ConclusionWorkspace(state);
+      break;
   }
 
   const footerHtml = isPres ? `
@@ -331,6 +335,7 @@ const renderApp = () => {
           <option value="pmo" ${state.activeTab === 'pmo' ? 'selected' : ''}>PMO : Risques & RACI</option>
           <option value="comparison" ${state.activeTab === 'comparison' ? 'selected' : ''}>Dette : Avant / Après</option>
           <option value="sites" ${state.activeTab === 'sites' ? 'selected' : ''}>Présentation des Sites</option>
+          <option value="conclusion" ${state.activeTab === 'conclusion' ? 'selected' : ''}>Conclusion</option>
         </select>
       </div>
 
