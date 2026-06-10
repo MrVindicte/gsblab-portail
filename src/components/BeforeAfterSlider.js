@@ -1,4 +1,84 @@
 export default function BeforeAfterSlider(state) {
+  const isPres = state.presentationMode;
+
+  // ── MODE PRÉSENTATION — slide visuelle full-screen ──────────────────────────
+  if (isPres) {
+    return `
+      <div data-pres-slide="1" data-pres-label="Avant / Après — Dette Technique"
+           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
+
+        <div class="text-center space-y-3">
+          <h2 class="text-5xl font-extrabold text-white tracking-tight font-display">Avant / Après — Dette Technique</h2>
+          <div class="w-20 h-1.5 bg-gradient-to-r from-red-500 to-emerald-500 mx-auto rounded-full"></div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6 w-full flex-1 min-h-0">
+
+          <!-- AVANT -->
+          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-red-500 flex flex-col gap-4 bg-slate-900/60">
+            <div class="flex items-center gap-2 text-red-400 font-bold uppercase tracking-widest text-xs">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              Situation existante
+            </div>
+            <div class="space-y-3 flex-1">
+              ${[
+                ['WS 2012 / VMware ESXi', 'EoL 2027 — vulnérabilités critiques non patchées'],
+                ['Réseau plat sans VLAN', 'Secrétariats et serveurs cliniques sur le même L2'],
+                ['Pas de MFA ni MDM', 'Messagerie sans 2FA · laptops non chiffrés'],
+                ['Baie VNX exposée WAN', 'Stockage accessible sans pare-feu frontal dédié'],
+              ].map(([t, d]) => `
+                <div class="bg-red-500/5 border border-red-500/15 rounded-xl p-3">
+                  <div class="text-red-300 font-semibold text-sm">${t}</div>
+                  <div class="text-slate-500 text-xs mt-0.5 leading-snug">${d}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- CENTER delta -->
+          <div class="flex flex-col items-center justify-center gap-5 text-center">
+            <div>
+              <div class="text-5xl font-mono font-extrabold text-emerald-400 leading-none">65 k€</div>
+              <div class="text-slate-400 text-sm mt-2">économisés par an<br>vs VMware Broadcom</div>
+            </div>
+            <div class="w-1 h-12 bg-gradient-to-b from-red-500 to-emerald-500 rounded-full"></div>
+            <div>
+              <div class="text-3xl font-mono font-bold text-indigo-300">440 794 €</div>
+              <div class="text-slate-400 text-xs mt-1">investi dans la nouvelle infra</div>
+            </div>
+            <div class="mt-2 flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 py-1.5">
+              <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="text-emerald-400 text-xs font-bold">HDS v2 conforme</span>
+            </div>
+          </div>
+
+          <!-- APRÈS -->
+          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-emerald-500 flex flex-col gap-4 bg-slate-900/60">
+            <div class="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-widest text-xs">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              Infrastructure cible HDS
+            </div>
+            <div class="space-y-3 flex-1">
+              ${[
+                ['Proxmox VE HA + Ceph', 'Hyperconvergé · RTO &lt; 5 min · support 5 ans'],
+                ['VLAN HDS + VPN IPsec', 'VLAN 30 isolé strict · 27 spokes FortiGate 40F'],
+                ['Exchange Online + MFA', 'M365 HDS certifié · BitLocker · Authenticator'],
+                ['PBS + OVH Object Storage', 'Sauvegarde 3-2-1 · RPO 1h · chiffré AES-256'],
+              ].map(([t, d]) => `
+                <div class="bg-emerald-500/5 border border-emerald-500/15 rounded-xl p-3">
+                  <div class="text-emerald-300 font-semibold text-sm">${t}</div>
+                  <div class="text-slate-500 text-xs mt-0.5 leading-snug">${d}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+  }
+
+  // ── MODE NORMAL ──────────────────────────────────────────────────────────────
   return `
     <div class="space-y-6">
       

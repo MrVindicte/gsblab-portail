@@ -1,4 +1,187 @@
-export default function SitesWorkspace() {
+export default function SitesWorkspace(state = {}) {
+  const isPres = state.presentationMode;
+
+  // ── MODE PRÉSENTATION — 2 slides visuelles ──────────────────────────────────
+  if (isPres) {
+    return `
+      <!-- SLIDE 1 : Vue d'ensemble 27 sites -->
+      <div data-pres-slide="1" data-pres-label="Architecture des 27 Sites"
+           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
+
+        <div class="text-center space-y-2">
+          <h2 class="text-5xl font-extrabold text-white tracking-tight font-display">Architecture des 27 Sites</h2>
+          <div class="w-20 h-1.5 bg-gradient-to-r from-violet-500 via-blue-500 to-emerald-500 mx-auto rounded-full"></div>
+          <p class="text-slate-400 text-sm">380 utilisateurs au plateau · Déploiement 2026-2028</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6 w-full flex-1 min-h-0">
+
+          <!-- Siège -->
+          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-violet-500 flex flex-col gap-4 bg-slate-900/60">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-violet-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-violet-400 uppercase tracking-wider">Siège Social</div>
+                <div class="text-base font-bold text-white">Strasbourg DG</div>
+              </div>
+            </div>
+            <div class="flex justify-around border-t border-white/5 pt-4">
+              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-violet-300">1</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Site HUB</div></div>
+              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-violet-300">75</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Utilisateurs</div></div>
+            </div>
+            <div class="space-y-2 flex-1">
+              ${[
+                'Cluster Proxmox VE HA — 2× Dell R760',
+                'Baie Dell PowerVault ME484 + Ceph',
+                'FortiGate 1100E — Hub VPN hub-and-spoke',
+                'Exchange Online HDS + Entra ID',
+                'PBS + OVH Object Storage HDS',
+              ].map(b => `<div class="flex items-start gap-2 text-[11px] text-slate-400"><span class="text-violet-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span></div>`).join('')}
+            </div>
+          </div>
+
+          <!-- Labos -->
+          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-blue-500 flex flex-col gap-4 bg-slate-900/60">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-blue-400 uppercase tracking-wider">Phase 2026</div>
+                <div class="text-base font-bold text-white">5 Laboratoires</div>
+              </div>
+            </div>
+            <div class="flex justify-around border-t border-white/5 pt-4">
+              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-blue-300">5</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Sites</div></div>
+              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-blue-300">60</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Utilisateurs</div></div>
+              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-blue-300">11k€</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">/labo</div></div>
+            </div>
+            <div class="space-y-2 flex-1">
+              ${[
+                'Toulouse · Marseille · Nantes · Lyon · Lille',
+                '10 HP ProDesk 400 G9 + 2 HP 250 G10',
+                'FortiGate 40F spoke + CBS250-24T',
+                'Ubiquiti U6+ Wi-Fi 6',
+                'VLAN 10/20/30/40/99 — règle 10.S.V.0/24',
+              ].map(b => `<div class="flex items-start gap-2 text-[11px] text-slate-400"><span class="text-blue-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span></div>`).join('')}
+            </div>
+          </div>
+
+          <!-- Centres -->
+          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-emerald-500 flex flex-col gap-4 bg-slate-900/60">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
+                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 15a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 4.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 11a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.92z"/></svg>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Phase 2027-2028</div>
+                <div class="text-base font-bold text-white">15 Centres prélèvement</div>
+              </div>
+            </div>
+            <div class="flex justify-around border-t border-white/5 pt-4">
+              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-emerald-300">15</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Sites</div></div>
+              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-emerald-300">245</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Utilisateurs</div></div>
+              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-emerald-300">5k€</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">/centre</div></div>
+            </div>
+            <div class="space-y-2 flex-1">
+              ${[
+                '3 centres par laboratoire (rayon &lt; 50 km)',
+                '5 HP ProDesk 400 G9 + 1 HP 250 G10',
+                'FortiGate 40F spoke + CBS250-16T',
+                'VLAN 20/30/40/99 — VLAN 10 via VPN hub',
+                'Lot 1 : 8 centres 2027 · Lot 2 : 7 centres 2028',
+              ].map(b => `<div class="flex items-start gap-2 text-[11px] text-slate-400"><span class="text-emerald-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span></div>`).join('')}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- SLIDE 2 : Connectivité & VLAN -->
+      <div data-pres-slide="2" data-pres-label="Connectivité & Sécurité Réseau"
+           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
+
+        <div class="text-center space-y-2">
+          <h2 class="text-5xl font-extrabold text-indigo-300 tracking-tight font-display">Connectivité Hub-and-Spoke</h2>
+          <div class="w-16 h-1.5 bg-indigo-500 mx-auto rounded-full shadow-[0_0_12px_rgba(99,102,241,0.5)]"></div>
+          <p class="text-slate-400 text-sm">VPN IPsec AES-256 IKEv2 · Règle d'adressage 10.S.V.0/24</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-8 w-full flex-1 min-h-0">
+
+          <!-- Topologie hub-and-spoke -->
+          <div class="glass-panel rounded-3xl p-7 flex flex-col justify-center gap-5 bg-slate-900/60">
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">Topologie réseau</div>
+            <div class="flex flex-col items-center gap-3">
+              <!-- HUB -->
+              <div class="bg-violet-500/20 border border-violet-500/40 rounded-xl px-5 py-3 text-center">
+                <div class="text-violet-300 font-bold text-sm">HUB — Strasbourg</div>
+                <div class="text-[10px] text-slate-500 mt-0.5">FortiGate 1100E · Cluster Proxmox</div>
+              </div>
+              <!-- VPN bar -->
+              <div class="flex items-center gap-2 text-[9px] text-slate-600 font-mono">
+                <div class="h-px w-16 bg-indigo-500/40"></div>VPN IPsec AES-256 IKEv2<div class="h-px w-16 bg-indigo-500/40"></div>
+              </div>
+              <!-- Spokes -->
+              <div class="grid grid-cols-3 gap-3 w-full">
+                ${[
+                  ['S10–14','5 Labos','blue'],
+                  ['S20–27','8 Centres 2027','emerald'],
+                  ['S28–34','7 Centres 2028','emerald'],
+                ].map(([s,l,c]) => `
+                  <div class="bg-${c}-500/10 border border-${c}-500/25 rounded-lg px-2 py-2 text-center">
+                    <div class="text-${c}-300 font-mono font-bold text-xs">${s}</div>
+                    <div class="text-[9px] text-slate-500 mt-0.5">${l}</div>
+                    <div class="text-[8px] text-slate-600 mt-0.5">FortiGate 40F</div>
+                  </div>
+                `).join('')}
+              </div>
+              <!-- Infra per site -->
+              <div class="flex items-center gap-2 text-[9px] text-slate-600 w-full justify-center">
+                <span class="bg-slate-800/60 border border-white/5 rounded px-2 py-0.5">CBS250-24T/16T</span>
+                <span>→</span>
+                <span class="bg-slate-800/60 border border-white/5 rounded px-2 py-0.5">Ubiquiti U6+</span>
+                <span>→</span>
+                <span class="bg-slate-800/60 border border-white/5 rounded px-2 py-0.5">PBS Strasbourg</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- VLAN palette -->
+          <div class="glass-panel rounded-3xl p-7 flex flex-col gap-4 bg-slate-900/60">
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">Segmentation VLAN (identique sur tous les spokes)</div>
+            <div class="space-y-3 flex-1">
+              ${[
+                ['10','Admin / Serveurs','blue','Routé via tunnel VPN vers Siège'],
+                ['20','Postes de travail','indigo','HP ProDesk + laptops · accès métier'],
+                ['30','Analyse HDS','emerald','ISOLÉ STRICT — VLAN 40 BLOQUÉ'],
+                ['40','Wi-Fi invités','amber','Ubiquiti U6+ · Internet only'],
+                ['99','Management','slate','CBS250 + FortiGate 40F hors-bande'],
+              ].map(([id, name, color, note]) => `
+                <div class="flex items-center gap-3">
+                  <span class="w-12 flex-shrink-0 text-center font-mono font-extrabold text-lg bg-${color}-500/15 border border-${color}-500/25 text-${color}-300 rounded-lg py-1">${id}</span>
+                  <div class="flex-1 min-w-0">
+                    <div class="font-semibold text-white text-sm">${name}</div>
+                    <div class="text-[10px] text-slate-500 mt-0.5 truncate">${note}</div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+            <div class="flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3 text-[10px] text-emerald-300">
+              <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <span><b>ACL FortiGate HDS</b> — VLAN 40 → VLAN 30 : DROP · VLAN 20 → VLAN 30 : PERMIT flux métier</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    `;
+  }
+
+  // ── MODE NORMAL ──────────────────────────────────────────────────────────────
   return `
     <!-- ═══════════════════════════════════════════════════════════════
          PRÉSENTATION DES SITES

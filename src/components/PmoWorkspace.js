@@ -102,6 +102,92 @@ export default function PmoWorkspace(state) {
     </tr>
   `).join('');
 
+  const isPres = state.presentationMode;
+
+  // ── MODE PRÉSENTATION — 2 slides visuelles ──────────────────────────────────
+  if (isPres) {
+    const topRisks = [...state.risksList].sort((a, b) => b.criticality - a.criticality).slice(0, 4);
+    const riskColor = (score) => score >= 12 ? ['red','CRITIQUE'] : score >= 8 ? ['amber','ÉLEVÉ'] : ['emerald','MODÉRÉ'];
+
+    return `
+      <!-- SLIDE 1 : Roadmap -->
+      <div data-pres-slide="1" data-pres-label="Roadmap 2026-2030"
+           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
+
+        <div class="text-center space-y-2">
+          <h2 class="text-5xl font-extrabold text-indigo-300 tracking-tight font-display">Roadmap 2026–2030</h2>
+          <div class="w-16 h-1.5 bg-indigo-500 mx-auto rounded-full shadow-[0_0_12px_rgba(99,102,241,0.5)]"></div>
+          <p class="text-slate-400 text-sm">440 794 € sur 5 ans &middot; Plafond 450 000 € &middot; Réserve 9 206 €</p>
+        </div>
+
+        <div class="grid grid-cols-5 gap-3 w-full flex-1 min-h-0">
+          ${[
+            { year:'2026', budget:'228 k€', color:'violet', phase:'Migration cœur', sites:12, users:215, bullets:['Proxmox VE + 2× R760','Exchange Online HDS','5 labos déployés'] },
+            { year:'2027', budget:'64 k€',  color:'blue',   phase:'Centres lot 1',  sites:20, users:303, bullets:['8 centres ouverts','VPN 20 spokes','CBS250 remplacement'] },
+            { year:'2028', budget:'60 k€',  color:'cyan',   phase:'Parc cible',     sites:27, users:380, bullets:['7 centres → plateau','380 utilisateurs','Coûts stabilisés'] },
+            { year:'2029', budget:'23 k€',  color:'emerald',phase:'Run-rate',        sites:27, users:380, bullets:['Exploitation courante','LTO-6 → LTO-8','Rachat optionnel'] },
+            { year:'2030', budget:'23 k€',  color:'slate',  phase:'Clôture projet', sites:27, users:380, bullets:['Dernière année','Bilan migration','Réserve disponible'] },
+          ].map(y => `
+            <div class="glass-panel rounded-2xl p-4 border-t-[4px] border-t-${y.color}-500 flex flex-col gap-3 bg-slate-900/60">
+              <div class="text-center">
+                <div class="text-2xl font-black text-${y.color}-300 font-mono">${y.year}</div>
+                <div class="text-lg font-mono font-bold text-white">${y.budget}</div>
+                <div class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">${y.phase}</div>
+              </div>
+              <div class="flex justify-around text-center border-t border-white/5 pt-2">
+                <div><div class="font-mono font-bold text-${y.color}-300 text-sm">${y.users}</div><div class="text-[9px] text-slate-600">pers.</div></div>
+                <div><div class="font-mono font-bold text-${y.color}-300 text-sm">${y.sites}</div><div class="text-[9px] text-slate-600">sites</div></div>
+              </div>
+              <div class="space-y-1.5 flex-1">
+                ${y.bullets.map(b => `
+                  <div class="flex items-start gap-1.5 text-[10px] text-slate-400">
+                    <span class="text-${y.color}-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+
+      </div>
+
+      <!-- SLIDE 2 : Risques -->
+      <div data-pres-slide="2" data-pres-label="Risques Critiques"
+           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-8 w-full max-w-5xl mx-auto h-full py-4">
+
+        <div class="text-center space-y-3">
+          <h2 class="text-5xl font-extrabold text-white tracking-tight font-display">Risques Critiques</h2>
+          <div class="w-16 h-1.5 bg-red-500 mx-auto rounded-full shadow-[0_0_12px_rgba(239,68,68,0.4)]"></div>
+          <p class="text-slate-400 text-sm">Registre de risques — Top ${topRisks.length} par criticité (Probabilité × Impact)</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-5 w-full">
+          ${topRisks.map(r => {
+            const [col, label] = riskColor(r.criticality);
+            return `
+              <div class="glass-panel rounded-2xl p-5 border-l-[5px] border-l-${col}-500 flex flex-col gap-3 bg-slate-900/60">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2">
+                    <span class="font-mono text-xs text-slate-500 font-bold">${r.id}</span>
+                    <span class="text-[9px] font-bold uppercase tracking-wider text-${col}-400 bg-${col}-500/10 border border-${col}-500/25 rounded px-1.5 py-0.5">${label}</span>
+                  </div>
+                  <span class="text-2xl font-mono font-extrabold text-${col}-400">${r.criticality}<span class="text-base text-slate-600">/16</span></span>
+                </div>
+                <div>
+                  <div class="font-bold text-white text-sm">${r.title}</div>
+                  <div class="text-slate-500 text-xs mt-1 leading-snug">${r.mitigation}</div>
+                </div>
+                <div class="text-[9px] text-slate-600 font-mono">Resp. : ${r.owner}</div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+
+      </div>
+    `;
+  }
+
+  // ── MODE NORMAL ──────────────────────────────────────────────────────────────
   return `
     <div class="space-y-6">
 

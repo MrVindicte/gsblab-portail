@@ -1,4 +1,71 @@
 export default function DrpSimulator(state) {
+  const isPres = state.presentationMode;
+
+  // ── MODE PRÉSENTATION — slide visuelle full-screen ──────────────────────────
+  if (isPres) {
+    return `
+      <div data-pres-slide="1" data-pres-label="Plan de Reprise d'Activité"
+           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-8 w-full max-w-6xl mx-auto h-full py-6">
+
+        <div class="text-center space-y-3">
+          <h2 class="text-5xl font-extrabold text-red-400 tracking-tight font-display">Plan de Reprise d'Activité</h2>
+          <div class="w-16 h-1.5 bg-red-500 mx-auto rounded-full shadow-[0_0_15px_rgba(239,68,68,0.4)]"></div>
+          <p class="text-slate-400 text-sm">Hub Strasbourg — Conformité HDS v2 Activité 6</p>
+        </div>
+
+        <div class="grid grid-cols-3 gap-6 w-full">
+          <div class="glass-panel rounded-3xl p-8 border-l-[6px] border-l-emerald-500 flex flex-col items-center justify-center text-center bg-slate-900/60 shadow-xl">
+            <span class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-3">RTO</span>
+            <div class="text-6xl font-mono font-extrabold text-emerald-400 leading-none">4h</div>
+            <div class="text-slate-400 text-sm mt-3">Reprise d'activité max.</div>
+          </div>
+          <div class="glass-panel rounded-3xl p-8 border-l-[6px] border-l-blue-500 flex flex-col items-center justify-center text-center bg-slate-900/60 shadow-xl">
+            <span class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-3">RPO</span>
+            <div class="text-6xl font-mono font-extrabold text-blue-400 leading-none">1h</div>
+            <div class="text-slate-400 text-sm mt-3">Perte de données max.</div>
+          </div>
+          <div class="glass-panel rounded-3xl p-8 border-l-[6px] border-l-indigo-500 flex flex-col items-center justify-center text-center bg-slate-900/60 shadow-xl">
+            <span class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-3">Sites couverts</span>
+            <div class="text-6xl font-mono font-extrabold text-indigo-400 leading-none">27</div>
+            <div class="text-slate-400 text-sm mt-3">Spokes VPN IPsec</div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6 w-full">
+          <div class="glass-panel rounded-2xl p-6 border-l-[5px] border-l-red-500 flex items-start gap-4 bg-slate-900/60">
+            <div class="w-12 h-12 rounded-xl bg-red-500/15 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div>
+              <div class="text-lg font-bold text-white mb-1">Scénario A — Ransomware</div>
+              <div class="text-slate-400 text-sm">Isolation VM · Snapshot Proxmox · Restauration PBS · Quarantaine VLAN 999</div>
+            </div>
+          </div>
+          <div class="glass-panel rounded-2xl p-6 border-l-[5px] border-l-amber-500 flex items-start gap-4 bg-slate-900/60">
+            <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <div>
+              <div class="text-lg font-bold text-white mb-1">Scénario B — Sinistre Physique</div>
+              <div class="text-slate-400 text-sm">Failover DNS AD · Restoration R730 Nantes · Bascule OVH HDS hors-site</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full glass-panel rounded-2xl p-4 flex flex-wrap items-center justify-center gap-3 bg-emerald-500/5 border border-emerald-500/20">
+          <span class="text-emerald-400 text-sm font-bold uppercase tracking-wider">Chaîne de sauvegarde :</span>
+          <span class="font-mono text-xs text-slate-300 bg-slate-900/60 border border-white/8 rounded px-2.5 py-1">PBS Local · J-1 incrémental</span>
+          <span class="text-slate-600 font-bold">→</span>
+          <span class="font-mono text-xs text-slate-300 bg-slate-900/60 border border-white/8 rounded px-2.5 py-1">PBS Nantes · hebdomadaire</span>
+          <span class="text-slate-600 font-bold">→</span>
+          <span class="font-mono text-xs text-slate-300 bg-slate-900/60 border border-white/8 rounded px-2.5 py-1">OVH Object Storage HDS · mensuel</span>
+        </div>
+
+      </div>
+    `;
+  }
+
+  // ── MODE NORMAL ──────────────────────────────────────────────────────────────
   if (state.activeCrisis === 'none') {
     return `
       <div class="space-y-6 animate-fade-in">

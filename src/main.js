@@ -6,10 +6,10 @@ import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=17';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=12';
 import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=6';
-import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=3';
-import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=4';
-import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=3';
-import SitesWorkspace from './components/SitesWorkspace.js?v=3';
+import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=4';
+import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=5';
+import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=4';
+import SitesWorkspace from './components/SitesWorkspace.js?v=4';
 
 // Global state holding parameters
 window.appState = {
@@ -40,7 +40,7 @@ window.appState = {
 // Update maxSteps when you add/remove data-pres-step elements in a component.
 const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites'];
 // Nombre de slides par onglet (Option B : slides exclusives)
-const PRES_MAX  = { dashboard: 8, finance: 2, tech: 3, drp: 2, pmo: 3, comparison: 2, sites: 3 };
+const PRES_MAX  = { dashboard: 8, finance: 2, tech: 3, drp: 1, pmo: 2, comparison: 1, sites: 2 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
