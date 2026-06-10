@@ -64,11 +64,11 @@ GSBLAB = entreprise de santé fictive, 27 laboratoires (1 hub Strasbourg + 26 sp
 
 | Fichier | Rôle |
 |---|---|
-| `index.html` | Point d'entrée — config Tailwind custom, CDN, `main.js?v=36` |
-| `src/main.js` | Orchestrateur — `window.appState`, `renderApp()`, système présentation (34 slides) |
+| `index.html` | Point d'entrée — config Tailwind custom, CDN, `main.js?v=37` |
+| `src/main.js` | Orchestrateur — `window.appState`, `renderApp()`, système présentation (37 slides) |
 | `src/index.css` | Styles custom (`?v=2`) — `.glass-panel`, animations, `@media print`, `.livrable-export-mode` |
 | `src/components/ExecutiveSummary.js` | Synthèse — 14 slides présentation (v21) |
-| `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, Chart.js, 2 slides (v12) |
+| `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, "Facture Comparée" + Comparatif Budgétaire, 5 slides présentation (v13) |
 | `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, IaC, 3 slides (v6) |
 | `src/components/DrpSimulator.js` | Simulateur PRA — ransomware + sinistre, 1 slide/3 reveals (v5) |
 | `src/components/PmoWorkspace.js` | PMO — risques, roadmap 2026-2030, 2 slides/5 reveals (v6) |
@@ -90,9 +90,9 @@ Mécanisme à deux niveaux (tous les onglets sont passés sur ce système) :
    progression). `updatePresentationDOM()` active (`pres-slide-active`) la
    slide dont la liste contient `appState.presentationStep` (= étape locale
    courante).
-   ⚠️ Exemple : onglet `finance` → `PRES_OFFSET.finance = 11` → son étape
-   locale 1 correspond à l'étape globale 12, mais le HTML porte bien
-   `data-pres-slide="1"` (jamais `"12"`).
+   ⚠️ Exemple : onglet `finance` → `PRES_OFFSET.finance = 14` → son étape
+   locale 1 correspond à l'étape globale 15, mais le HTML porte bien
+   `data-pres-slide="1"` (jamais `"15"`).
 2. **Révélation progressive** — `data-reveal-at="N"` sur des sous-éléments
    *à l'intérieur* de la slide active : `opacity-100` dès que
    `presentationStep >= N` (N = étape **locale**), sinon `opacity-0`.
@@ -101,13 +101,13 @@ Mécanisme à deux niveaux (tous les onglets sont passés sur ce système) :
 Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélecteur
 « Espace : » (`pres-page-select`, footer) pour sauter directement à un onglet.
 
-`PRES_MAX = { dashboard:14, finance:2, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
-→ **PRES_TOTAL = 34 slides/étapes**
+`PRES_MAX = { dashboard:14, finance:5, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
+→ **PRES_TOTAL = 37 slides/étapes**
 
 | Onglet | N | Détail |
 |---|---|---|
 | dashboard | 14 | 1 Équipe · 2-6 Synthèse + Périmètre du Projet (reveal 3→6) · 7-10 Stratégie de Transformation (4 piliers révélés un par un) · 11-14 Impact Budgétaire (hero "+329 500 €" puis 3 preuves TCO/ROI/Budget révélées une par une) |
-| finance | 2 | 1 Analyse TCO · 2 Comparatif budgétaire |
+| finance | 5 | 1-4 Analyse TCO & Économies, « Facture Comparée » 2 colonnes VMware/Proxmox (CapEx identique reveal 2 → OpEx divergent reveal 3 → TOTAL 441,5k€ vs 112,0k€ + écart "+329 500 €" reveal 4) · 5 Comparatif budgétaire |
 | tech | 3 | 1 Architecture globale · 2 Cluster Proxmox · 3 Déploiement IaC |
 | drp | 3 | 1 slide « PRA » : KPIs fixes → scénarios (reveal 2) → chaîne PBS (reveal 3) |
 | pmo | 5 | Slides 1-3 « Roadmap 2026-2030 » (2026 fixe → +2027/28 reveal 2 → +2029/30 reveal 3) · Slides 4-5 « Risques critiques » (top2 fixes → risques 3-4 reveal 5) |
@@ -128,6 +128,55 @@ Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélect
 ---
 
 ## Ce qui a été fait
+
+### Session 2026-06-10 (suite 3) — Slide "Analyse TCO & Économies" repensée en "Facture Comparée"
+
+Ancienne slide 1 de l'onglet `finance` : cartes KPI (économies/ROI) + bloc
+"conseil" + canvas Chart.js (graphe TCO 5 ans empilé), 1 étape locale,
+statique. Jugée trop proche du gabarit "cards" déjà vu plusieurs fois dans
+le deck — demande explicite : un effet "wow" marketing, visuellement
+distinct, mais professionnel.
+
+Concept retenu (parmi 3 propositions soumises via `AskUserQuestion`) : **la
+Facture Comparée** — mise en scène "ticket de caisse" en 2 colonnes
+face-à-face (VMware Broadcom vs Proxmox VE HA) :
+
+- En-têtes visibles direct : `01 · Statu quo / VMware Broadcom` vs
+  `02 · Cible retenue / Proxmox VE HA`.
+- **Reveal 2** — ligne "Socle technique (CapEx)" : strictement identique
+  pour les deux scénarios (vérifié dans `financialMath.js` :
+  `capexVmware = {...capexProxmox}`) — démontre que ce n'est pas le matériel
+  qui coûte cher.
+- **Reveal 3** — ligne OpEx divergente : `Licences cœur Broadcom`
+  (facturation par cœur, driver qualitatif vérifié dans `financialMath.js` :
+  `opexVmware.hypervisorSupport = totalCores * vmwareCorePrice`) vs
+  `Support standard inclus` (forfait fixe, aucun coût/cœur).
+- **Reveal 4** — TOTAL TCO 5 ans : `441,5k€` vs `112,0k€` + bandeau écart
+  final `+ 329 500 €`.
+
+La slide passe de **1 à 4 étapes locales** (1→1,2,3,4) ; "Comparatif
+Budgétaire" est décalée de l'étape locale 2 → 5. Le canvas Chart.js
+(`tco-chart-canvas`) n'existe désormais plus dans aucune slide de
+présentation de l'onglet finance — `bindFinanceEvents` détruit proprement
+`chartInstance` (et le remet à `null`) si le canvas est absent, pour éviter
+toute fuite mémoire en navigant entre slides.
+
+⚠️ **Incohérence référentielle découverte** (non bloquante, signalée par
+commentaire dans le code de `presSlide1`) : avec l'état par défaut du
+calculateur interactif (333 users / 27 sites / 4 serveurs / 300€ core /
+4500€ cloud / 5% inflation), `financialMath.js` donne un **CapEx Proxmox
+seul de 237 580€** — déjà supérieur au TCO Proxmox 5 ans "officiel"
+(112,0k€) utilisé sur cette slide et sur "Impact Budgétaire". Le calculateur
+live et les chiffres officiels du deck utilisent deux référentiels non
+réconciliés. Décision : conserver les chiffres officiels (112,0k€/441,5k€/
++329 500 €, sourcés `ETAT_PROJET.md`) sur les slides de présentation, ne pas
+inventer de ventilation de raccordement. Point ouvert de même nature que
+l'incohérence RTO/RPO (cf. GUIDE_SLIDES.md §5).
+
+Impact : `PRES_MAX.finance` 2 → **5**, slide "Comparatif Budgétaire" décalée
+de l'étape locale 2 → 5, `PRES_TOTAL` 34 → **37**.
+
+Versions : `index.html` → `main.js?v=37` · `FinanceWorkspace.js?v=13`
 
 ### Session 2026-06-10 (suite 2) — Slide "Impact Budgétaire" repensée (clôture)
 

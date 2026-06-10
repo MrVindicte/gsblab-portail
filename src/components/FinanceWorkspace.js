@@ -265,52 +265,81 @@ export default function FinanceWorkspace(state) {
     return `<div data-pres-slide="1" class="space-y-6 h-full overflow-y-auto pr-2 pb-10">${dashboardHTML}</div>`;
   }
 
+  // Slide "Analyse TCO & Économies" (étapes locales 1→4) : "facture comparée"
+  // 2 colonnes (VMware vs Proxmox). Ligne 1 = socle CapEx IDENTIQUE (vrai dans
+  // financialMath.js : capexVmware = {...capexProxmox}) — démontre que ce
+  // n'est PAS le matériel qui coûte cher. Ligne 2 = OpEx divergent (driver
+  // qualitatif : licences/cœur Broadcom vs forfait standard). Ligne 3 = TOTAL
+  // (chiffres officiels 441,5k€/112,0k€, identiques à ETAT_PROJET.md /
+  // slide "Impact Budgétaire" — pas les valeurs du calculateur interactif,
+  // qui utilise un autre référentiel).
   const presSlide1 = `
-    <div data-pres-slide="1" data-pres-label="Analyse TCO" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-8 w-full max-w-6xl mx-auto h-full py-4">
-      <div class="text-center space-y-4 w-full mb-2">
-        <h2 class="text-4xl md:text-5xl font-extrabold text-emerald-400 tracking-tight">Analyse TCO & Économies</h2>
-        <div class="w-16 h-1.5 bg-emerald-500 mx-auto rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
-      </div>
-      
-      <!-- KPIs -->
-      <div class="grid grid-cols-2 gap-8 w-full">
-        <div class="glass-panel rounded-3xl p-8 border-l-[6px] border-l-emerald-500 shadow-2xl flex flex-col justify-center bg-slate-900/60">
-          <span class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Économie Nette (5 ans)</span>
-          <div class="flex items-center gap-4">
-            <div class="text-[4rem] font-mono font-extrabold text-emerald-400 leading-none" id="kpi-savings">-- €</div>
-            <span class="text-emerald-500 text-4xl font-bold mb-2">↑</span>
-          </div>
-          <div class="text-lg text-slate-400 font-medium mt-4">vs. statu quo VMware Broadcom</div>
-        </div>
-        <div class="glass-panel rounded-3xl p-8 border-l-[6px] border-l-red-500 shadow-2xl flex flex-col justify-center bg-slate-900/60">
-          <span class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Surcoût VMware Broadcom</span>
-          <div class="flex items-center gap-4">
-            <div class="text-[4rem] font-mono font-extrabold text-red-400 leading-none" id="kpi-pct-vmware">--%</div>
-            <span class="text-red-500 text-4xl font-bold mb-2">↑</span>
-          </div>
-          <div class="text-lg text-slate-400 font-medium mt-4">Dû au nouveau licensing par cœur</div>
-        </div>
-      </div>
+    <div data-pres-slide="1,2,3,4" data-pres-label="Analyse TCO & Économies"
+         class="flex-1 min-h-0 flex flex-col justify-center py-2">
 
-      <!-- Advisory -->
-      <div id="budget-advisory" class="w-full p-6 rounded-2xl flex items-center gap-6 border bg-emerald-500/10 border-emerald-500/20 text-emerald-400 text-xl shadow-lg mt-2">
-        <span id="advisory-icon" class="flex-shrink-0">
-          <svg class="w-10 h-10" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        </span>
-        <div id="advisory-text" class="flex-1 leading-relaxed">
-          <!-- JS target -->
-        </div>
-      </div>
+      <div class="w-full max-w-5xl mx-auto flex flex-col gap-8">
 
-      <!-- Chart -->
-      <div class="w-full flex-1 min-h-[300px] glass-panel rounded-3xl p-8 shadow-2xl relative bg-slate-900/80">
-         <canvas id="tco-chart-canvas" class="h-full w-full"></canvas>
+        <!-- ── TITRE ─────────────────────────────────────────────────────────── -->
+        <div class="text-center space-y-2.5">
+          <h2 class="text-3xl font-extrabold text-white tracking-tight leading-tight">
+            Analyse TCO & Économies
+          </h2>
+          <div class="w-16 h-[2px] mx-auto bg-slate-700 rounded-full"></div>
+        </div>
+
+        <!-- ── FACTURE COMPARÉE — 2 colonnes ─────────────────────────────────── -->
+        <div class="relative grid grid-cols-2 gap-x-16">
+          <div class="absolute left-1/2 top-2 bottom-2 w-px bg-slate-700/40 -translate-x-1/2 pointer-events-none"></div>
+
+          <!-- En-têtes (visibles direct) -->
+          <div class="text-center space-y-1.5 pb-4 border-b border-red-500/20">
+            <div class="text-xs font-bold uppercase tracking-widest text-red-400">01 · Statu quo</div>
+            <div class="text-2xl font-extrabold text-white whitespace-nowrap">VMware Broadcom</div>
+          </div>
+          <div class="text-center space-y-1.5 pb-4 border-b border-emerald-500/20">
+            <div class="text-xs font-bold uppercase tracking-widest text-emerald-400">02 · Cible retenue</div>
+            <div class="text-2xl font-extrabold text-white whitespace-nowrap">Proxmox VE HA</div>
+          </div>
+
+          <!-- Ligne 1 : CapEx identique (reveal 2) -->
+          <div data-reveal-at="2" class="opacity-0 transition-all duration-700 col-span-2 text-center py-5 border-b border-slate-700">
+            <span class="text-base md:text-lg font-mono font-bold text-slate-300 whitespace-nowrap">Socle technique (CapEx)</span>
+            <span class="text-sm md:text-base font-mono text-slate-500 whitespace-nowrap ml-3">— strictement identique pour les deux scénarios</span>
+          </div>
+
+          <!-- Ligne 2 : OpEx divergent (reveal 3) -->
+          <div data-reveal-at="3" class="opacity-0 transition-all duration-700 text-center py-5 border-b border-slate-700">
+            <div class="text-base md:text-lg font-mono font-bold text-red-400 whitespace-nowrap">Licences cœur Broadcom</div>
+            <div class="text-sm font-mono text-slate-500 mt-1 whitespace-nowrap">facturation par cœur · ×5 ans</div>
+          </div>
+          <div data-reveal-at="3" class="opacity-0 transition-all duration-700 text-center py-5 border-b border-slate-700">
+            <div class="text-base md:text-lg font-mono font-bold text-emerald-400 whitespace-nowrap">Support standard inclus</div>
+            <div class="text-sm font-mono text-slate-500 mt-1 whitespace-nowrap">forfait fixe · aucun coût/cœur</div>
+          </div>
+
+          <!-- Ligne 3 : TOTAL (reveal 4) -->
+          <div data-reveal-at="4" class="opacity-0 transition-all duration-700 text-center pt-6">
+            <div class="text-4xl md:text-5xl font-mono font-black text-red-400 whitespace-nowrap">441,5k€</div>
+            <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mt-2">TCO cumulé 5 ans</div>
+          </div>
+          <div data-reveal-at="4" class="opacity-0 transition-all duration-700 text-center pt-6">
+            <div class="text-4xl md:text-5xl font-mono font-black text-emerald-400 whitespace-nowrap" style="text-shadow: 0 0 20px rgba(16,185,129,0.3)">112,0k€</div>
+            <div class="text-xs font-bold uppercase tracking-widest text-slate-500 mt-2">TCO cumulé 5 ans</div>
+          </div>
+        </div>
+
+        <!-- ── Bandeau écart final (reveal 4) ────────────────────────────────── -->
+        <div data-reveal-at="4" class="opacity-0 transition-all duration-700 text-center">
+          <span class="text-2xl md:text-3xl font-mono font-black text-emerald-300 whitespace-nowrap">+ 329 500 €</span>
+          <span class="text-sm md:text-base font-bold text-slate-400 uppercase tracking-widest ml-3 whitespace-nowrap">d'écart sur 5 ans</span>
+        </div>
+
       </div>
     </div>
   `;
 
   const presSlide2 = `
-    <div data-pres-slide="2" data-pres-label="Comparatif Budgétaire" class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
+    <div data-pres-slide="5" data-pres-label="Comparatif Budgétaire" class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
       <div class="text-center space-y-3 w-full">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Comparatif Budgétaire</h2>
         <div class="w-16 h-1.5 bg-gradient-to-r from-blue-500 to-emerald-500 mx-auto rounded-full"></div>
@@ -542,12 +571,14 @@ const updateValues = (state) => {
 export function bindFinanceEvents(state, renderApp) {
   // Initialisation du graphique Chart.js
   const canvas = document.getElementById('tco-chart-canvas');
+
+  if (chartInstance) {
+    chartInstance.destroy();
+    chartInstance = null;
+  }
+
   if (canvas) {
     const ctx = canvas.getContext('2d');
-    
-    if (chartInstance) {
-      chartInstance.destroy();
-    }
 
     const projections = generateTcoProjections(state.usersCount, state.sitesCount, state.serversCount, state.vmwareCorePrice, state.cloudMonthlyCost, state.inflationRate);
 

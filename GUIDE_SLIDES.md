@@ -129,9 +129,9 @@ vient d'être refaite dans ce style et **validée** par l'utilisateur
 
 ---
 
-## 4. Statut d'avancement (34 étapes)
+## 4. Statut d'avancement (37 étapes)
 
-`PRES_MAX = { dashboard:14, finance:2, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
+`PRES_MAX = { dashboard:14, finance:5, tech:3, drp:3, pmo:5, comparison:2, sites:5 }`
 
 | Onglet | Étapes locales | Slide | Statut |
 |---|---|---|---|
@@ -139,8 +139,8 @@ vient d'être refaite dans ce style et **validée** par l'utilisateur
 | dashboard | 2-6 | Synthèse Générale + Périmètre du Projet | ✅ **Référence du gabarit** (déjà conforme) |
 | dashboard | 7-10 | Stratégie de Transformation | ✅ **FAIT** (session 2026-06-10) — 4 piliers révélés un par un |
 | dashboard | 11-14 | Impact Budgétaire | ✅ **FAIT** (session 2026-06-10) — hero "+329 500 €" puis 3 preuves (TCO/ROI/Budget) révélées une par une |
-| finance | 1 | Analyse TCO | ⏳ À retravailler |
-| finance | 2 | Comparatif Budgétaire | ⏳ À retravailler |
+| finance | 1-4 | Analyse TCO & Économies | ✅ **FAIT** (session 2026-06-10) — "Facture Comparée" 2 colonnes (VMware vs Proxmox) : socle CapEx identique révélé, puis OpEx divergent (licences/cœur vs support standard), puis TOTAL 441,5k€ vs 112,0k€ + écart "+329 500 €" |
+| finance | 5 | Comparatif Budgétaire | ⏳ À retravailler |
 | tech | 1 | Architecture Globale | ⏳ À retravailler |
 | tech | 2 | Cluster Proxmox | ⏳ À retravailler |
 | tech | 3 | Déploiement IaC | ⏳ À retravailler |
@@ -156,11 +156,21 @@ Légende : ✅ fait & validé · ⏳ pas commencé · 🔶 a un reveal mais styl
 
 ---
 
-## 5. ⚠️ Point en suspens (hérité de la session précédente)
+## 5. ⚠️ Points en suspens
 
-Incohérence **RTO/RPO** : slide DRP affiche `4h / 1h`, le tableau
-"Chiffres clés" d'`ETAT_PROJET.md` indique `< 5 min / < 1h`. À trancher
-avec Romain avant de retravailler la slide DRP.
+Incohérence **RTO/RPO** (héritée d'une session précédente) : slide DRP
+affiche `4h / 1h`, le tableau "Chiffres clés" d'`ETAT_PROJET.md` indique
+`< 5 min / < 1h`. À trancher avec Romain avant de retravailler la slide DRP.
+
+Incohérence **référentiel financier** (découverte session 2026-06-10,
+slide "Analyse TCO & Économies") : le calculateur interactif
+(`financialMath.js`, état par défaut) donne un CapEx Proxmox seul de
+237 580€, déjà supérieur au TCO Proxmox 5 ans "officiel" (112,0k€) utilisé
+dans le deck. Calculateur live et chiffres officiels ne sont pas réconciliés.
+Pour les slides de présentation, utiliser les chiffres officiels
+(112,0k€/441,5k€/+329 500 €) — ne pas inventer de ventilation de
+raccordement. Détail complet dans `ETAT_PROJET.md` (session 2026-06-10
+suite 3).
 
 ---
 
