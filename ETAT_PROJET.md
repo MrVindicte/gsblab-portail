@@ -69,7 +69,7 @@ GSBLAB = entreprise de santé fictive, 27 laboratoires (1 hub Strasbourg + 26 sp
 | `src/index.css` | Styles custom (`?v=2`) — `.glass-panel`, animations, `@media print`, `.livrable-export-mode` |
 | `src/components/ExecutiveSummary.js` | Synthèse — 14 slides présentation (v21) |
 | `src/components/FinanceWorkspace.js` | Chiffrage & TCO — sliders, "Facture Comparée" + Comparatif Budgétaire, 5 slides présentation (v14) |
-| `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, carte de France, IaC, 3 slides (v8) |
+| `src/components/TechnicalWorkspace.js` | Architecture réseau — SVG hub-spoke, carte de France, IaC, 3 slides (v9) |
 | `src/components/DrpSimulator.js` | Simulateur PRA — ransomware + sinistre, 1 slide/3 reveals (v5) |
 | `src/components/PmoWorkspace.js` | PMO — risques, roadmap 2026-2030, 2 slides/5 reveals (v6) |
 | `src/components/BeforeAfterSlider.js` | Comparaison avant/après, 1 slide/2 reveals (v5) |
@@ -204,6 +204,12 @@ Playwright/chromium-cli disponibles dans l'environnement) :
    atlantique, Lyon/Marseille/Nice sud-est, Toulouse/Montpellier sud,
    Strasbourg sur le "nez" alsacien à l'est).
 
+6. V6 — retour utilisateur : le titre "Carte de France — Réseau National"
+   était trop imposant (`text-4xl md:text-5xl`, identique aux slides 2/3).
+   Réduit à `text-3xl md:text-4xl` — moins dominant tout en restant proche
+   du gabarit des autres titres de l'onglet (et aligné avec la taille des
+   chiffres-clés 27/333/20 juste en dessous).
+
 ⚠️ **Placeholder assumé** : les 16 sites de `defaultData.js` (actuellement
 tous en Alsace) sont affichés à ces positions nationales pour la maquette —
 le contenu du tooltip (nom/région) ne correspond donc pas encore à la
@@ -214,7 +220,7 @@ tableau `mapPositions` (et `defaultData.js`) en conséquence.
 `presSlide2` (Cluster Proxmox) et `presSlide3` (Déploiement IaC) inchangées,
 `PRES_MAX.tech` reste à **3** (édition en place de la slide 1).
 
-Versions : `index.html` → `main.js?v=54` · `TechnicalWorkspace.js?v=8`
+Versions : `index.html` → `main.js?v=55` · `TechnicalWorkspace.js?v=9`
 
 ### Session 2026-06-10 (suite 3) — Slide "Analyse TCO & Économies" repensée en "Facture Comparée"
 
