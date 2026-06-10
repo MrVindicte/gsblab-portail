@@ -111,7 +111,7 @@ export default function PmoWorkspace(state) {
 
     return `
       <!-- SLIDE 1 : Roadmap -->
-      <div data-pres-slide="1" data-pres-label="Roadmap 2026-2030"
+      <div data-pres-slide="1,2,3" data-pres-label="Roadmap 2026-2030"
            class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
 
         <div class="text-center space-y-2">
@@ -122,13 +122,13 @@ export default function PmoWorkspace(state) {
 
         <div class="grid grid-cols-5 gap-3 w-full flex-1 min-h-0">
           ${[
-            { year:'2026', budget:'228 k€', color:'violet', phase:'Migration cœur', sites:12, users:215, bullets:['Proxmox VE + 2× R760','Exchange Online HDS','5 labos déployés'] },
-            { year:'2027', budget:'64 k€',  color:'blue',   phase:'Centres lot 1',  sites:20, users:303, bullets:['8 centres ouverts','VPN 20 spokes','CBS250 remplacement'] },
-            { year:'2028', budget:'60 k€',  color:'cyan',   phase:'Parc cible',     sites:27, users:380, bullets:['7 centres → plateau','380 utilisateurs','Coûts stabilisés'] },
-            { year:'2029', budget:'23 k€',  color:'emerald',phase:'Run-rate',        sites:27, users:380, bullets:['Exploitation courante','LTO-6 → LTO-8','Rachat optionnel'] },
-            { year:'2030', budget:'23 k€',  color:'slate',  phase:'Clôture projet', sites:27, users:380, bullets:['Dernière année','Bilan migration','Réserve disponible'] },
+            { year:'2026', budget:'228 k€', color:'violet', phase:'Migration cœur', sites:12, users:215, bullets:['Proxmox VE + 2× R760','Exchange Online HDS','5 labos déployés'],   revealAt: null },
+            { year:'2027', budget:'64 k€',  color:'blue',   phase:'Centres lot 1',  sites:20, users:303, bullets:['8 centres ouverts','VPN 20 spokes','CBS250 remplacement'],          revealAt: 2 },
+            { year:'2028', budget:'60 k€',  color:'cyan',   phase:'Parc cible',     sites:27, users:380, bullets:['7 centres → plateau','380 utilisateurs','Coûts stabilisés'],        revealAt: 2 },
+            { year:'2029', budget:'23 k€',  color:'emerald',phase:'Run-rate',        sites:27, users:380, bullets:['Exploitation courante','LTO-6 → LTO-8','Rachat optionnel'],        revealAt: 3 },
+            { year:'2030', budget:'23 k€',  color:'slate',  phase:'Clôture projet', sites:27, users:380, bullets:['Dernière année','Bilan migration','Réserve disponible'],            revealAt: 3 },
           ].map(y => `
-            <div class="glass-panel rounded-2xl p-4 border-t-[4px] border-t-${y.color}-500 flex flex-col gap-3 bg-slate-900/60">
+            <div ${y.revealAt ? `data-reveal-at="${y.revealAt}"` : ''} class="glass-panel rounded-2xl p-4 border-t-[4px] border-t-${y.color}-500 flex flex-col gap-3 bg-slate-900/60 ${y.revealAt ? 'opacity-0 transition-all duration-700' : ''}">
               <div class="text-center">
                 <div class="text-2xl font-black text-${y.color}-300 font-mono">${y.year}</div>
                 <div class="text-lg font-mono font-bold text-white">${y.budget}</div>
@@ -152,7 +152,7 @@ export default function PmoWorkspace(state) {
       </div>
 
       <!-- SLIDE 2 : Risques -->
-      <div data-pres-slide="2" data-pres-label="Risques Critiques"
+      <div data-pres-slide="4,5" data-pres-label="Risques Critiques"
            class="flex-1 min-h-0 flex flex-col items-center justify-center gap-8 w-full max-w-5xl mx-auto h-full py-4">
 
         <div class="text-center space-y-3">
@@ -162,10 +162,12 @@ export default function PmoWorkspace(state) {
         </div>
 
         <div class="grid grid-cols-2 gap-5 w-full">
-          ${topRisks.map(r => {
+          ${topRisks.map((r, i) => {
             const [col, label] = riskColor(r.criticality);
+            const reveal = i >= 2 ? 'data-reveal-at="5" class="glass-panel rounded-2xl p-5 border-l-[5px] border-l-' + col + '-500 flex flex-col gap-3 bg-slate-900/60 opacity-0 transition-all duration-700"'
+                                  : 'class="glass-panel rounded-2xl p-5 border-l-[5px] border-l-' + col + '-500 flex flex-col gap-3 bg-slate-900/60"';
             return `
-              <div class="glass-panel rounded-2xl p-5 border-l-[5px] border-l-${col}-500 flex flex-col gap-3 bg-slate-900/60">
+              <div ${reveal}>
                 <div class="flex items-center justify-between">
                   <div class="flex items-center gap-2">
                     <span class="font-mono text-xs text-slate-500 font-bold">${r.id}</span>

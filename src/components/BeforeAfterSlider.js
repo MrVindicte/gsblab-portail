@@ -4,7 +4,7 @@ export default function BeforeAfterSlider(state) {
   // ── MODE PRÉSENTATION — slide visuelle full-screen ──────────────────────────
   if (isPres) {
     return `
-      <div data-pres-slide="1" data-pres-label="Avant / Après — Dette Technique"
+      <div data-pres-slide="1,2" data-pres-label="Avant / Après — Dette Technique"
            class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
 
         <div class="text-center space-y-3">
@@ -36,7 +36,7 @@ export default function BeforeAfterSlider(state) {
           </div>
 
           <!-- CENTER delta -->
-          <div class="flex flex-col items-center justify-center gap-5 text-center">
+          <div data-reveal-at="2" class="flex flex-col items-center justify-center gap-5 text-center opacity-0 transition-all duration-700">
             <div>
               <div class="text-5xl font-mono font-extrabold text-emerald-400 leading-none">65 k€</div>
               <div class="text-slate-400 text-sm mt-2">économisés par an<br>vs VMware Broadcom</div>
@@ -53,7 +53,7 @@ export default function BeforeAfterSlider(state) {
           </div>
 
           <!-- APRÈS -->
-          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-emerald-500 flex flex-col gap-4 bg-slate-900/60">
+          <div data-reveal-at="2" class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-emerald-500 flex flex-col gap-4 bg-slate-900/60 opacity-0 transition-all duration-700">
             <div class="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-widest text-xs">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
               Infrastructure cible HDS

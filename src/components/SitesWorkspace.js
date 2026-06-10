@@ -5,7 +5,7 @@ export default function SitesWorkspace(state = {}) {
   if (isPres) {
     return `
       <!-- SLIDE 1 : Vue d'ensemble 27 sites -->
-      <div data-pres-slide="1" data-pres-label="Architecture des 27 Sites"
+      <div data-pres-slide="1,2,3" data-pres-label="Architecture des 27 Sites"
            class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
 
         <div class="text-center space-y-2">
@@ -43,7 +43,7 @@ export default function SitesWorkspace(state = {}) {
           </div>
 
           <!-- Labos -->
-          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-blue-500 flex flex-col gap-4 bg-slate-900/60">
+          <div data-reveal-at="2" class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-blue-500 flex flex-col gap-4 bg-slate-900/60 opacity-0 transition-all duration-700">
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -70,7 +70,7 @@ export default function SitesWorkspace(state = {}) {
           </div>
 
           <!-- Centres -->
-          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-emerald-500 flex flex-col gap-4 bg-slate-900/60">
+          <div data-reveal-at="3" class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-emerald-500 flex flex-col gap-4 bg-slate-900/60 opacity-0 transition-all duration-700">
             <div class="flex items-center gap-3">
               <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
                 <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 15a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 4.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 11a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.92z"/></svg>
@@ -101,7 +101,7 @@ export default function SitesWorkspace(state = {}) {
       </div>
 
       <!-- SLIDE 2 : Connectivité & VLAN -->
-      <div data-pres-slide="2" data-pres-label="Connectivité & Sécurité Réseau"
+      <div data-pres-slide="4,5" data-pres-label="Connectivité & Sécurité Réseau"
            class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
 
         <div class="text-center space-y-2">
@@ -151,7 +151,7 @@ export default function SitesWorkspace(state = {}) {
           </div>
 
           <!-- VLAN palette -->
-          <div class="glass-panel rounded-3xl p-7 flex flex-col gap-4 bg-slate-900/60">
+          <div data-reveal-at="5" class="glass-panel rounded-3xl p-7 flex flex-col gap-4 bg-slate-900/60 opacity-0 transition-all duration-700">
             <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">Segmentation VLAN (identique sur tous les spokes)</div>
             <div class="space-y-3 flex-1">
               ${[

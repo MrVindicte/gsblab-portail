@@ -4,7 +4,7 @@ export default function DrpSimulator(state) {
   // ── MODE PRÉSENTATION — slide visuelle full-screen ──────────────────────────
   if (isPres) {
     return `
-      <div data-pres-slide="1" data-pres-label="Plan de Reprise d'Activité"
+      <div data-pres-slide="1,2,3" data-pres-label="Plan de Reprise d'Activité"
            class="flex-1 min-h-0 flex flex-col items-center justify-center gap-8 w-full max-w-6xl mx-auto h-full py-6">
 
         <div class="text-center space-y-3">
@@ -31,7 +31,7 @@ export default function DrpSimulator(state) {
           </div>
         </div>
 
-        <div class="grid grid-cols-2 gap-6 w-full">
+        <div data-reveal-at="2" class="grid grid-cols-2 gap-6 w-full opacity-0 transition-all duration-700">
           <div class="glass-panel rounded-2xl p-6 border-l-[5px] border-l-red-500 flex items-start gap-4 bg-slate-900/60">
             <div class="w-12 h-12 rounded-xl bg-red-500/15 flex items-center justify-center flex-shrink-0">
               <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -52,7 +52,7 @@ export default function DrpSimulator(state) {
           </div>
         </div>
 
-        <div class="w-full glass-panel rounded-2xl p-4 flex flex-wrap items-center justify-center gap-3 bg-emerald-500/5 border border-emerald-500/20">
+        <div data-reveal-at="3" class="w-full glass-panel rounded-2xl p-4 flex flex-wrap items-center justify-center gap-3 bg-emerald-500/5 border border-emerald-500/20 opacity-0 transition-all duration-700">
           <span class="text-emerald-400 text-sm font-bold uppercase tracking-wider">Chaîne de sauvegarde :</span>
           <span class="font-mono text-xs text-slate-300 bg-slate-900/60 border border-white/8 rounded px-2.5 py-1">PBS Local · J-1 incrémental</span>
           <span class="text-slate-600 font-bold">→</span>
