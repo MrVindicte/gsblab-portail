@@ -111,6 +111,9 @@ const scalePresentationSlide = () => {
     const sW = slide.scrollWidth;
     hiddenReveals.forEach(el => { el.style.display = ''; });
 
+    // Slides scrollables (overflow-y-auto) : pas de scale, elles défilent
+    if (slide.classList.contains('overflow-y-auto')) return;
+
     const scale = Math.min(cH / sH, cW / sW, 1);
     if (scale < 0.985) {
       slide.style.transformOrigin = 'top center';
@@ -142,6 +145,14 @@ const updatePresentationDOM = () => {
         el.classList.remove('opacity-100');
       }
     });
+
+    // Auto-scroll vers la section révélée (pour les slides scrollables)
+    if (activeSlide.classList.contains('overflow-y-auto')) {
+      requestAnimationFrame(() => {
+        const target = activeSlide.querySelector(`[data-reveal-at="${window.appState.presentationStep}"]`);
+        if (target) activeSlide.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+      });
+    }
   }
 
   // ── Compteur footer + badge slide flottant ──────────────────────────────────────
