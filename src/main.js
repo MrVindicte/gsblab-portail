@@ -439,8 +439,7 @@ const renderApp = () => {
       <div id="pres-slide-badge" style="
         position:fixed;
         bottom:5.5rem;
-        left:50%;
-        transform:translateX(-50%);
+        right:2.5rem;
         z-index:9999;
         display:flex;
         align-items:baseline;

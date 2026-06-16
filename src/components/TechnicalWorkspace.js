@@ -101,7 +101,7 @@ export default function TechnicalWorkspace(state) {
 
   // ── SLIDE 1 — Cartographie SD-WAN France ────────────────────────────────────
   const presSlide1 = `
-    <div data-pres-slide="1" data-pres-label="Cartographie SD-WAN — France" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="1" data-pres-label="Cartographie SD-WAN — France" class="flex-1 min-h-0 w-full h-full">
       <style>
         .fmap-shape{fill:#0f1e3d;stroke:#6366f1;stroke-width:2.5;stroke-linejoin:round;filter:drop-shadow(0 0 22px rgba(99,102,241,.35))}
         .fmap-corse{fill:#0d1420;stroke:#475569;stroke-width:1.3;stroke-linejoin:round;opacity:.7}
@@ -122,119 +122,191 @@ export default function TechnicalWorkspace(state) {
         .fmap-label.major{font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;fill:#c7d2fe}
         #fmap-ovh{transition:opacity .55s}
       </style>
-      <div id="eraState" data-era="avant" class="max-w-6xl mx-auto px-4 py-6 space-y-5">
-        <!-- Title (eraState wrapper carries data-era for CSS selectors) -->
-        <div class="text-center space-y-2">
-          <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 01 — Maillage national</p>
+      <div id="eraState" data-era="avant" class="max-w-6xl w-full mx-auto px-4 py-4 h-full flex flex-col gap-4">
+        
+        <!-- Header Section (Compact) -->
+        <div class="flex flex-col items-center text-center space-y-2 shrink-0">
           <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Cartographie des sites GSBLAB</h2>
-          <div class="w-14 h-1 bg-gradient-to-r from-indigo-500 to-emerald-500 mx-auto rounded-full"></div>
-          <p class="text-slate-400 text-sm max-w-2xl mx-auto">D'un réseau régional de <b class="text-slate-200">7 sites</b> Grand Est à un maillage national de <b class="text-slate-200">27 sites</b> interconnectés</p>
+          <div class="w-16 h-1 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full"></div>
+          <p class="text-slate-400 text-sm max-w-2xl">
+            D'un réseau régional de <b class="text-slate-200">7 sites</b> Grand Est à un maillage national de <b class="text-slate-200">27 sites interconnectés</b>.
+          </p>
         </div>
 
-        <!-- Era toggle (reveal at 1) -->
-        <div class="flex justify-center opacity-0 transition-all duration-700" data-reveal-at="1">
-          <div id="eraToggle" data-era="avant" class="relative inline-flex bg-slate-900 border border-white/10 rounded-xl p-1 gap-1 shadow-xl">
-            <div id="eraPill" class="absolute inset-y-1 rounded-lg transition-all duration-500 bg-red-500/8 border border-red-500/15 pointer-events-none" style="width:calc(50% - 4px);left:4px"></div>
-            <button class="relative z-10 px-4 py-2 rounded-lg text-left transition-colors duration-200 min-w-[170px]" data-era-btn="avant">
-              <div class="text-sm font-bold text-orange-400">2026 — Avant migration</div>
-              <div class="text-[10px] text-slate-500">7 sites · VPN manuels · 0 VLAN</div>
-            </button>
-            <button class="relative z-10 px-4 py-2 rounded-lg text-left transition-colors duration-200 min-w-[170px]" data-era-btn="apres">
-              <div class="text-sm font-bold text-slate-400" id="eraBtnApresLabel">2030 — Cible SD-WAN</div>
-              <div class="text-[10px] text-slate-500">27 sites · IPsec auto-orchestré</div>
-            </button>
-          </div>
-        </div>
+        <!-- Main Split View -->
+        <div class="flex-1 grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-5 min-h-0 opacity-0 transition-all duration-700" data-reveal-at="1">
+          
+          <!-- Left: France Map Panel -->
+          <div class="glass-panel rounded-2xl relative overflow-hidden flex flex-col">
+            
+            <!-- Floating Era Toggle -->
+            <div class="absolute top-3 right-3 z-20 scale-90 origin-top-right">
+              <div id="eraToggle" data-era="avant" class="relative inline-flex bg-slate-950/90 backdrop-blur-md border border-white/10 rounded-xl p-1 shadow-2xl">
+                <div id="eraPill" class="absolute inset-y-1 rounded-lg transition-all duration-500 bg-red-500/15 border border-red-500/30 pointer-events-none" style="width:calc(50% - 4px);left:4px"></div>
+                <button class="relative z-10 px-4 py-2 rounded-lg text-center transition-colors duration-200 min-w-[130px]" data-era-btn="avant">
+                  <div class="text-xs font-bold text-orange-400">2026 — Existant</div>
+                </button>
+                <button class="relative z-10 px-4 py-2 rounded-lg text-center transition-colors duration-200 min-w-[130px]" data-era-btn="apres">
+                  <div class="text-xs font-bold text-slate-400" id="eraBtnApresLabel">2030 — Cible</div>
+                </button>
+              </div>
+            </div>
 
-        <!-- KPI grid (reveal at 2) -->
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 opacity-0 transition-all duration-700" data-reveal-at="2">
-          <div class="glass-panel rounded-xl p-3 text-center"><div class="text-2xl font-extrabold font-mono text-indigo-400" id="kSites">7</div><div class="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Sites interconnectés</div></div>
-          <div class="glass-panel rounded-xl p-3 text-center"><div class="text-2xl font-extrabold font-mono text-white" id="kPostes">92</div><div class="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Postes de travail</div></div>
-          <div class="glass-panel rounded-xl p-3 text-center"><div class="text-2xl font-extrabold font-mono text-white" id="kUsers">130</div><div class="text-[10px] uppercase tracking-widest text-slate-500 mt-1">Utilisateurs</div></div>
-          <div id="kpiVlan" class="glass-panel rounded-xl p-3 text-center border border-red-500/20"><div class="text-2xl font-extrabold font-mono text-red-400" id="kVlan">0</div><div class="text-[10px] uppercase tracking-widest text-slate-500 mt-1" id="kVlanL">VLAN déployé</div></div>
-        </div>
-
-        <!-- Map + panels (reveal at 1) -->
-        <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-4 opacity-0 transition-all duration-700" data-reveal-at="1">
-          <!-- France map -->
-          <div class="glass-panel rounded-xl p-4">
-            <div class="text-sm font-bold mb-2" id="fmapEraLabel" style="color: rgb(251, 146, 60);">2026 — Avant migration</div>
-            <svg viewBox="0 0 600 600" id="franceMap" class="w-full h-auto">
-              <text class="fmap-sealabel" x="34" y="340" transform="rotate(-90 34 340)">Océan Atlantique</text>
-              <text class="fmap-sealabel" x="340" y="565">Mer Méditerranée</text>
-              <path class="fmap-shape" d="M284,49 L304,45 L331,72 L394,105 L435,126 L512,176 L495,222 L448,302 L479,318 L468,372 L502,431 L442,467 L420,462 L387,452 L331,500 L271,500 L145,453 L167,388 L167,305 L128,260 L93,233 L28,185 L59,169 L136,172 L140,116 L151,119 L171,137 L217,127 L255,104 Z"/>
-              <path class="fmap-corse" d="M552,480 L566,471 L574,498 L567,545 L553,540 L549,506 Z"/>
-              <g id="fmap-ovh" class="only-apres" style="opacity:1">
-                <path d="M300,34 a9,9 0 0 1 9,-8 a11,9 0 0 1 21,1 a8,8 0 0 1 2,15 l-28,0 a8,8 0 0 1 -4,-8 Z" fill="#0a2020" stroke="#10b981" stroke-width="1.5"/>
-                <text x="338" y="28" class="fmap-label" style="fill:#34d399;font-weight:700;font-size:10px">OVHcloud Cold Archive HDS</text>
-              </g>
-              <g id="fmapLinks"></g>
-              <g id="fmapSites"></g>
-            </svg>
-            <!-- Legend -->
-            <div class="flex flex-wrap gap-x-4 gap-y-1 mt-2 px-1 text-[11px] text-slate-400">
-              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-sm bg-indigo-500 transform rotate-45" style="flex-shrink:0"></span>Siège SD-WAN</span>
-              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-indigo-500" style="flex-shrink:0"></span>Laboratoire</span>
-              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-[#0d1117] border-2 border-indigo-400" style="flex-shrink:0"></span>Centre prélèvement</span>
-              <span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full bg-slate-600" style="flex-shrink:0"></span>Site historique</span>
-              <span class="flex items-center gap-1.5"><span style="width:16px;border-top:3px dashed #f87171;flex-shrink:0"></span>VPN IPsec manuel</span>
-              <span class="flex items-center gap-1.5"><span style="width:16px;border-top:3px dashed #6366f1;flex-shrink:0"></span>Tunnel SD-WAN</span>
+            <!-- Map Era Label -->
+            <div class="text-xs font-bold absolute top-4 left-4 z-10 bg-slate-900/80 backdrop-blur px-3 py-1.5 rounded-lg border border-white/5 shadow-lg" id="fmapEraLabel" style="color: rgb(251, 146, 60);">
+              2026 — Avant migration
+            </div>
+            
+            <div class="flex-1 w-full flex items-center justify-center p-4">
+              <svg viewBox="0 0 600 600" id="franceMap" class="w-full h-full" preserveAspectRatio="xMidYMid meet">
+                <text class="fmap-sealabel" x="34" y="340" transform="rotate(-90 34 340)">Océan Atlantique</text>
+                <text class="fmap-sealabel" x="340" y="565">Mer Méditerranée</text>
+                <path class="fmap-shape" d="M284,49 L304,45 L331,72 L394,105 L435,126 L512,176 L495,222 L448,302 L479,318 L468,372 L502,431 L442,467 L420,462 L387,452 L331,500 L271,500 L145,453 L167,388 L167,305 L128,260 L93,233 L28,185 L59,169 L136,172 L140,116 L151,119 L171,137 L217,127 L255,104 Z"/>
+                <path class="fmap-corse" d="M552,480 L566,471 L574,498 L567,545 L553,540 L549,506 Z"/>
+                <g id="fmap-ovh" class="only-apres" style="opacity:1">
+                  <path d="M300,34 a9,9 0 0 1 9,-8 a11,9 0 0 1 21,1 a8,8 0 0 1 2,15 l-28,0 a8,8 0 0 1 -4,-8 Z" fill="#0a2020" stroke="#10b981" stroke-width="1.5"/>
+                  <text x="338" y="28" class="fmap-label" style="fill:#34d399;font-weight:700;font-size:10px">OVHcloud Cold Archive HDS</text>
+                </g>
+                <g id="fmapLinks"></g>
+                <g id="fmapSites"></g>
+              </svg>
+            </div>
+            
+            <!-- Map Legend -->
+            <div class="flex flex-wrap justify-center gap-x-3 gap-y-1.5 pb-2.5 pt-2 border-t border-white/5 text-[8.5px] uppercase tracking-widest text-slate-400 bg-slate-900/30 shrink-0">
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-indigo-500 transform rotate-45 shrink-0"></span>Siège</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-indigo-500 shrink-0"></span>Laboratoire</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-[#0d1117] border border-indigo-400 shrink-0"></span>Prélèvement</span>
+              <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-slate-600 shrink-0"></span>Historique</span>
+              <span class="flex items-center gap-1 ml-1"><span class="w-3 border-t-[1.5px] border-dashed border-red-400 shrink-0"></span>VPN Manuel</span>
+              <span class="flex items-center gap-1"><span class="w-3 border-t-[1.5px] border-dashed border-indigo-500 shrink-0"></span>SD-WAN</span>
             </div>
           </div>
 
-          <!-- Side panels -->
-          <div class="flex flex-col gap-3">
-            <!-- Avant panel -->
-            <div id="fmapPanelAvant" class="glass-panel rounded-xl p-4">
-              <h4 class="text-sm font-bold text-orange-400 flex items-center gap-2 mb-2">
-                <span class="w-2 h-2 rounded-sm bg-orange-400 flex-shrink-0"></span>
-                Existant 2026 <span class="text-[10px] font-mono bg-orange-500/10 text-orange-400 border border-orange-500/20 rounded px-1.5 py-0.5 ml-1">non conforme HDS</span>
-              </h4>
-              <ul class="space-y-1.5 text-xs text-slate-400">
-                <li class="flex gap-2"><span class="text-red-400 font-bold flex-shrink-0">✕</span><span><b class="text-slate-200">Aucun VLAN</b> — réseau à plat, données de santé non isolées</span></li>
-                <li class="flex gap-2"><span class="text-red-400 font-bold flex-shrink-0">✕</span><span>Switchs <b class="text-slate-200">Cisco SF200-24P en EoSL</b> — CVE non corrigées</span></li>
-                <li class="flex gap-2"><span class="text-red-400 font-bold flex-shrink-0">✕</span><span><b class="text-slate-200">Exchange 2013</b> on-prem (WS 2012 R2) — vulnérabilités non patchées</span></li>
-                <li class="flex gap-2"><span class="text-red-400 font-bold flex-shrink-0">✕</span><span><b class="text-slate-200">VMware ESXi 6</b> en fin de vie</span></li>
-                <li class="flex gap-2"><span class="text-red-400 font-bold flex-shrink-0">✕</span><span>Tunnels <b class="text-slate-200">VPN manuels</b> site par site, sans supervision</span></li>
-                <li class="flex gap-2"><span class="text-red-400 font-bold flex-shrink-0">✕</span><span>Wi-Fi 4 (Cisco WP121, 2015) sans patch depuis 2019</span></li>
-              </ul>
+          <!-- Right: Sidebar Dashboard -->
+          <div class="glass-panel rounded-2xl flex flex-col h-full overflow-hidden">
+            
+            <!-- Hidden KPIs for JS -->
+            <div class="hidden">
+              <span id="kSites"></span><span id="kPostes"></span><span id="kUsers"></span><span id="kVlan"></span><span id="kVlanL"></span><span id="kpiVlan"></span>
             </div>
-            <!-- Après panel -->
-            <div id="fmapPanelApres" class="glass-panel rounded-xl p-4 hidden">
-              <h4 class="text-sm font-bold text-emerald-400 flex items-center gap-2 mb-2">
-                <span class="w-2 h-2 rounded-sm bg-emerald-400 flex-shrink-0"></span>
-                Cible 2030 <span class="text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded px-1.5 py-0.5 ml-1">HDS</span>
-              </h4>
-              <ul class="space-y-1.5 text-xs text-slate-400">
-                <li class="flex gap-2"><span class="text-emerald-400 font-bold flex-shrink-0">✓</span><span><b class="text-slate-200">SD-WAN Magic Site-to-Site</b> — 26 tunnels IPsec AES-256 + IKEv2, 0 € de licence</span></li>
-                <li class="flex gap-2"><span class="text-emerald-400 font-bold flex-shrink-0">✓</span><span><b class="text-slate-200">5 VLAN 802.1Q</b> par site — VLAN 30 données de santé isolé</span></li>
-                <li class="flex gap-2"><span class="text-emerald-400 font-bold flex-shrink-0">✓</span><span>Parc 100 % <b class="text-slate-200">Ubiquiti UniFi</b> — 27 UCG-Ultra, 31 switches, 29 bornes Wi-Fi 6</span></li>
-                <li class="flex gap-2"><span class="text-emerald-400 font-bold flex-shrink-0">✓</span><span>Sauvegarde <b class="text-slate-200">3-2-1-1-0</b> — copie hors site <b class="text-emerald-400">OVHcloud HDS</b></span></li>
-              </ul>
-            </div>
-            <!-- Phases table -->
-            <div class="glass-panel rounded-xl p-4">
-              <h4 class="text-sm font-bold text-slate-300 flex items-center gap-2 mb-2"><span class="w-2 h-2 rounded-sm bg-indigo-400 flex-shrink-0"></span>Phases de déploiement</h4>
-              <table class="w-full text-xs border-collapse">
-                <tr class="border-b border-white/5"><td class="py-1.5 pr-3 font-mono text-indigo-300 w-20">2026</td><td class="py-1.5 text-slate-400">Siège modernisé · 7 sites migrés UniFi · ouverture des <b class="text-slate-200">5 laboratoires</b></td></tr>
-                <tr class="border-b border-white/5"><td class="py-1.5 pr-3 font-mono text-indigo-300">2027-28</td><td class="py-1.5 text-slate-400">Ouverture des <b class="text-slate-200">15 centres de prélèvement</b></td></tr>
-                <tr><td class="py-1.5 pr-3 font-mono text-emerald-400">2030</td><td class="py-1.5 text-slate-200 font-bold">380 utilisateurs · 242 postes · 27 sites</td></tr>
-              </table>
+
+            <!-- Content Area (No overflow-y-auto to enforce fitting) -->
+            <div class="p-5 flex-1 flex flex-col justify-between overflow-hidden">
+              
+              <!-- Avant Panel -->
+              <div id="fmapPanelAvant" class="flex flex-col gap-4">
+                <div class="flex items-center justify-between shrink-0 mb-2">
+                  <h4 class="text-sm font-bold text-orange-400 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"></span>
+                    Audit 2026 : Dette Technique
+                  </h4>
+                  <span class="text-[9px] font-mono bg-red-500/10 text-red-400 border border-red-500/20 rounded px-1.5 py-0.5">NON-CONFORME HDS</span>
+                </div>
+                
+                <div class="flex flex-col gap-3 flex-1 min-h-0 justify-center">
+                  <div class="bg-orange-950/20 border border-orange-500/10 rounded-lg p-3 flex items-center gap-3">
+                    <div class="shrink-0"><svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
+                    <div>
+                      <div class="text-[11px] font-bold text-slate-200">Réseau à plat</div>
+                      <div class="text-[10px] text-slate-400 leading-snug"><span class="text-red-400 font-bold">0 VLAN</span> — Trafic de santé non isolé du reste.</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                    <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg></div>
+                    <div>
+                      <div class="text-[11px] font-bold text-slate-200">Matériel EoSL</div>
+                      <div class="text-[10px] text-slate-400 leading-snug">Switchs Cisco SF200, Wi-Fi 4 — <span class="text-orange-300">CVE non patchables</span>.</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                    <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
+                    <div>
+                      <div class="text-[11px] font-bold text-slate-200">Serveurs Obsolètes</div>
+                      <div class="text-[10px] text-slate-400 leading-snug">VMware ESXi 6, Exchange 2013 vulnérables.</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                    <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></div>
+                    <div>
+                      <div class="text-[11px] font-bold text-slate-200">Tunnels artisanaux</div>
+                      <div class="text-[10px] text-slate-400 leading-snug">Routage VPN manuel, aucune vision ni supervision globale.</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Apres Panel -->
+              <div id="fmapPanelApres" class="flex flex-col gap-4 hidden h-full">
+                <div class="flex items-center justify-between shrink-0 mb-2">
+                  <h4 class="text-sm font-bold text-emerald-400 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                    Cible 2030 : Socle Sécurisé
+                  </h4>
+                  <span class="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded px-1.5 py-0.5">CERTIFIÉ HDS</span>
+                </div>
+                
+                <div class="flex flex-col gap-3 flex-1 min-h-0 justify-center">
+                  <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-lg p-3 flex items-center gap-3">
+                    <div class="shrink-0"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
+                    <div>
+                      <div class="text-[11px] font-bold text-slate-200">SD-WAN Actif</div>
+                      <div class="text-[10px] text-slate-400 leading-snug">26 tunnels IPsec auto-orchestrés et fiabilisés.</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                    <div class="shrink-0"><svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
+                    <div>
+                      <div class="text-[11px] font-bold text-slate-200">Sécurité HDS Isolée</div>
+                      <div class="text-[10px] text-slate-400 leading-snug"><b class="text-emerald-300">5 VLANs/site</b> (VLAN 30 médical compartimenté).</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                    <div class="shrink-0"><svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
+                    <div>
+                      <div class="text-[11px] font-bold text-slate-200">Parc 100% UniFi</div>
+                      <div class="text-[10px] text-slate-400 leading-snug">UCG-Ultra, Switches PoE, AP Wi-Fi 6 unifiés — 0 licence.</div>
+                    </div>
+                  </div>
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                    <div class="shrink-0"><svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg></div>
+                    <div>
+                      <div class="text-[11px] font-bold text-slate-200">Sauvegarde 3-2-1-1-0</div>
+                      <div class="text-[10px] text-slate-400 leading-snug">Données externalisées chiffrées sur <b class="text-slate-300">OVHcloud HDS</b>.</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="flex justify-between items-center text-[10px] shrink-0 mt-2">
+                  <span class="text-slate-400">Budget prévisionnel</span>
+                  <span class="font-mono text-emerald-400 font-bold text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded border border-emerald-500/10">398 733 € HT</span>
+                </div>
+              </div>
+              
+              <!-- Bottom Fixed: Phases -->
+              <div class="shrink-0 mt-3 pt-3 border-t border-white/5">
+                <div class="bg-slate-900/30 border border-white/5 rounded-xl p-2.5 flex justify-between items-center text-[10px]">
+                  <div class="flex flex-col gap-0.5">
+                    <div class="font-mono text-indigo-300 flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-indigo-400 ring-2 ring-indigo-400/20"></div> 2026</div>
+                    <div class="text-slate-400">Siège &amp; 5 labos</div>
+                  </div>
+                  <svg class="w-3 h-3 text-white/10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  <div class="flex flex-col gap-0.5">
+                    <div class="font-mono text-indigo-300/70 flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-indigo-400/50 ring-2 ring-indigo-400/10"></div> 2027-28</div>
+                    <div class="text-slate-400">15 centres</div>
+                  </div>
+                  <svg class="w-3 h-3 text-white/10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                  <div class="flex flex-col gap-0.5">
+                    <div class="font-mono text-emerald-400 flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-emerald-400 ring-2 ring-emerald-400/20"></div> 2030</div>
+                    <div class="text-slate-200 font-bold">Cible 27 sites</div>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
 
-        <!-- HDS footer bar -->
-        <div class="rounded-xl bg-gradient-to-r from-emerald-950 via-emerald-900/80 to-emerald-950 border border-emerald-500/20 px-5 py-3 flex flex-wrap items-center gap-x-6 gap-y-1 text-emerald-300 text-xs font-semibold">
-          <span class="flex items-center gap-2 font-bold text-emerald-200">
-            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M12 2.5 4.5 5.4v6.1c0 4.6 3.2 8.4 7.5 9.9 4.3-1.5 7.5-5.3 7.5-9.9V5.4L12 2.5Z" stroke="currentColor" stroke-width="1.8" fill="rgba(16,185,129,.12)"/><path d="m8.7 12 2.3 2.3 4.3-4.6" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Socle HDS — tous sites
-          </span>
-          <span>IPsec AES-256 + IKEv2</span>
-          <span>VLAN 30 analyse médicale isolé</span>
-          <span>Sauvegarde 3-2-1-1-0 · OVHcloud HDS</span>
-          <span class="ml-auto font-mono text-emerald-400/70">Chiffrage v10 : 398 733 € HT / 450 000 €</span>
-        </div>
       </div>
       <div id="sdwanTip" class="fixed z-[200] pointer-events-none opacity-0 transition-opacity duration-150 bg-[#0d0e13]/95 backdrop-blur-md border border-white/10 rounded-xl px-4 py-3 shadow-2xl text-sm max-w-[220px]"></div>
     </div>
