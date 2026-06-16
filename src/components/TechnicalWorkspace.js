@@ -578,7 +578,6 @@ export default function TechnicalWorkspace(state) {
         </table>
           </div>
         </div>
-        </div>
 
       </div>
     </div>
@@ -604,7 +603,6 @@ export default function TechnicalWorkspace(state) {
           <div class="bg-slate-900/60 border border-indigo-500/20 rounded-xl p-3"><span class="font-mono text-indigo-300 font-bold">FTTH Pro ≈ 1 Gb/s</span><div class="text-slate-500 mt-1">WAN unique · OPEX hors projet</div></div>
           <div class="bg-slate-900/60 border border-indigo-500/20 rounded-xl p-3"><span class="font-mono text-indigo-300 font-bold">1× UCG-Ultra</span><div class="text-slate-500 mt-1">SD-WAN spoke · tunnel vers Strasbourg</div></div>
           <div class="bg-slate-900/60 border border-emerald-500/20 rounded-xl p-3"><span class="font-mono text-emerald-300 font-bold">10 PC · 2 laptops · 1 MFP</span><div class="text-slate-500 mt-1">12 postes · Ricoh MPC307SPF réseau</div></div>
-        </div>
         </div>
 
       </div>
@@ -649,7 +647,6 @@ export default function TechnicalWorkspace(state) {
         </table>
           </div>
         </div>
-        </div>
 
       </div>
     </div>
@@ -675,7 +672,6 @@ export default function TechnicalWorkspace(state) {
           <div class="bg-slate-900/60 border border-indigo-500/20 rounded-xl p-3"><span class="font-mono text-indigo-300 font-bold">USW-Lite-16-PoE</span><div class="text-slate-500 mt-1">Switch compact · 16 ports · PoE intégré</div></div>
           <div class="bg-slate-900/60 border border-indigo-500/20 rounded-xl p-3"><span class="font-mono text-indigo-300 font-bold">5 PC + 1 laptop</span><div class="text-slate-500 mt-1">HP ProDesk 400 G9 · HP 250 G10</div></div>
           <div class="bg-slate-900/60 border border-emerald-500/20 rounded-xl p-3"><span class="font-mono text-emerald-300 font-bold">VLAN 30 isolé</span><div class="text-slate-500 mt-1">Accès Medoc via tunnel chiffré HDS</div></div>
-        </div>
         </div>
 
       </div>
