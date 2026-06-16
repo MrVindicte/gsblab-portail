@@ -41,7 +41,7 @@ window.appState = {
 // Update maxSteps when you add/remove data-pres-step elements in a component.
 const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites', 'conclusion'];
 // Nombre de slides par onglet (Option B : slides exclusives)
-const PRES_MAX  = { dashboard: 14, finance: 7, tech: 9, drp: 3, pmo: 5, comparison: 2, sites: 5, conclusion: 1 };
+const PRES_MAX  = { dashboard: 14, finance: 7, tech: 17, drp: 3, pmo: 5, comparison: 2, sites: 5, conclusion: 1 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
@@ -228,6 +228,11 @@ const updatePresentationDOM = () => {
   }
 
   scalePresentationSlide();
+
+  // Dispatch custom event to notify components of step change
+  window.dispatchEvent(new CustomEvent('presentationStepChange', {
+    detail: { tab: window.appState.activeTab, step: window.appState.presentationStep }
+  }));
 };
 window.updatePresentationDOM = updatePresentationDOM;
 

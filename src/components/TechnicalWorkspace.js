@@ -101,7 +101,7 @@ export default function TechnicalWorkspace(state) {
 
   // ── SLIDE 1 — Cartographie SD-WAN France ────────────────────────────────────
   const presSlide1 = `
-    <div data-pres-slide="1" data-pres-label="Cartographie SD-WAN — France" class="flex-1 min-h-0 w-full h-full">
+    <div data-pres-slide="1,2,3,4,5,6,7,8,9" data-pres-label="Cartographie SD-WAN — France" class="flex-1 min-h-0 w-full h-full" id="eraState" data-era="avant">
       <style>
         .fmap-shape{fill:#0f1e3d;stroke:#6366f1;stroke-width:2.5;stroke-linejoin:round;filter:drop-shadow(0 0 22px rgba(99,102,241,.35))}
         .fmap-corse{fill:#0d1420;stroke:#475569;stroke-width:1.3;stroke-linejoin:round;opacity:.7}
@@ -122,7 +122,7 @@ export default function TechnicalWorkspace(state) {
         .fmap-label.major{font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;fill:#c7d2fe}
         #fmap-ovh{transition:opacity .55s}
       </style>
-      <div id="eraState" data-era="avant" class="max-w-6xl w-full mx-auto px-4 py-4 h-full flex flex-col gap-4">
+      <div class="max-w-6xl w-full mx-auto px-4 py-4 h-full flex flex-col gap-4">
         
         <!-- Header Section (Compact) -->
         <div class="flex flex-col items-center text-center space-y-2 shrink-0">
@@ -195,7 +195,7 @@ export default function TechnicalWorkspace(state) {
             <div class="p-5 flex-1 flex flex-col justify-between overflow-hidden">
               
               <!-- Avant Panel -->
-              <div id="fmapPanelAvant" class="flex flex-col gap-4">
+              <div id="fmapPanelAvant" class="flex flex-col gap-4 h-full">
                 <div class="flex items-center justify-between shrink-0 mb-2">
                   <h4 class="text-sm font-bold text-orange-400 flex items-center gap-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"></span>
@@ -205,28 +205,28 @@ export default function TechnicalWorkspace(state) {
                 </div>
                 
                 <div class="flex flex-col gap-3 flex-1 min-h-0 justify-center">
-                  <div class="bg-orange-950/20 border border-orange-500/10 rounded-lg p-3 flex items-center gap-3">
+                  <div class="bg-orange-950/20 border border-orange-500/10 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="2">
                     <div class="shrink-0"><svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Réseau à plat</div>
                       <div class="text-[10px] text-slate-400 leading-snug"><span class="text-red-400 font-bold">0 VLAN</span> — Trafic de santé non isolé du reste.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="3">
                     <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Matériel EoSL</div>
                       <div class="text-[10px] text-slate-400 leading-snug">Switchs Cisco SF200, Wi-Fi 4 — <span class="text-orange-300">CVE non patchables</span>.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="4">
                     <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Serveurs Obsolètes</div>
                       <div class="text-[10px] text-slate-400 leading-snug">VMware ESXi 6, Exchange 2013 vulnérables.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="5">
                     <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Tunnels artisanaux</div>
@@ -247,28 +247,28 @@ export default function TechnicalWorkspace(state) {
                 </div>
                 
                 <div class="flex flex-col gap-3 flex-1 min-h-0 justify-center">
-                  <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-lg p-3 flex items-center gap-3">
+                  <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="6">
                     <div class="shrink-0"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">SD-WAN Actif</div>
                       <div class="text-[10px] text-slate-400 leading-snug">26 tunnels IPsec auto-orchestrés et fiabilisés.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="7">
                     <div class="shrink-0"><svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Sécurité HDS Isolée</div>
                       <div class="text-[10px] text-slate-400 leading-snug"><b class="text-emerald-300">5 VLANs/site</b> (VLAN 30 médical compartimenté).</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="8">
                     <div class="shrink-0"><svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Parc 100% UniFi</div>
                       <div class="text-[10px] text-slate-400 leading-snug">UCG-Ultra, Switches PoE, AP Wi-Fi 6 unifiés — 0 licence.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="9">
                     <div class="shrink-0"><svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Sauvegarde 3-2-1-1-0</div>
@@ -277,15 +277,15 @@ export default function TechnicalWorkspace(state) {
                   </div>
                 </div>
                 
-                <div class="flex justify-between items-center text-[10px] shrink-0 mt-2">
-                  <span class="text-slate-400">Budget prévisionnel</span>
+                <div class="flex justify-between items-center text-[10px] shrink-0 mt-2 opacity-0 transition-all duration-700" data-reveal-at="9">
+                  <span class="text-slate-400">Budget prévisionnel matériel complet</span>
                   <span class="font-mono text-emerald-400 font-bold text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded border border-emerald-500/10">398 733 € HT</span>
                 </div>
               </div>
               
               <!-- Bottom Fixed: Phases -->
               <div class="shrink-0 mt-3 pt-3 border-t border-white/5">
-                <div class="bg-slate-900/30 border border-white/5 rounded-xl p-2.5 flex justify-between items-center text-[10px]">
+                <div class="bg-slate-900/30 border border-white/5 rounded-xl p-2.5 flex justify-between items-center text-[10px]" data-reveal-at="6" data-era-trigger="apres">
                   <div class="flex flex-col gap-0.5">
                     <div class="font-mono text-indigo-300 flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-indigo-400 ring-2 ring-indigo-400/20"></div> 2026</div>
                     <div class="text-slate-400">Siège &amp; 5 labos</div>
@@ -314,7 +314,7 @@ export default function TechnicalWorkspace(state) {
 
   // ── SLIDE 2 — Focus Siège ─────────────────────────────────────────────────
   const presSlide2 = `
-    <div data-pres-slide="2" data-pres-label="Focus Siège — Strasbourg" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="10" data-pres-label="Focus Siège — Strasbourg" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-6 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 02 — GSBLAB-STR-DC · site 02</p>
@@ -364,7 +364,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 3 — Schéma réseau Siège ───────────────────────────────────────────
   const presSlide3 = `
-    <div data-pres-slide="3" data-pres-label="Schéma réseau — Siège" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="11" data-pres-label="Schéma réseau — Siège" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Siège — GSBLAB-STR-DC · site 02</p>
@@ -388,7 +388,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 4 — Laboratoire régional ──────────────────────────────────────────
   const presSlide4 = `
-    <div data-pres-slide="4" data-pres-label="Laboratoire Régional" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="12" data-pres-label="Laboratoire Régional" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-6 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 04 — GSBLAB-LAB-[VILLE] · sites 10 à 14 · phase 2026</p>
@@ -430,7 +430,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 5 — Schéma réseau Laboratoire ─────────────────────────────────────
   const presSlide5 = `
-    <div data-pres-slide="5" data-pres-label="Schéma réseau — Laboratoire" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="13" data-pres-label="Schéma réseau — Laboratoire" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Laboratoire régional — GSBLAB-LAB-[VILLE] · sites 10 → 14</p>
@@ -454,7 +454,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 6 — Centre de prélèvement ──────────────────────────────────────────
   const presSlide6 = `
-    <div data-pres-slide="6" data-pres-label="Centre de Prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="14" data-pres-label="Centre de Prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-6 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 06 — GSBLAB-CP-[VILLE] · sites 20 à 34 · phase 2027-2028</p>
@@ -495,7 +495,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 7 — Schéma réseau Centre de prélèvement ───────────────────────────
   const presSlide7 = `
-    <div data-pres-slide="7" data-pres-label="Schéma réseau — Centre prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="15" data-pres-label="Schéma réseau — Centre prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Centre de prélèvement — GSBLAB-CP-[VILLE] · sites 20 → 34</p>
@@ -519,7 +519,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 8 — Cluster Proxmox HA ─────────────────────────────────────────────
   const presSlide8 = `
-    <div data-pres-slide="8" data-pres-label="Cluster Proxmox" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12 w-full max-w-5xl mx-auto h-full py-4">
+    <div data-pres-slide="16" data-pres-label="Cluster Proxmox" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12 w-full max-w-5xl mx-auto h-full py-4">
       <div class="text-center space-y-4 w-full mb-8">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Capacité du Cluster Proxmox HA</h2>
         <div class="w-16 h-1.5 bg-emerald-500 mx-auto rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
@@ -544,7 +544,7 @@ export default function TechnicalWorkspace(state) {
 
   // ── SLIDE 9 — Déploiement IaC ─────────────────────────────────────────────
   const presSlide9 = `
-    <div data-pres-slide="9" data-pres-label="Déploiement IaC" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-8 w-full max-w-6xl mx-auto h-full py-4">
+    <div data-pres-slide="17" data-pres-label="Déploiement IaC" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-8 w-full max-w-6xl mx-auto h-full py-4">
       <div class="text-center space-y-4 w-full mb-4">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Déploiement Automatisé (IaC)</h2>
         <div class="w-16 h-1.5 bg-blue-500 mx-auto rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
@@ -917,8 +917,8 @@ export function bindTechEvents(state) {
     // Panels
     const pAvant = document.getElementById('fmapPanelAvant');
     const pApres = document.getElementById('fmapPanelApres');
-    if (pAvant) pAvant.hidden = era !== 'avant';
-    if (pApres) pApres.hidden = era !== 'apres';
+    if (pAvant) pAvant.classList.toggle('hidden', era !== 'avant');
+    if (pApres) pApres.classList.toggle('hidden', era !== 'apres');
   }
 
   // Era toggle listeners
@@ -927,4 +927,25 @@ export function bindTechEvents(state) {
   });
 
   buildFMap();
+
+  // Listen for step changes to automate era toggle
+  if (!window._techStepListener) {
+    window.addEventListener('presentationStepChange', (e) => {
+      if (e.detail.tab === 'tech') {
+        const step = e.detail.step;
+        if (step >= 6 && step <= 9) {
+          const btnApres = document.querySelector('[data-era-btn="apres"]');
+          if (btnApres && document.getElementById('eraState')?.dataset.era !== 'apres') {
+            btnApres.click();
+          }
+        } else if (step < 6) {
+          const btnAvant = document.querySelector('[data-era-btn="avant"]');
+          if (btnAvant && document.getElementById('eraState')?.dataset.era !== 'avant') {
+            btnAvant.click();
+          }
+        }
+      }
+    });
+    window._techStepListener = true;
+  }
 }
