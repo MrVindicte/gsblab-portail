@@ -158,10 +158,11 @@ const updatePresentationDOM = () => {
     
     // Révélation dynamique des sous-éléments (sans rechargement DOM)
     activeSlide.querySelectorAll('[data-reveal-at]').forEach(el => {
-      const revealAt = parseInt(el.getAttribute('data-reveal-at'), 10);
+      const revealAttr = el.getAttribute('data-reveal-at');
+      const revealAt = parseInt(revealAttr, 10);
       const exclusive = el.getAttribute('data-reveal-mode') === 'exclusive';
       const shouldShow = exclusive
-        ? (window.appState.presentationStep === revealAt)
+        ? revealAttr.split(',').map(n => parseInt(n, 10)).includes(window.appState.presentationStep)
         : (window.appState.presentationStep >= revealAt);
 
       if (shouldShow) {
@@ -184,8 +185,12 @@ const updatePresentationDOM = () => {
     // Auto-scroll vers la section révélée (pour les slides scrollables)
     if (activeSlide.classList.contains('overflow-y-auto')) {
       requestAnimationFrame(() => {
-        const target = activeSlide.querySelector(`[data-reveal-at="${window.appState.presentationStep}"]`);
-        if (target) activeSlide.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+        // Find any element containing the step (e.g. "21,22,23" or "21")
+        const targets = Array.from(activeSlide.querySelectorAll('[data-reveal-at]')).filter(el => el.getAttribute('data-reveal-at').split(',').map(Number).includes(window.appState.presentationStep));
+        const target = targets.find(el => el.offsetTop !== undefined); // find first HTML element
+        if (target && target.offsetTop !== undefined) {
+            activeSlide.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+        }
       });
     }
   }
