@@ -41,7 +41,7 @@ window.appState = {
 // Update maxSteps when you add/remove data-pres-step elements in a component.
 const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites', 'conclusion'];
 // Nombre de slides par onglet (Option B : slides exclusives)
-const PRES_MAX  = { dashboard: 14, finance: 7, tech: 27, drp: 3, pmo: 5, comparison: 2, sites: 5, conclusion: 1 };
+const PRES_MAX  = { dashboard: 14, finance: 7, tech: 27, drp: 3, pmo: 5, comparison: 3, sites: 5, conclusion: 1 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
@@ -59,6 +59,18 @@ const globalToLocal = (g) => {
   }
   return { tab: PRES_TABS[0], localStep: 1 };
 };
+
+// --- RESTAURATION DE LA SLIDE DEPUIS LE CACHE ---
+const savedPresStep = sessionStorage.getItem('gsblab_pres_step');
+if (savedPresStep) {
+  const g = parseInt(savedPresStep, 10);
+  if (!isNaN(g) && g >= 1 && g <= PRES_TOTAL) {
+    window.appState.globalPresentationStep = g;
+    const { tab, localStep } = globalToLocal(g);
+    window.appState.activeTab = tab;
+    window.appState.presentationStep = localStep;
+  }
+}
 
 // ─── Presentation helpers ────────────────────────────────────────────────────
 const togglePresentationMode = (active) => {
@@ -145,6 +157,11 @@ const _startIacLoop = () => {
 };
 
 const updatePresentationDOM = () => {
+  // Sauvegarde dans le cache du navigateur à chaque changement
+  if (window.appState.presentationMode) {
+    sessionStorage.setItem('gsblab_pres_step', window.appState.globalPresentationStep);
+  }
+
   // ── Slides : désactiver toutes, activer la courante ────────────────────────
   document.querySelectorAll('[data-pres-slide]').forEach(el => {
     el.classList.remove('pres-slide-active');

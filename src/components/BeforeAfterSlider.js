@@ -4,70 +4,105 @@ export default function BeforeAfterSlider(state) {
   // ── MODE PRÉSENTATION — slide visuelle full-screen ──────────────────────────
   if (isPres) {
     return `
-      <div data-pres-slide="1,2" data-pres-label="Avant / Après — Dette Technique"
-           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
+      <div data-pres-slide="1,2,3" data-pres-label="Avant / Après — Dette Technique"
+           class="flex-1 min-h-0 flex flex-col items-center justify-center w-full max-w-7xl mx-auto h-full py-4 relative">
 
-        <div class="text-center space-y-3">
-          <h2 class="text-5xl font-extrabold text-white tracking-tight font-display">Avant / Après — Dette Technique</h2>
-          <div class="w-20 h-px bg-white/15 mx-auto"></div>
+        <div class="text-center space-y-4 mb-8">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-mono tracking-widest uppercase">
+            Bilan de Transformation
+          </div>
+          <h2 class="text-4xl font-bold text-white tracking-tight">Dette Technique vs. Cible HDS</h2>
         </div>
 
-        <div class="grid grid-cols-3 gap-6 w-full flex-1 min-h-0">
+        <div class="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-8 w-full flex-1 min-h-0 items-center">
 
           <!-- AVANT -->
-          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-red-500 flex flex-col gap-4 bg-slate-900/60">
-            <div class="flex items-center gap-2 text-red-400 font-bold uppercase tracking-widest text-xs">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-              Situation existante
+          <div class="bg-[#13141a] rounded-2xl p-8 border border-red-500/20 flex flex-col gap-6 shadow-[0_8px_40px_-12px_rgba(239,68,68,0.15)] relative overflow-hidden group">
+            <!-- Liseré supérieur très fin et lumineux -->
+            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-red-500/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-red-500/5 to-transparent pointer-events-none"></div>
+            
+            <div class="flex items-center gap-3 text-red-400 font-bold uppercase tracking-widest text-sm z-10">
+              <div class="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center border border-red-500/20 shadow-[0_0_15px_rgba(239,68,68,0.2)]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <div>
+                <div class="text-white text-base">Existant (Avant)</div>
+                <div class="text-[10px] text-red-500/80">Dette Technique Critique</div>
+              </div>
             </div>
-            <div class="space-y-3 flex-1">
+            
+            <div class="space-y-4 z-10 flex-1">
               ${[
                 ['WS 2012 / VMware ESXi', 'EoL 2027 — vulnérabilités critiques non patchées'],
                 ['Réseau plat sans VLAN', 'Secrétariats et serveurs cliniques sur le même L2'],
                 ['Pas de MFA ni MDM', 'Messagerie sans 2FA · laptops non chiffrés'],
                 ['Baie VNX exposée WAN', 'Stockage accessible sans pare-feu frontal dédié'],
               ].map(([t, d]) => `
-                <div class="bg-red-500/5 border border-red-500/15 rounded-xl p-3">
-                  <div class="text-red-300 font-semibold text-sm">${t}</div>
-                  <div class="text-slate-500 text-xs mt-0.5 leading-snug">${d}</div>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-black/40 border border-white/5 group-hover:border-red-500/20 transition-colors">
+                  <div class="mt-1 w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></div>
+                  <div>
+                    <div class="text-slate-200 font-bold text-sm mb-1">${t}</div>
+                    <div class="text-slate-400 text-xs leading-relaxed">${d}</div>
+                  </div>
                 </div>
               `).join('')}
             </div>
           </div>
 
           <!-- CENTER delta -->
-          <div data-reveal-at="2" class="flex flex-col items-center justify-center gap-5 text-center opacity-0 transition-all duration-700">
-            <div>
-              <div class="text-5xl font-mono font-extrabold text-slate-100 leading-none">65 k€</div>
-              <div class="text-slate-400 text-sm mt-2">économisés par an<br>vs VMware Broadcom</div>
+          <div data-reveal-at="3" class="flex flex-col items-center justify-center gap-6 px-4 opacity-0 transition-all duration-700">
+            
+            <div class="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-6 text-center shadow-lg relative overflow-hidden backdrop-blur-sm w-48">
+              <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10"></div>
+              <div class="text-xs text-indigo-300 font-bold tracking-widest uppercase mb-2">Bénéfice Annuel</div>
+              <div class="text-4xl font-mono font-extrabold text-white mb-1">+65k€</div>
+              <div class="text-[10px] text-slate-400">Économies de licences</div>
             </div>
-            <div class="w-px h-10 bg-white/12"></div>
-            <div>
-              <div class="text-3xl font-mono font-bold text-slate-300">440 794 €</div>
-              <div class="text-slate-400 text-xs mt-1">investi dans la nouvelle infra</div>
+
+            <div class="w-px h-16 bg-gradient-to-b from-indigo-500/50 to-emerald-500/50"></div>
+
+            <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-6 text-center shadow-lg relative overflow-hidden backdrop-blur-sm w-48">
+              <div class="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-teal-500/10"></div>
+              <div class="text-xs text-emerald-300 font-bold tracking-widest uppercase mb-2">Conformité</div>
+              <div class="flex items-center justify-center gap-2 text-white font-bold text-lg mb-1">
+                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                HDS v2
+              </div>
+              <div class="text-[10px] text-slate-400">Certification Validée</div>
             </div>
-            <div class="mt-2 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
-              <svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-              <span class="text-slate-300 text-xs font-bold">HDS v2 conforme</span>
-            </div>
+
           </div>
 
           <!-- APRÈS -->
-          <div data-reveal-at="2" class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-emerald-500 flex flex-col gap-4 bg-slate-900/60 opacity-0 transition-all duration-700">
-            <div class="flex items-center gap-2 text-emerald-400 font-bold uppercase tracking-widest text-xs">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-              Infrastructure cible HDS
+          <div data-reveal-at="2" class="bg-[#13141a] rounded-2xl p-8 border border-emerald-500/20 flex flex-col gap-6 shadow-[0_8px_40px_-12px_rgba(16,185,129,0.15)] relative overflow-hidden group opacity-0 transition-all duration-700">
+            <!-- Liseré supérieur très fin et lumineux -->
+            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-emerald-500/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-emerald-500/5 to-transparent pointer-events-none"></div>
+            
+            <div class="flex items-center gap-3 text-emerald-400 font-bold uppercase tracking-widest text-sm z-10">
+              <div class="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <div>
+                <div class="text-white text-base">Cible HDS (Après)</div>
+                <div class="text-[10px] text-emerald-500/80">Infrastructure Sécurisée</div>
+              </div>
             </div>
-            <div class="space-y-3 flex-1">
+            
+            <div class="space-y-4 z-10 flex-1">
               ${[
                 ['Proxmox VE HA + Ceph', 'Hyperconvergé · RTO &lt; 5 min · support 5 ans'],
                 ['VLAN HDS + VPN IPsec', 'VLAN 30 isolé strict · 27 spokes FortiGate 40F'],
                 ['Exchange Online + MFA', 'M365 HDS certifié · BitLocker · Authenticator'],
                 ['PBS + OVH Object Storage', 'Sauvegarde 3-2-1 · RPO 1h · chiffré AES-256'],
               ].map(([t, d]) => `
-                <div class="bg-emerald-500/5 border border-emerald-500/15 rounded-xl p-3">
-                  <div class="text-emerald-300 font-semibold text-sm">${t}</div>
-                  <div class="text-slate-500 text-xs mt-0.5 leading-snug">${d}</div>
+                <div class="flex items-start gap-4 p-4 rounded-xl bg-black/40 border border-white/5 group-hover:border-emerald-500/20 transition-colors">
+                  <div class="mt-1 w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+                  <div>
+                    <div class="text-slate-200 font-bold text-sm mb-1">${t}</div>
+                    <div class="text-slate-400 text-xs leading-relaxed">${d}</div>
+                  </div>
                 </div>
               `).join('')}
             </div>
