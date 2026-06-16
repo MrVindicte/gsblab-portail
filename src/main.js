@@ -5,7 +5,7 @@ import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=21';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=28';
-import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=14';
+import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=15';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=5';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=6';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=5';
@@ -85,6 +85,32 @@ const navigatePresentation = (direction) => {
   }
 };
 
+
+// ── Auto-scale : compresse le contenu de la slide active pour tenir en plein écran ──
+const scalePresentationSlide = () => {
+  if (!window.appState?.presentationMode) return;
+  // Réinitialiser toutes les slides
+  document.querySelectorAll('.pres-slides-container [data-pres-slide]').forEach(s => {
+    s.style.transform = '';
+    s.style.transformOrigin = '';
+  });
+  const container = document.querySelector('.pres-slides-container');
+  const slide = document.querySelector('.pres-slides-container [data-pres-slide].pres-slide-active');
+  if (!slide || !container) return;
+
+  // Double rAF : le navigateur a le temps de finaliser le layout avant la mesure
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const cH = container.clientHeight;
+    const cW = container.clientWidth;
+    const sH = slide.scrollHeight;
+    const sW = slide.scrollWidth;
+    const scale = Math.min(cH / sH, cW / sW, 1);
+    if (scale < 0.985) {
+      slide.style.transformOrigin = 'top center';
+      slide.style.transform = `scale(${scale.toFixed(5)})`;
+    }
+  }));
+};
 
 const updatePresentationDOM = () => {
   // ── Slides : désactiver toutes, activer la courante ────────────────────────
@@ -193,6 +219,8 @@ const updatePresentationDOM = () => {
     btnNext.classList.toggle('cursor-not-allowed', atEnd);
     atEnd ? btnNext.setAttribute('disabled', 'true') : btnNext.removeAttribute('disabled');
   }
+
+  scalePresentationSlide();
 };
 window.updatePresentationDOM = updatePresentationDOM;
 
@@ -529,3 +557,8 @@ window.addEventListener('keydown', (e) => {
 // Initial Render
 document.addEventListener('DOMContentLoaded', renderApp);
 renderApp();
+
+// Recalcul du scale si la fenêtre est redimensionnée (ex: rotation vidéoprojecteur)
+window.addEventListener('resize', () => {
+  if (window.appState?.presentationMode) scalePresentationSlide();
+});
