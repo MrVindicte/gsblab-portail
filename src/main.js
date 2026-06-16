@@ -5,10 +5,10 @@ import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents, menuSections } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=21';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=28';
-import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=22';
-import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=6';
+import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=23';
+import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=7';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=9';
-import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=5';
+import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=6';
 import SitesWorkspace from './components/SitesWorkspace.js?v=5';
 import ConclusionWorkspace from './components/ConclusionWorkspace.js?v=1';
 
@@ -159,12 +159,18 @@ const updatePresentationDOM = () => {
     // Révélation dynamique des sous-éléments (sans rechargement DOM)
     activeSlide.querySelectorAll('[data-reveal-at]').forEach(el => {
       const revealAt = parseInt(el.getAttribute('data-reveal-at'), 10);
-      if (window.appState.presentationStep >= revealAt) {
-        el.classList.remove('opacity-0');
+      const exclusive = el.getAttribute('data-reveal-mode') === 'exclusive';
+      const shouldShow = exclusive
+        ? (window.appState.presentationStep === revealAt)
+        : (window.appState.presentationStep >= revealAt);
+
+      if (shouldShow) {
+        el.classList.remove('opacity-0', 'h-0', 'overflow-hidden');
         el.classList.add('opacity-100');
       } else {
         el.classList.add('opacity-0');
         el.classList.remove('opacity-100');
+        if (exclusive) el.classList.add('h-0', 'overflow-hidden');
       }
     });
 

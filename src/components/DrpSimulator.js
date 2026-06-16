@@ -133,17 +133,17 @@ export default function DrpSimulator(state) {
 
           <!-- Backup chain — reveal at step 3 -->
           <div data-reveal-at="3" class="opacity-0 transition-all duration-700 shrink-0">
-            <div class="glass-panel rounded-2xl p-4 border border-emerald-500/15" style="background:rgba(16,185,129,0.04)">
+            <div class="glass-panel rounded-2xl p-4 border border-white/8" style="background:rgba(255,255,255,0.02)">
               <div class="text-[8.5px] font-mono tracking-[0.22em] uppercase text-slate-600 mb-3">Chaîne de sauvegarde 3-2-1-1-0</div>
               <div class="flex items-center gap-0">
 
                 <!-- Node 1 -->
                 <div class="flex flex-col items-center gap-1.5 flex-1">
-                  <div class="w-9 h-9 rounded-xl bg-indigo-500/15 border border-indigo-500/25 flex items-center justify-center shadow-[0_0_10px_rgba(99,102,241,0.2)]">
-                    <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+                  <div class="w-9 h-9 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
                   </div>
                   <div class="text-center">
-                    <div class="text-[10px] font-bold text-indigo-300">PBS Local</div>
+                    <div class="text-[10px] font-bold text-slate-300">PBS Local</div>
                     <div class="text-[9px] text-slate-500">J-1 incrémental</div>
                     <div class="text-[8.5px] font-mono text-slate-600">Strasbourg</div>
                   </div>
@@ -151,17 +151,17 @@ export default function DrpSimulator(state) {
 
                 <!-- Arrow -->
                 <div class="flex flex-col items-center gap-0.5 px-1">
-                  <div class="drp-chain-line h-px w-12 bg-gradient-to-r from-indigo-500/40 to-blue-500/40" style="animation-delay:.2s"></div>
+                  <div class="drp-chain-line h-px w-12 bg-slate-600/60" style="animation-delay:.2s"></div>
                   <div class="text-[8px] text-slate-700 font-mono">hebdo</div>
                 </div>
 
                 <!-- Node 2 -->
                 <div class="flex flex-col items-center gap-1.5 flex-1">
-                  <div class="w-9 h-9 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center shadow-[0_0_10px_rgba(59,130,246,0.2)]">
-                    <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+                  <div class="w-9 h-9 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
                   </div>
                   <div class="text-center">
-                    <div class="text-[10px] font-bold text-blue-300">PBS Nantes</div>
+                    <div class="text-[10px] font-bold text-slate-300">PBS Nantes</div>
                     <div class="text-[9px] text-slate-500">Hebdomadaire</div>
                     <div class="text-[8.5px] font-mono text-slate-600">Site de secours</div>
                   </div>
@@ -169,17 +169,17 @@ export default function DrpSimulator(state) {
 
                 <!-- Arrow -->
                 <div class="flex flex-col items-center gap-0.5 px-1">
-                  <div class="drp-chain-line h-px w-12 bg-gradient-to-r from-blue-500/40 to-emerald-500/40" style="animation-delay:.5s"></div>
+                  <div class="drp-chain-line h-px w-12 bg-slate-600/60" style="animation-delay:.5s"></div>
                   <div class="text-[8px] text-slate-700 font-mono">mensuel</div>
                 </div>
 
                 <!-- Node 3 -->
                 <div class="flex flex-col items-center gap-1.5 flex-1">
-                  <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shadow-[0_0_10px_rgba(52,211,153,0.2)]">
-                    <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                  <div class="w-9 h-9 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
                   </div>
                   <div class="text-center">
-                    <div class="text-[10px] font-bold text-emerald-300">OVHcloud HDS</div>
+                    <div class="text-[10px] font-bold text-slate-300">OVHcloud HDS</div>
                     <div class="text-[9px] text-slate-500">Object Storage</div>
                     <div class="text-[8.5px] font-mono text-slate-600">Cold Archive</div>
                   </div>
@@ -187,11 +187,11 @@ export default function DrpSimulator(state) {
 
                 <!-- Immuable badge -->
                 <div class="ml-4 flex flex-col items-center gap-1.5">
-                  <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                    <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                  <div class="w-9 h-9 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
                   </div>
                   <div class="text-center">
-                    <div class="text-[10px] font-bold text-emerald-400">3-2-1-1-0</div>
+                    <div class="text-[10px] font-bold text-slate-200">3-2-1-1-0</div>
                     <div class="text-[9px] text-slate-500">Immuable</div>
                     <div class="text-[8.5px] font-mono text-slate-600">0 erreur</div>
                   </div>

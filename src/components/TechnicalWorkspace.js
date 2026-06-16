@@ -520,7 +520,7 @@ export default function TechnicalWorkspace(state) {
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-10">
 
         <!-- ── Step 21 : Schéma réseau Siège ── -->
-        <div class="space-y-4 opacity-0 transition-all duration-700" data-reveal-at="21">
+        <div class="space-y-4 opacity-0 transition-all duration-700" data-reveal-at="21" data-reveal-mode="exclusive">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Siège — GSBLAB-STR-DC · site 02</p>
           <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Schéma réseau détaillé — Strasbourg</h2>
@@ -541,7 +541,7 @@ export default function TechnicalWorkspace(state) {
         </div>
 
         <!-- ── Step 22 : Laboratoire Régional ── -->
-        <div class="border-t border-white/5 pt-8 space-y-5 opacity-0 transition-all duration-700" data-reveal-at="22">
+        <div class="border-t border-white/5 pt-8 space-y-5 opacity-0 transition-all duration-700" data-reveal-at="22" data-reveal-mode="exclusive">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 04 — GSBLAB-LAB-[VILLE] · sites 10 à 14 · phase 2026</p>
           <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Laboratoire régional — site témoin</h2>
@@ -580,7 +580,7 @@ export default function TechnicalWorkspace(state) {
         </div>
 
         <!-- ── Step 23 : Schéma réseau Laboratoire ── -->
-        <div class="border-t border-white/5 pt-8 space-y-4 opacity-0 transition-all duration-700" data-reveal-at="23">
+        <div class="border-t border-white/5 pt-8 space-y-4 opacity-0 transition-all duration-700" data-reveal-at="23" data-reveal-mode="exclusive">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Laboratoire régional — GSBLAB-LAB-[VILLE] · sites 10 → 14</p>
           <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Schéma réseau type — Laboratoire régional</h2>
@@ -601,7 +601,7 @@ export default function TechnicalWorkspace(state) {
         </div>
 
         <!-- ── Step 24 : Centre de Prélèvement ── -->
-        <div class="border-t border-white/5 pt-8 space-y-5 opacity-0 transition-all duration-700" data-reveal-at="24">
+        <div class="border-t border-white/5 pt-8 space-y-5 opacity-0 transition-all duration-700" data-reveal-at="24" data-reveal-mode="exclusive">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 06 — GSBLAB-CP-[VILLE] · sites 20 à 34 · phase 2027-2028</p>
           <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Centre de prélèvement — site témoin</h2>
@@ -639,7 +639,7 @@ export default function TechnicalWorkspace(state) {
         </div>
 
         <!-- ── Step 25 : Schéma réseau Centre de prélèvement ── -->
-        <div class="border-t border-white/5 pt-8 space-y-4 opacity-0 transition-all duration-700" data-reveal-at="25">
+        <div class="border-t border-white/5 pt-8 space-y-4 opacity-0 transition-all duration-700" data-reveal-at="25" data-reveal-mode="exclusive">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Centre de prélèvement — GSBLAB-CP-[VILLE] · sites 20 → 34</p>
           <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Schéma réseau type — Centre de prélèvement</h2>
@@ -660,7 +660,7 @@ export default function TechnicalWorkspace(state) {
         </div>
 
         <!-- ── Step 26 : Cluster Proxmox HA ── -->
-        <div class="border-t border-white/5 pt-8 space-y-8 opacity-0 transition-all duration-700" data-reveal-at="26">
+        <div class="border-t border-white/5 pt-8 space-y-8 opacity-0 transition-all duration-700" data-reveal-at="26" data-reveal-mode="exclusive">
       <div class="text-center space-y-4 w-full">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Capacité du Cluster Proxmox HA</h2>
         <div class="w-16 h-1.5 bg-emerald-500 mx-auto rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>

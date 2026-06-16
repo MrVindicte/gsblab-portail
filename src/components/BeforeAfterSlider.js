@@ -9,7 +9,7 @@ export default function BeforeAfterSlider(state) {
 
         <div class="text-center space-y-3">
           <h2 class="text-5xl font-extrabold text-white tracking-tight font-display">Avant / Après — Dette Technique</h2>
-          <div class="w-20 h-1.5 bg-gradient-to-r from-red-500 to-emerald-500 mx-auto rounded-full"></div>
+          <div class="w-20 h-px bg-white/15 mx-auto"></div>
         </div>
 
         <div class="grid grid-cols-3 gap-6 w-full flex-1 min-h-0">
@@ -38,17 +38,17 @@ export default function BeforeAfterSlider(state) {
           <!-- CENTER delta -->
           <div data-reveal-at="2" class="flex flex-col items-center justify-center gap-5 text-center opacity-0 transition-all duration-700">
             <div>
-              <div class="text-5xl font-mono font-extrabold text-emerald-400 leading-none">65 k€</div>
+              <div class="text-5xl font-mono font-extrabold text-slate-100 leading-none">65 k€</div>
               <div class="text-slate-400 text-sm mt-2">économisés par an<br>vs VMware Broadcom</div>
             </div>
-            <div class="w-1 h-12 bg-gradient-to-b from-red-500 to-emerald-500 rounded-full"></div>
+            <div class="w-px h-10 bg-white/12"></div>
             <div>
-              <div class="text-3xl font-mono font-bold text-indigo-300">440 794 €</div>
+              <div class="text-3xl font-mono font-bold text-slate-300">440 794 €</div>
               <div class="text-slate-400 text-xs mt-1">investi dans la nouvelle infra</div>
             </div>
-            <div class="mt-2 flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/25 rounded-full px-3 py-1.5">
-              <svg class="w-3.5 h-3.5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-              <span class="text-emerald-400 text-xs font-bold">HDS v2 conforme</span>
+            <div class="mt-2 flex items-center gap-1.5 bg-white/5 border border-white/10 rounded-full px-3 py-1.5">
+              <svg class="w-3.5 h-3.5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+              <span class="text-slate-300 text-xs font-bold">HDS v2 conforme</span>
             </div>
           </div>
 
