@@ -42,12 +42,18 @@ window.appState = {
 const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites', 'conclusion'];
 // Nombre de slides par onglet (Option B : slides exclusives)
 const PRES_MAX  = { dashboard: 14, finance: 7, tech: 27, drp: 3, pmo: 5, comparison: 3, sites: 5, conclusion: 1 };
+const PRES_SLIDE_MAX = { dashboard: 4, finance: 3, tech: 9, drp: 1, pmo: 1, comparison: 1, sites: 2, conclusion: 1 };
 
 // Compute cumulative offsets once
 const PRES_OFFSET = {};
 let _acc = 0;
 for (const t of PRES_TABS) { PRES_OFFSET[t] = _acc; _acc += PRES_MAX[t]; }
-const PRES_TOTAL = _acc; // 37
+const PRES_TOTAL = _acc; // 65
+
+const PRES_SLIDE_OFFSET = {};
+let _s_acc = 0;
+for (const t of PRES_TABS) { PRES_SLIDE_OFFSET[t] = _s_acc; _s_acc += PRES_SLIDE_MAX[t]; }
+const PRES_SLIDE_TOTAL = _s_acc; // 22
 
 /** Convert a global step (1-based) to { tab, localStep } */
 const globalToLocal = (g) => {
@@ -167,9 +173,11 @@ const updatePresentationDOM = () => {
     el.classList.remove('pres-slide-active');
   });
   const stepStr = String(window.appState.presentationStep);
-  const activeSlide = Array.from(document.querySelectorAll('[data-pres-slide]')).find(el => {
+  const slideNodes = Array.from(document.querySelectorAll('[data-pres-slide]'));
+  const activeSlideIndex = slideNodes.findIndex(el => {
     return el.getAttribute('data-pres-slide').split(',').includes(stepStr);
   });
+  const activeSlide = activeSlideIndex !== -1 ? slideNodes[activeSlideIndex] : null;
   if (activeSlide) {
     activeSlide.classList.add('pres-slide-active');
     
@@ -213,16 +221,20 @@ const updatePresentationDOM = () => {
   }
 
   // ── Compteur footer + badge slide flottant ──────────────────────────────────────
-  const g = window.appState.globalPresentationStep;
+  let globalSlideNum = 1;
+  if (activeSlideIndex !== -1) {
+    globalSlideNum = PRES_SLIDE_OFFSET[window.appState.activeTab] + activeSlideIndex + 1;
+  }
+
   const counterEl = document.getElementById('pres-counter-label');
   if (counterEl) {
-    counterEl.innerText = `Slide ${g} / ${PRES_TOTAL}`;
+    counterEl.innerText = `Slide ${globalSlideNum} / ${PRES_SLIDE_TOTAL}`;
   }
   // Badge flottant sur la slide (position fixe, hors de tout conteneur)
   const badge = document.getElementById('pres-slide-badge');
   if (badge) {
-    const num = String(g).padStart(2, '0');
-    const tot = String(PRES_TOTAL).padStart(2, '0');
+    const num = String(globalSlideNum).padStart(2, '0');
+    const tot = String(PRES_SLIDE_TOTAL).padStart(2, '0');
     badge.innerHTML = `
       <span style="color:#f1f5f9;font-size:1.15rem;font-weight:900;line-height:1;">${num}</span>
       <span style="color:#475569;font-size:0.85rem;font-weight:700;line-height:1;">/</span>
@@ -233,11 +245,10 @@ const updatePresentationDOM = () => {
   // ── Barre de progression ───────────────────────────────────────────────────
   const pillsContainer = document.getElementById('pres-step-pills');
   if (pillsContainer) {
-    const g   = window.appState.globalPresentationStep;
-    const pct = ((g - 1) / Math.max(PRES_TOTAL - 1, 1)) * 100;
+    const pct = ((globalSlideNum - 1) / Math.max(PRES_SLIDE_TOTAL - 1, 1)) * 100;
 
     const boundaryPcts = PRES_TABS.slice(1).map(t =>
-      (PRES_OFFSET[t] / PRES_TOTAL) * 100
+      (PRES_SLIDE_OFFSET[t] / PRES_SLIDE_TOTAL) * 100
     );
     const ticks = boundaryPcts.map(p =>
       `<div style="position:absolute;top:-4px;left:${p}%;width:2px;height:14px;background:#475569;border-radius:1px;transform:translateX(-50%);pointer-events:none;"></div>`
