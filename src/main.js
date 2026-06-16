@@ -122,6 +122,28 @@ const scalePresentationSlide = () => {
   }));
 };
 
+// ── IaC animation loop (slide 27) ─────────────────────────────────────────
+let _iacTimer = null;
+
+const _resetIacAnimation = () => {
+  document.querySelectorAll('#iac-run-panel .iac-row').forEach(r => {
+    r.style.animation = 'none';
+    void r.offsetHeight; // force reflow
+    r.style.animation = '';
+  });
+};
+
+const _startIacLoop = () => {
+  clearTimeout(_iacTimer);
+  _resetIacAnimation();
+  // dernier row-delay 10.8s + durée 0.25s ≈ 11s + 3s pause = 14s cycle
+  _iacTimer = setTimeout(() => {
+    if (window.appState?.presentationStep === 27 && window.appState?.presentationMode) {
+      _startIacLoop();
+    }
+  }, 14000);
+};
+
 const updatePresentationDOM = () => {
   // ── Slides : désactiver toutes, activer la courante ────────────────────────
   document.querySelectorAll('[data-pres-slide]').forEach(el => {
@@ -145,6 +167,13 @@ const updatePresentationDOM = () => {
         el.classList.remove('opacity-100');
       }
     });
+
+    // Boucle animation IaC (step 27)
+    if (window.appState.presentationStep === 27) {
+      _startIacLoop();
+    } else {
+      clearTimeout(_iacTimer);
+    }
 
     // Auto-scroll vers la section révélée (pour les slides scrollables)
     if (activeSlide.classList.contains('overflow-y-auto')) {
