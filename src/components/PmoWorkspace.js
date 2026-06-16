@@ -106,9 +106,6 @@ export default function PmoWorkspace(state) {
 
   // ── MODE PRÉSENTATION — 2 slides visuelles ──────────────────────────────────
   if (isPres) {
-    const topRisks = [...state.risksList].sort((a, b) => b.criticality - a.criticality).slice(0, 4);
-    const riskColor = (score) => score >= 12 ? ['red','CRITIQUE'] : score >= 8 ? ['amber','ÉLEVÉ'] : ['emerald','MODÉRÉ'];
-
     return `
       <!-- SLIDE 1 : Roadmap -->
       <div data-pres-slide="1,2,3" data-pres-label="Roadmap 2026-2030"
@@ -147,42 +144,6 @@ export default function PmoWorkspace(state) {
               </div>
             </div>
           `).join('')}
-        </div>
-
-      </div>
-
-      <!-- SLIDE 2 : Risques -->
-      <div data-pres-slide="4,5" data-pres-label="Risques Critiques"
-           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-8 w-full max-w-5xl mx-auto h-full py-4">
-
-        <div class="text-center space-y-3">
-          <h2 class="text-5xl font-extrabold text-white tracking-tight font-display">Risques Critiques</h2>
-          <div class="w-16 h-1.5 bg-red-500 mx-auto rounded-full shadow-[0_0_12px_rgba(239,68,68,0.4)]"></div>
-          <p class="text-slate-400 text-sm">Registre de risques — Top ${topRisks.length} par criticité (Probabilité × Impact)</p>
-        </div>
-
-        <div class="grid grid-cols-2 gap-5 w-full">
-          ${topRisks.map((r, i) => {
-            const [col, label] = riskColor(r.criticality);
-            const reveal = i >= 2 ? 'data-reveal-at="5" class="glass-panel rounded-2xl p-5 border-l-[5px] border-l-' + col + '-500 flex flex-col gap-3 bg-slate-900/60 opacity-0 transition-all duration-700"'
-                                  : 'class="glass-panel rounded-2xl p-5 border-l-[5px] border-l-' + col + '-500 flex flex-col gap-3 bg-slate-900/60"';
-            return `
-              <div ${reveal}>
-                <div class="flex items-center justify-between">
-                  <div class="flex items-center gap-2">
-                    <span class="font-mono text-xs text-slate-500 font-bold">${r.id}</span>
-                    <span class="text-[9px] font-bold uppercase tracking-wider text-${col}-400 bg-${col}-500/10 border border-${col}-500/25 rounded px-1.5 py-0.5">${label}</span>
-                  </div>
-                  <span class="text-2xl font-mono font-extrabold text-${col}-400">${r.criticality}<span class="text-base text-slate-600">/16</span></span>
-                </div>
-                <div>
-                  <div class="font-bold text-white text-sm">${r.title}</div>
-                  <div class="text-slate-500 text-xs mt-1 leading-snug">${r.mitigation}</div>
-                </div>
-                <div class="text-[9px] text-slate-600 font-mono">Resp. : ${r.owner}</div>
-              </div>
-            `;
-          }).join('')}
         </div>
 
       </div>
