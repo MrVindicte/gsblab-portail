@@ -101,7 +101,7 @@ export default function TechnicalWorkspace(state) {
 
   // ── SLIDE 1 — Cartographie SD-WAN France ────────────────────────────────────
   const presSlide1 = `
-    <div data-pres-slide="1,2,3,4,5,6,7,8,9" data-pres-label="Cartographie SD-WAN — France" class="flex-1 min-h-0 w-full h-full" id="eraState" data-era="avant">
+    <div data-pres-slide="1,2,3,4,5,6,7,8" data-pres-label="Cartographie SD-WAN — France" class="flex-1 min-h-0 w-full h-full" id="eraState" data-era="avant">
       <style>
         .fmap-shape{fill:#0f1e3d;stroke:#6366f1;stroke-width:2.5;stroke-linejoin:round;filter:drop-shadow(0 0 22px rgba(99,102,241,.35))}
         .fmap-corse{fill:#0d1420;stroke:#475569;stroke-width:1.3;stroke-linejoin:round;opacity:.7}
@@ -112,8 +112,6 @@ export default function TechnicalWorkspace(state) {
         .fmap-link.sdwan.to-centre{stroke:#818cf8;stroke-width:1.3;stroke-dasharray:5 9;opacity:.75}
         .fmap-link.backup{stroke:#10b981;stroke-width:1.6;stroke-dasharray:2 6;animation:fmapFlow 1.6s linear infinite}
         @keyframes fmapFlow{to{stroke-dashoffset:-16}}
-        [data-era="avant"] .only-apres{opacity:0!important;pointer-events:none!important}
-        [data-era="apres"] .only-avant{opacity:0!important;pointer-events:none!important}
         .fmap-site circle,.fmap-site rect{transition:filter .2s}
         .fmap-site:hover circle,.fmap-site:hover rect{filter:brightness(1.2) drop-shadow(0 0 8px rgba(99,102,241,.7))}
         .fmap-halo{animation:fmapHalo 2.7s ease-out infinite;transform-origin:center;transform-box:fill-box}
@@ -121,6 +119,8 @@ export default function TechnicalWorkspace(state) {
         .fmap-label{font-family:'Inter',sans-serif;font-weight:600;font-size:10.5px;fill:#94a3b8;pointer-events:none}
         .fmap-label.major{font-family:'Outfit',sans-serif;font-weight:700;font-size:12px;fill:#c7d2fe}
         #fmap-ovh{transition:opacity .55s}
+        [data-era="avant"] .only-apres{opacity:0!important;pointer-events:none!important}
+        [data-era="apres"] .only-avant{opacity:0!important;pointer-events:none!important}
       </style>
       <div class="max-w-6xl w-full mx-auto px-4 py-4 h-full flex flex-col gap-4">
         
@@ -195,7 +195,7 @@ export default function TechnicalWorkspace(state) {
             <div class="p-5 flex-1 flex flex-col justify-between overflow-hidden">
               
               <!-- Avant Panel -->
-              <div id="fmapPanelAvant" class="flex flex-col gap-4 h-full">
+              <div id="fmapPanelAvant" class="flex flex-col gap-4">
                 <div class="flex items-center justify-between shrink-0 mb-2">
                   <h4 class="text-sm font-bold text-orange-400 flex items-center gap-2">
                     <span class="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse"></span>
@@ -204,29 +204,29 @@ export default function TechnicalWorkspace(state) {
                   <span class="text-[9px] font-mono bg-red-500/10 text-red-400 border border-red-500/20 rounded px-1.5 py-0.5">NON-CONFORME HDS</span>
                 </div>
                 
-                <div class="flex flex-col gap-3 flex-1 min-h-0 justify-center">
-                  <div class="bg-orange-950/20 border border-orange-500/10 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="2">
+                <div class="flex flex-col gap-3 relative mt-2">
+                  <div class="bg-orange-950/20 border border-orange-500/10 rounded-lg p-3 flex items-center gap-3 relative z-10">
                     <div class="shrink-0"><svg class="w-4 h-4 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Réseau à plat</div>
                       <div class="text-[10px] text-slate-400 leading-snug"><span class="text-red-400 font-bold">0 VLAN</span> — Trafic de santé non isolé du reste.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="3">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700 relative z-10" data-reveal-at="2">
                     <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Matériel EoSL</div>
                       <div class="text-[10px] text-slate-400 leading-snug">Switchs Cisco SF200, Wi-Fi 4 — <span class="text-orange-300">CVE non patchables</span>.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="4">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700 relative z-10" data-reveal-at="3">
                     <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Serveurs Obsolètes</div>
                       <div class="text-[10px] text-slate-400 leading-snug">VMware ESXi 6, Exchange 2013 vulnérables.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="5">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700 relative z-10" data-reveal-at="4">
                     <div class="shrink-0"><svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Tunnels artisanaux</div>
@@ -246,29 +246,29 @@ export default function TechnicalWorkspace(state) {
                   <span class="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded px-1.5 py-0.5">CERTIFIÉ HDS</span>
                 </div>
                 
-                <div class="flex flex-col gap-3 flex-1 min-h-0 justify-center">
-                  <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="6">
+                <div class="flex flex-col gap-3 relative mt-2">
+                  <div class="bg-emerald-950/20 border border-emerald-500/20 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="5">
                     <div class="shrink-0"><svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">SD-WAN Actif</div>
                       <div class="text-[10px] text-slate-400 leading-snug">26 tunnels IPsec auto-orchestrés et fiabilisés.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="7">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="6">
                     <div class="shrink-0"><svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Sécurité HDS Isolée</div>
                       <div class="text-[10px] text-slate-400 leading-snug"><b class="text-emerald-300">5 VLANs/site</b> (VLAN 30 médical compartimenté).</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="8">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="7">
                     <div class="shrink-0"><svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Parc 100% UniFi</div>
                       <div class="text-[10px] text-slate-400 leading-snug">UCG-Ultra, Switches PoE, AP Wi-Fi 6 unifiés — 0 licence.</div>
                     </div>
                   </div>
-                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="9">
+                  <div class="bg-slate-800/40 border border-white/5 rounded-lg p-3 flex items-center gap-3 opacity-0 transition-all duration-700" data-reveal-at="8">
                     <div class="shrink-0"><svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg></div>
                     <div>
                       <div class="text-[11px] font-bold text-slate-200">Sauvegarde 3-2-1-1-0</div>
@@ -277,7 +277,7 @@ export default function TechnicalWorkspace(state) {
                   </div>
                 </div>
                 
-                <div class="flex justify-between items-center text-[10px] shrink-0 mt-2 opacity-0 transition-all duration-700" data-reveal-at="9">
+                <div class="flex justify-between items-center text-[10px] shrink-0 mt-2 opacity-0 transition-all duration-700" data-reveal-at="8">
                   <span class="text-slate-400">Budget prévisionnel matériel complet</span>
                   <span class="font-mono text-emerald-400 font-bold text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded border border-emerald-500/10">398 733 € HT</span>
                 </div>
@@ -285,7 +285,7 @@ export default function TechnicalWorkspace(state) {
               
               <!-- Bottom Fixed: Phases -->
               <div class="shrink-0 mt-3 pt-3 border-t border-white/5">
-                <div class="bg-slate-900/30 border border-white/5 rounded-xl p-2.5 flex justify-between items-center text-[10px]" data-reveal-at="6" data-era-trigger="apres">
+                <div class="bg-slate-900/30 border border-white/5 rounded-xl p-2.5 flex justify-between items-center text-[10px]" data-reveal-at="5" data-era-trigger="apres">
                   <div class="flex flex-col gap-0.5">
                     <div class="font-mono text-indigo-300 flex items-center gap-1.5"><div class="w-1.5 h-1.5 rounded-full bg-indigo-400 ring-2 ring-indigo-400/20"></div> 2026</div>
                     <div class="text-slate-400">Siège &amp; 5 labos</div>
@@ -314,7 +314,7 @@ export default function TechnicalWorkspace(state) {
 
   // ── SLIDE 2 — Focus Siège ─────────────────────────────────────────────────
   const presSlide2 = `
-    <div data-pres-slide="10" data-pres-label="Focus Siège — Strasbourg" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="9,10,11,12,13,14,15,16,17,18,19,20" data-pres-label="Focus Siège — Strasbourg" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-6 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 02 — GSBLAB-STR-DC · site 02</p>
@@ -323,39 +323,143 @@ export default function TechnicalWorkspace(state) {
           <p class="text-slate-400 text-sm max-w-2xl mx-auto">Concentrateur de l'ensemble des <b class="text-slate-200">26 tunnels SD-WAN</b>. Les données de santé restent on-premise ; le VLAN 30 est strictement isolé sur chaque site.</p>
         </div>
 
-        <!-- Chain + fiche réseau (reveal at 1) -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 opacity-0 transition-all duration-700" data-reveal-at="1">
-          <div class="glass-panel rounded-xl p-5">
-            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2"><span class="w-2 h-2 rounded-sm bg-indigo-400"></span>Schéma réseau du siège</h3>
-            <div class="flex flex-col gap-0">
-          <div class="grid grid-cols-2 gap-2">
-            <div class="bg-slate-800/50 border border-white/8 rounded-xl p-3"><div class="text-sm font-bold text-slate-200">WAN principal — FTTO 1 Gb/s</div><div class="text-xs text-slate-500 mt-0.5">Fibre dédiée opérateur</div></div>
-            <div class="bg-slate-800/50 border border-white/8 rounded-xl p-3"><div class="text-sm font-bold text-slate-200">WAN secours — FTTH</div><div class="text-xs text-slate-500 mt-0.5">Bascule automatique failover</div></div>
+        <!-- Chain + fiche réseau (reveal progressively) -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+          
+          <!-- Schéma réseau -->
+          <div class="glass-panel rounded-xl p-6 opacity-0 transition-all duration-700" data-reveal-at="9">
+            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-6 flex items-center gap-2 border-b border-white/5 pb-3">
+              <span class="w-2 h-2 rounded-sm bg-indigo-400 shadow-[0_0_8px_rgba(99,102,241,0.8)]"></span>
+              Schéma réseau du siège
+            </h3>
+            
+            <div class="flex flex-col gap-1.5">
+              <!-- Étape 1 : WAN -->
+              <div class="grid grid-cols-2 gap-3 opacity-0 transition-all duration-700" data-reveal-at="10">
+                <div class="bg-slate-800/50 hover:bg-slate-800 transition-colors border border-white/10 rounded-xl p-3.5">
+                  <div class="text-sm font-bold text-slate-200">WAN principal</div>
+                  <div class="text-xs text-slate-400 mt-1">FTTO 1 Gb/s — Opérateur</div>
+                </div>
+                <div class="bg-slate-800/50 hover:bg-slate-800 transition-colors border border-white/10 rounded-xl p-3.5">
+                  <div class="text-sm font-bold text-slate-200">WAN secours</div>
+                  <div class="text-xs text-slate-400 mt-1">FTTH — Failover auto</div>
+                </div>
+              </div>
+              
+              <div class="flex flex-col items-center py-1 opacity-0 transition-all duration-700" data-reveal-at="10">
+                <div class="text-[10px] font-mono text-indigo-400/80 tracking-wider uppercase bg-indigo-950/30 px-2 py-0.5 rounded border border-indigo-500/10">Dual-WAN · OPEX hors projet</div>
+                <div class="w-px h-5 bg-indigo-500/40 border-l-2 border-dashed border-indigo-500/50 mt-1"></div>
+              </div>
+              
+              <!-- Étape 2 : UCG -->
+              <div class="grid grid-cols-2 gap-3 opacity-0 transition-all duration-700" data-reveal-at="11">
+                <div class="bg-indigo-950/30 hover:bg-indigo-950/50 transition-colors border border-indigo-500/40 rounded-xl p-3.5 relative overflow-hidden group">
+                  <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                  <div class="flex justify-between items-start mb-1">
+                    <div class="text-sm font-bold text-slate-200">UCG-Ultra n°1</div>
+                    <span class="text-[9px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded px-1.5 py-0.5 font-mono">SD-WAN HUB</span>
+                  </div>
+                  <div class="text-[11px] text-slate-400 leading-snug">Firewall · routage inter-VLAN · 26 tunnels IPsec</div>
+                </div>
+                <div class="bg-slate-900/40 border border-indigo-500/20 rounded-xl p-3.5">
+                  <div class="flex justify-between items-start mb-1">
+                    <div class="text-sm font-bold text-slate-200">UCG-Ultra n°2</div>
+                    <span class="text-[9px] bg-slate-800 text-slate-400 border border-white/10 rounded px-1.5 py-0.5 font-mono">STANDBY</span>
+                  </div>
+                  <div class="text-[11px] text-slate-400 leading-snug">Redondance passerelle HA</div>
+                </div>
+              </div>
+              
+              <div class="flex flex-col items-center py-1 opacity-0 transition-all duration-700" data-reveal-at="12">
+                <div class="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 tracking-wider bg-emerald-950/30 border border-emerald-500/20 rounded-full px-3 py-1 shadow-[0_0_10px_rgba(16,185,129,0.1)]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                  IPsec AES-256 + IKEv2 · Magic Site-to-Site
+                </div>
+                <div class="w-px h-5 bg-slate-600 mt-1"></div>
+              </div>
+              
+              <!-- Étape 3 : Switches -->
+              <div class="bg-slate-900/60 hover:bg-slate-800/80 transition-colors border border-indigo-400/30 rounded-xl p-4 opacity-0 transition-all duration-700" data-reveal-at="12">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-indigo-950/50 border border-indigo-500/30 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-slate-200">5× Ubiquiti USW-24</div>
+                    <div class="text-xs text-slate-400 mt-0.5">L2 manageable · 802.1Q · PoE · 10 GbE vers serveurs</div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="flex flex-col items-center py-1 opacity-0 transition-all duration-700" data-reveal-at="13">
+                <div class="w-px h-5 bg-slate-700"></div>
+              </div>
+              
+              <!-- Étape 4 : Wi-Fi -->
+              <div class="bg-emerald-950/20 hover:bg-emerald-950/40 transition-colors border border-emerald-500/30 rounded-xl p-4 opacity-0 transition-all duration-700" data-reveal-at="13">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg bg-emerald-950/50 border border-emerald-500/30 flex items-center justify-center shrink-0">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.906 14.142 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-sm font-bold text-slate-200">3× Ubiquiti U6+ — Wi-Fi 6</div>
+                    <div class="text-xs text-slate-400 mt-0.5">SSID GSBLAB → <span class="text-indigo-300 font-mono text-[10px]">VLAN 20</span> · SSID Invités → <span class="text-orange-300 font-mono text-[10px]">VLAN 40</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="flex flex-col items-center py-1"><div class="text-[10px] font-mono text-indigo-400 tracking-wider uppercase">Dual-WAN · OPEX hors projet</div><div class="w-px h-4 bg-indigo-500/40 border-l-2 border-dashed border-indigo-500/50 mt-0.5"></div></div>
-          <div class="grid grid-cols-2 gap-2">
-            <div class="bg-[#0c1e36] border border-indigo-500/40 rounded-xl p-3"><div class="text-sm font-bold text-slate-200">UCG-Ultra n°1 <span class="text-[10px] bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded px-1.5 py-0.5 font-mono">SD-WAN hub</span></div><div class="text-xs text-slate-500 mt-0.5">Firewall · routage inter-VLAN · 26 tunnels IPsec</div></div>
-            <div class="bg-[#0c1e36] border border-indigo-500/20 rounded-xl p-3"><div class="text-sm font-bold text-slate-200">UCG-Ultra n°2 <span class="text-[10px] bg-slate-700 text-slate-400 border border-white/10 rounded px-1.5 py-0.5 font-mono">standby</span></div><div class="text-xs text-slate-500 mt-0.5">Redondance passerelle</div></div>
-          </div>
-          <div class="flex flex-col items-center py-1"><div class="inline-flex items-center gap-1.5 text-[10px] font-mono text-emerald-400 tracking-wider bg-emerald-500/10 border border-emerald-500/20 rounded px-2 py-0.5">IPsec AES-256 + IKEv2 · Magic Site-to-Site</div><div class="w-px h-3 bg-slate-600 mt-0.5"></div></div>
-          <div class="bg-[#171340] border border-indigo-400/30 rounded-xl p-3"><div class="text-sm font-bold text-slate-200">5× Ubiquiti USW-24</div><div class="text-xs text-slate-500 mt-0.5">L2 manageable · 802.1Q · PoE · 10 GbE vers serveurs</div></div>
-          <div class="flex flex-col items-center py-1"><div class="w-px h-4 bg-slate-700"></div></div>
-          <div class="bg-[#0a2a1a] border border-emerald-500/30 rounded-xl p-3"><div class="text-sm font-bold text-slate-200">3× Ubiquiti U6+ — Wi-Fi 6</div><div class="text-xs text-slate-500 mt-0.5">SSID GSBLAB → VLAN 20 · SSID Invités → VLAN 40</div></div>
-        </div>
-          </div>
-          <div class="glass-panel rounded-xl p-5">
-            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2"><span class="w-2 h-2 rounded-sm bg-indigo-400"></span>Fiche réseau</h3>
-            <table class="w-full text-xs border-collapse">
-          <tbody>
-            <tr class="border-b border-white/5"><td class="py-1.5 pr-3 text-slate-500 font-medium w-40">Identifiant site</td><td class="py-1.5 font-mono text-slate-300">GSBLAB-STR-DC</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 pr-3 text-slate-500 font-medium">Rôle SD-WAN</td><td class="py-1.5 text-slate-300">Hub concentrateur — 26 tunnels terminés</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 pr-3 text-slate-500 font-medium">Passerelles</td><td class="py-1.5 text-slate-300">2× UCG-Ultra (HA) · dual-WAN failover</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 pr-3 text-slate-500 font-medium">Switches</td><td class="py-1.5 text-slate-300">5× USW-24 (802.1Q, PoE, 10 GbE uplink)</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 pr-3 text-slate-500 font-medium">Wi-Fi</td><td class="py-1.5 text-slate-300">3× U6+ (Wi-Fi 6) — 2 SSID distincts</td></tr>
-            <tr class="border-b border-white/5"><td class="py-1.5 pr-3 text-slate-500 font-medium">VLANs déployés</td><td class="py-1.5 font-mono text-indigo-300">10 · 20 · 30 · 40 · 99</td></tr>
-            <tr><td class="py-1.5 pr-3 text-slate-500 font-medium">Postes</td><td class="py-1.5 text-slate-300">56 postes · 15 smartphones</td></tr>
-          </tbody>
-        </table>
+          
+          <!-- Fiche réseau -->
+          <div class="glass-panel rounded-xl p-6 opacity-0 transition-all duration-700 flex flex-col" data-reveal-at="14">
+            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider mb-6 flex items-center gap-2 border-b border-white/5 pb-3">
+              <span class="w-2 h-2 rounded-sm bg-indigo-400 shadow-[0_0_8px_rgba(99,102,241,0.8)]"></span>
+              Fiche réseau
+            </h3>
+            
+            <div class="flex-1 flex flex-col gap-3">
+              <div class="bg-slate-800/30 border border-white/5 rounded-lg p-3.5 flex justify-between items-center opacity-0 transition-all duration-700" data-reveal-at="15">
+                <div class="text-xs text-slate-500 font-medium">Identifiant site</div>
+                <div class="text-sm font-mono text-slate-200 font-bold">GSBLAB-STR-DC</div>
+              </div>
+              
+              <div class="bg-slate-800/30 border border-white/5 rounded-lg p-3.5 flex justify-between items-center opacity-0 transition-all duration-700" data-reveal-at="16">
+                <div class="text-xs text-slate-500 font-medium">Rôle SD-WAN</div>
+                <div class="text-xs text-indigo-300 font-semibold bg-indigo-500/10 px-2 py-1 rounded border border-indigo-500/20">Hub concentrateur — 26 tunnels</div>
+              </div>
+              
+              <div class="bg-slate-800/30 border border-white/5 rounded-lg p-3.5 flex justify-between items-center opacity-0 transition-all duration-700" data-reveal-at="17">
+                <div class="text-xs text-slate-500 font-medium">Passerelles</div>
+                <div class="text-xs text-slate-300 text-right">2× UCG-Ultra (HA) <br/> <span class="text-slate-500 text-[10px]">Dual-WAN failover</span></div>
+              </div>
+              
+              <div class="bg-slate-800/30 border border-white/5 rounded-lg p-3.5 flex justify-between items-center opacity-0 transition-all duration-700" data-reveal-at="18">
+                <div class="text-xs text-slate-500 font-medium">Switches &amp; Wi-Fi</div>
+                <div class="text-xs text-slate-300 text-right">5× USW-24 <br/> 3× U6+ (Wi-Fi 6)</div>
+              </div>
+              
+              <div class="bg-slate-800/30 border border-white/5 rounded-lg p-3.5 flex justify-between items-center opacity-0 transition-all duration-700" data-reveal-at="19">
+                <div class="text-xs text-slate-500 font-medium">VLANs déployés</div>
+                <div class="flex gap-1.5">
+                  <span class="px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-400 font-mono text-[10px] border border-blue-500/20">10</span>
+                  <span class="px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 font-mono text-[10px] border border-indigo-500/20">20</span>
+                  <span class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-mono text-[10px] border border-emerald-500/20 shadow-[0_0_5px_rgba(16,185,129,0.2)]">30</span>
+                  <span class="px-1.5 py-0.5 rounded bg-orange-500/10 text-orange-400 font-mono text-[10px] border border-orange-500/20">40</span>
+                  <span class="px-1.5 py-0.5 rounded bg-slate-500/10 text-slate-400 font-mono text-[10px] border border-slate-500/20">99</span>
+                </div>
+              </div>
+              
+              <div class="bg-slate-800/30 border border-white/5 rounded-lg p-3.5 flex justify-between items-center mt-auto opacity-0 transition-all duration-700" data-reveal-at="20">
+                <div class="text-xs text-slate-500 font-medium">Capacité estimée</div>
+                <div class="text-xs text-slate-300 font-medium flex items-center gap-2">
+                  <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                  56 postes
+                  <span class="w-1 h-1 rounded-full bg-slate-600 mx-0.5"></span>
+                  <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                  15 smt
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -364,7 +468,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 3 — Schéma réseau Siège ───────────────────────────────────────────
   const presSlide3 = `
-    <div data-pres-slide="11" data-pres-label="Schéma réseau — Siège" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="21" data-pres-label="Schéma réseau — Siège" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Siège — GSBLAB-STR-DC · site 02</p>
@@ -388,7 +492,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 4 — Laboratoire régional ──────────────────────────────────────────
   const presSlide4 = `
-    <div data-pres-slide="12" data-pres-label="Laboratoire Régional" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="22" data-pres-label="Laboratoire Régional" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-6 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 04 — GSBLAB-LAB-[VILLE] · sites 10 à 14 · phase 2026</p>
@@ -430,7 +534,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 5 — Schéma réseau Laboratoire ─────────────────────────────────────
   const presSlide5 = `
-    <div data-pres-slide="13" data-pres-label="Schéma réseau — Laboratoire" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="23" data-pres-label="Schéma réseau — Laboratoire" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Laboratoire régional — GSBLAB-LAB-[VILLE] · sites 10 → 14</p>
@@ -454,7 +558,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 6 — Centre de prélèvement ──────────────────────────────────────────
   const presSlide6 = `
-    <div data-pres-slide="14" data-pres-label="Centre de Prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="24" data-pres-label="Centre de Prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-6 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 06 — GSBLAB-CP-[VILLE] · sites 20 à 34 · phase 2027-2028</p>
@@ -495,7 +599,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 7 — Schéma réseau Centre de prélèvement ───────────────────────────
   const presSlide7 = `
-    <div data-pres-slide="15" data-pres-label="Schéma réseau — Centre prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full">
+    <div data-pres-slide="25" data-pres-label="Schéma réseau — Centre prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Centre de prélèvement — GSBLAB-CP-[VILLE] · sites 20 → 34</p>
@@ -519,7 +623,7 @@ export default function TechnicalWorkspace(state) {
   `;
   // ── SLIDE 8 — Cluster Proxmox HA ─────────────────────────────────────────────
   const presSlide8 = `
-    <div data-pres-slide="16" data-pres-label="Cluster Proxmox" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12 w-full max-w-5xl mx-auto h-full py-4">
+    <div data-pres-slide="26" data-pres-label="Cluster Proxmox" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-12 w-full max-w-5xl mx-auto h-full py-4">
       <div class="text-center space-y-4 w-full mb-8">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Capacité du Cluster Proxmox HA</h2>
         <div class="w-16 h-1.5 bg-emerald-500 mx-auto rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
@@ -544,7 +648,7 @@ export default function TechnicalWorkspace(state) {
 
   // ── SLIDE 9 — Déploiement IaC ─────────────────────────────────────────────
   const presSlide9 = `
-    <div data-pres-slide="17" data-pres-label="Déploiement IaC" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-8 w-full max-w-6xl mx-auto h-full py-4">
+    <div data-pres-slide="27" data-pres-label="Déploiement IaC" class="flex-1 min-h-0 flex flex-col items-center justify-center space-y-8 w-full max-w-6xl mx-auto h-full py-4">
       <div class="text-center space-y-4 w-full mb-4">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Déploiement Automatisé (IaC)</h2>
         <div class="w-16 h-1.5 bg-blue-500 mx-auto rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"></div>
@@ -933,7 +1037,8 @@ export function bindTechEvents(state) {
     window.addEventListener('presentationStepChange', (e) => {
       if (e.detail.tab === 'tech') {
         const step = e.detail.step;
-        if (step >= 6 && step <= 9) {
+
+        if (step >= 5 && step <= 8) {
           const btnApres = document.querySelector('[data-era-btn="apres"]');
           if (btnApres && document.getElementById('eraState')?.dataset.era !== 'apres') {
             btnApres.click();
