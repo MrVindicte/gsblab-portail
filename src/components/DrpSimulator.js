@@ -37,7 +37,7 @@ export default function DrpSimulator(state) {
           <div class="bg-[#13141a] p-6 flex flex-col items-center justify-center">
             <div class="text-[10px] font-bold text-slate-400 tracking-widest mb-2 uppercase">Sites Couverts</div>
             <div class="text-4xl font-bold text-slate-200 mb-2">27</div>
-            <div class="text-[10px] text-slate-500">Spokes VPN IPsec</div>
+            <div class="text-[10px] text-slate-500">Sites · SD-WAN UniFi</div>
           </div>
           <div class="bg-[#13141a] p-6 flex flex-col items-center justify-center">
             <div class="text-[10px] font-bold text-slate-400 tracking-widest mb-2 uppercase">Scénarios</div>
@@ -304,8 +304,8 @@ const ransomwareSteps = [
   },
   {
     title: "Confinement Réseau",
-    desc: "Lancement des scripts CLI sur le FortiGate de Strasbourg. Les liaisons VPN des 17 spokes sont immédiatement coupées pour protéger les centres.",
-    log: "# Connexion SSH sur FW-STR-EDGE-01...\n# config firewall policy\n# edit 15 (VPN-SPOKES)\n# set status disable\n# next\n# end\n[INFO] Tunnels VPN IPsec vers les 17 centres d'Alsace désactivés.\n[STATUT] Strasbourg isolé du réseau d'entreprise.",
+    desc: "Lancement des scripts CLI sur l'UCG-Ultra de Strasbourg. Les liaisons SD-WAN des 26 spokes sont immédiatement coupées pour protéger les centres.",
+    log: "# Connexion SSH sur UCG-STR-HUB-01...\n# unifi network disable-site-to-site --all-spokes\n# unifi network apply\n[INFO] Tunnels SD-WAN vers les 26 spokes désactivés.\n[STATUT] Strasbourg isolé du réseau d'entreprise.",
     btnText: "Arrêter hyperviseurs et isoler VM"
   },
   {
@@ -337,7 +337,7 @@ const fireSteps = [
   },
   {
     title: "Failover DNS & Routage WAN",
-    desc: "Mise à jour des enregistrements DNS internes sur le contrôleur de Nantes et réactivation des tunnels VPN secondaires des 17 centres.",
+    desc: "Mise à jour des enregistrements DNS internes sur le contrôleur de Nantes et réactivation des tunnels SD-WAN secondaires des 26 spokes.",
     log: "# Connexion AD Nantes en PowerShell...\n# Set-DnsServerResourceRecordA -Name \"sgl\" -ZoneName \"gsblab.local\" -OldRecordData \"10.100.10.10\" -NewRecordData \"10.200.10.10\"\n# repadmin /syncall /AePdq\n[OK] Mise à jour DNS propagée. Les spokes ciblent désormais Nantes.",
     btnText: "Restaurer sur cluster de secours"
   },
@@ -349,8 +349,8 @@ const fireSteps = [
   },
   {
     title: "Rétablissement Réseau Spokes",
-    desc: "Les tunnels VPN de secours configurés sur les FortiGate 40F des 17 spokes s'activent pour rediriger le trafic vers le routeur de Nantes.",
-    log: "# Modification de la priorité de routage statique sur les spokes...\n# config router static\n# edit 1 (Strasbourg) -> set distance 20 (priorité basse)\n# edit 2 (Nantes Secours) -> set distance 10 (priorité haute)\n# end\n[OK] Tunnel IPsec active vers Nantes (IP: 195.12.32.12).\n[STATUT] Liaison réseau active pour les 17 centres.",
+    desc: "Les tunnels SD-WAN de secours configurés sur les UCG-Ultra des 26 spokes s'activent pour rediriger le trafic vers l'UCG-Ultra de Nantes.",
+    log: "# Basculement priorité SD-WAN sur les 26 spokes UCG-Ultra...\n# unifi network site-to-site set-primary --hub UCG-NTS-HUB-01\n# unifi network apply --all-spokes\n[OK] Tunnel SD-WAN actif vers Nantes (IP: 195.12.32.12).\n[STATUT] Liaison réseau active pour les 26 spokes.",
     btnText: "Vérifier l'intégrité métier"
   },
   {

@@ -114,7 +114,7 @@ export default function PmoWorkspace(state) {
         <div class="text-center space-y-2.5">
           <h2 class="text-3xl font-extrabold text-white tracking-tight leading-tight">Roadmap 2026–2030</h2>
           <div class="w-16 h-[2px] mx-auto bg-slate-700 rounded-full"></div>
-          <p class="text-slate-400 text-sm mt-4">440 794 € sur 5 ans &middot; Plafond 450 000 € &middot; Réserve 9 206 €</p>
+          <p class="text-slate-400 text-sm mt-4">398 733 € &middot; Plafond 450 000 € &middot; Réserve 51 267 €</p>
         </div>
 
         <div class="relative w-full max-w-5xl mx-auto mt-12 px-4">
@@ -124,7 +124,7 @@ export default function PmoWorkspace(state) {
           <div class="relative flex justify-between w-full">
           ${[
             { year:'2026', budget:'228 k€', color:'violet', phase:'Migration cœur', sites:12, users:215, bullets:['Proxmox VE + 2× R760','Exchange Online HDS','5 labos déployés'],   revealAt: null },
-            { year:'2027', budget:'64 k€',  color:'blue',   phase:'Centres lot 1',  sites:20, users:303, bullets:['8 centres ouverts','VPN 20 spokes','CBS250 remplacement'],          revealAt: 2 },
+            { year:'2027', budget:'64 k€',  color:'blue',   phase:'Centres lot 1',  sites:20, users:303, bullets:['8 centres ouverts','SD-WAN 20 spokes','USW déploiement'],          revealAt: 2 },
             { year:'2028', budget:'60 k€',  color:'cyan',   phase:'Parc cible',     sites:27, users:380, bullets:['7 centres → plateau','380 utilisateurs','Coûts stabilisés'],        revealAt: 3 },
             { year:'2029', budget:'23 k€',  color:'emerald',phase:'Run-rate',        sites:27, users:380, bullets:['Exploitation courante','LTO-6 → LTO-8','Rachat optionnel'],        revealAt: 4 },
             { year:'2030', budget:'23 k€',  color:'slate',  phase:'Clôture projet', sites:27, users:380, bullets:['Dernière année','Bilan migration','Réserve disponible'],            revealAt: 5 },
@@ -182,15 +182,15 @@ export default function PmoWorkspace(state) {
             <span class="text-xs font-bold text-slate-300 uppercase tracking-wider">Roadmap Projet — 2026 à 2030</span>
           </div>
           <div class="flex flex-wrap gap-2 text-[10px] items-center">
-            <span class="bg-slate-800 border border-white/5 rounded px-2 py-1 font-mono text-slate-300">Sous-total : <strong class="text-white">400 722 €</strong></span>
+            <span class="bg-slate-800 border border-white/5 rounded px-2 py-1 font-mono text-slate-300">Sous-total : <strong class="text-white">369 197 €</strong></span>
             <span class="text-slate-600 font-bold">+</span>
-            <span class="bg-amber-500/10 border border-amber-500/25 rounded px-2 py-1 font-mono text-amber-300">Marge 10 % : <strong>40 072 €</strong></span>
+            <span class="bg-amber-500/10 border border-amber-500/25 rounded px-2 py-1 font-mono text-amber-300">Provision 8 % : <strong>29 536 €</strong></span>
             <span class="text-slate-600 font-bold">=</span>
-            <span class="bg-slate-700 border border-white/10 rounded px-2 py-1 font-mono text-white font-bold">Total : 440 794 €</span>
+            <span class="bg-slate-700 border border-white/10 rounded px-2 py-1 font-mono text-white font-bold">Total : 398 733 €</span>
             <span class="text-slate-600 font-bold">·</span>
             <span class="bg-indigo-500/10 border border-indigo-500/25 rounded px-2 py-1 font-mono text-indigo-300">Plafond : <strong>450 000 €</strong></span>
             <span class="text-slate-600 font-bold">→</span>
-            <span class="bg-emerald-500/10 border border-emerald-500/25 rounded px-2 py-1 font-mono text-emerald-300">Réserve : <strong>9 206 €</strong></span>
+            <span class="bg-emerald-500/10 border border-emerald-500/25 rounded px-2 py-1 font-mono text-emerald-300">Réserve : <strong>51 267 €</strong></span>
           </div>
         </div>
 
@@ -198,10 +198,10 @@ export default function PmoWorkspace(state) {
         <div class="grid grid-cols-5 gap-2">
           ${[
             { year: '2026', budget: 228662, pct: 100, phase: 'Migration cœur + 5 labos', eff: 215, sites: 12, color: 'violet', events: ['Proxmox VE + 2× R760','Exchange Online','VLAN + VPN IPsec','5 labos (Toulouse…)'] },
-            { year: '2027', budget: 64508,  pct: 28,  phase: 'Centres lot 1 + switchs P2', eff: 303, sites: 20, color: 'blue',   events: ['8 centres de prélèvement','CBS250-24T (EoSL 2028)','COPIL annuel'] },
+            { year: '2027', budget: 64508,  pct: 28,  phase: 'Centres lot 1 + switchs P2', eff: 303, sites: 20, color: 'blue',   events: ['8 centres de prélèvement','USW-24 déploiement','COPIL annuel'] },
             { year: '2028', budget: 60747,  pct: 27,  phase: 'Centres lot 2 — parc cible', eff: 380, sites: 27, color: 'cyan',   events: ['7 centres → 27 sites','380 utilisateurs atteints','Coûts au plateau'] },
             { year: '2029', budget: 23402,  pct: 10,  phase: 'Exploitation run-rate',       eff: 380, sites: 27, color: 'emerald',events: ['Exploitation courante','LTO-6 → LTO-8 (arbitrage)','Rachat concurrent (enveloppe distincte)'] },
-            { year: '2030', budget: 23403,  pct: 10,  phase: 'Clôture projet migration',    eff: 380, sites: 27, color: 'slate',  events: ['Dernière année projet','Support Office LTSC à réévaluer','Réserve 9 206 € disponible'] },
+            { year: '2030', budget: 23403,  pct: 10,  phase: 'Clôture projet migration',    eff: 380, sites: 27, color: 'slate',  events: ['Dernière année projet','Support Office LTSC à réévaluer','Réserve 51 267 € disponible'] },
           ].map(y => `
             <div class="flex flex-col gap-2">
               <!-- Année + budget -->

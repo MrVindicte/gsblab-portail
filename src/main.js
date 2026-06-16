@@ -3,13 +3,13 @@
 // ==============================================================================
 import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents, menuSections } from './components/Sidebar.js?v=4';
-import ExecutiveSummary from './components/ExecutiveSummary.js?v=21';
+import ExecutiveSummary from './components/ExecutiveSummary.js?v=22';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=28';
 import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=25';
-import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=10';
-import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=9';
-import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=6';
-import SitesWorkspace from './components/SitesWorkspace.js?v=5';
+import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=11';
+import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=10';
+import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=7';
+import SitesWorkspace from './components/SitesWorkspace.js?v=6';
 import ConclusionWorkspace from './components/ConclusionWorkspace.js?v=1';
 
 // Global state holding parameters

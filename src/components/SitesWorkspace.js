@@ -41,7 +41,7 @@ export default function SitesWorkspace(state = {}) {
               ${[
                 'Cluster Proxmox VE HA — 2× Dell R760',
                 'Baie Dell PowerVault ME484 + Ceph',
-                'FortiGate 1100E — Hub VPN hub-and-spoke',
+                'UCG-Ultra HA — Hub SD-WAN',
                 'Exchange Online HDS + Entra ID',
                 'PBS + OVH Object Storage HDS',
               ].map(b => `
@@ -79,7 +79,7 @@ export default function SitesWorkspace(state = {}) {
               ${[
                 'Toulouse · Marseille · Nantes · Lyon · Lille',
                 '10 HP ProDesk 400 G9 + 2 HP 250 G10',
-                'FortiGate 40F spoke + CBS250-24T',
+                'UCG-Ultra + USW-24',
                 'Ubiquiti U6+ Wi-Fi 6',
                 'VLAN 10/20/30/40/99 — règle 10.S.V.0/24',
               ].map(b => `
@@ -117,7 +117,7 @@ export default function SitesWorkspace(state = {}) {
               ${[
                 '3 centres par laboratoire (rayon &lt; 50 km)',
                 '5 HP ProDesk 400 G9 + 1 HP 250 G10',
-                'FortiGate 40F spoke + CBS250-16T',
+                'UCG-Ultra + USW-Lite-16-PoE',
                 'VLAN 20/30/40/99 — VLAN 10 via VPN hub',
                 'Lot 1 : 8 centres 2027 · Lot 2 : 7 centres 2028',
               ].map(b => `
@@ -169,7 +169,7 @@ export default function SitesWorkspace(state = {}) {
               <!-- HUB -->
               <div class="bg-violet-500/10 border border-violet-500/30 rounded-xl px-6 py-2.5 text-center shadow-[0_0_15px_rgba(139,92,246,0.15)]">
                 <div class="text-violet-300 font-bold text-sm">HUB — Strasbourg</div>
-                <div class="text-[10px] text-slate-400 mt-0.5">FortiGate 1100E · Cluster Proxmox</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">UCG-Ultra HA · Cluster Proxmox</div>
               </div>
 
               <!-- VPN bar -->
@@ -197,9 +197,9 @@ export default function SitesWorkspace(state = {}) {
               <div class="flex items-center gap-2 text-[9px] text-slate-400 bg-black/40 border border-white/5 rounded-lg px-4 py-1.5 mt-1">
                 <span class="text-white font-semibold">LAN Spoke</span>
                 <span>→</span>
-                <span>FortiGate 40F</span>
+                <span>UCG-Ultra</span>
                 <span>→</span>
-                <span>CBS250-24T/16T</span>
+                <span>USW-24 / USW-Lite-16-PoE</span>
                 <span>→</span>
                 <span>Ubiquiti U6+</span>
               </div>
@@ -223,7 +223,7 @@ export default function SitesWorkspace(state = {}) {
               </div>
               <div class="flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2.5 text-[9px] text-emerald-300">
                 <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span class="leading-relaxed"><b>ACL FortiGate HDS</b><br>VLAN 40 → 30 : DROP<br>VLAN 20 → 30 : PERMIT métier</span>
+                <span class="leading-relaxed"><b>ACL UCG-Ultra HDS</b><br>VLAN 40 → 30 : DROP<br>VLAN 20 → 30 : PERMIT métier</span>
               </div>
             </div>
 
@@ -280,7 +280,7 @@ export default function SitesWorkspace(state = {}) {
               <div class="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">Utilisateurs</div>
             </div>
             <div class="bg-blue-500/10 border border-blue-500/25 rounded-xl px-4 py-2.5 text-center">
-              <div class="text-xl font-bold text-blue-300">135 450 €</div>
+              <div class="text-xl font-bold text-blue-300">123 450 €</div>
               <div class="text-[10px] text-slate-400 uppercase tracking-wider mt-0.5">Budget sites neufs HT</div>
             </div>
           </div>
@@ -485,7 +485,7 @@ export default function SitesWorkspace(state = {}) {
             <div class="space-y-2">
               ${[
                 ['40×','HP Z440 Workstations','Bureautique siège · Win 11 · conservés','slate'],
-                ['11×','Cisco CBS250 (switchs)','5× CBS250-24P (2026) + 6× CBS250-24T (2027)','blue'],
+                ['11×','Ubiquiti USW-24','switches manageable · 802.1Q · PoE','blue'],
                 ['9×','Ubiquiti U6+ Wi-Fi 6','PoE · gestion UniFi centralisée','cyan'],
                 ['2×','Eaton 9PX 3000W RT2U','Onduleurs · management SNMP · conservés','amber'],
                 ['15×','Samsung Galaxy A16 5G','Knox MDM · 6 ans patches Android · MFA','green'],
@@ -528,8 +528,8 @@ export default function SitesWorkspace(state = {}) {
                   ['VNX 5200 disques','2 200 €'],
                   ['Proxmox VE + support','10 400 €'],
                   ['WS 2022 + 250 CAL','16 350 €'],
-                  ['VLAN + VPN IPsec','14 120 €'],
-                  ['ESET + PBS + OVH + LTO','33 430 €'],
+                  ['VLAN + SD-WAN UniFi','6 470 €'],
+                  ['ESET + PBS + OVH + LTO','29 230 €'],
                   ['Wi-Fi U6+ + smartphones','5 680 €'],
                 ].map(([label, cost]) => `
                   <div class="flex items-center justify-between text-[10px]">
@@ -568,7 +568,7 @@ export default function SitesWorkspace(state = {}) {
                 <div class="text-[10px] text-slate-500 mt-2">Déployés en 2026 — 1 labo = 1 centre de prélèvement principal</div>
               </div>
               <div class="text-right flex-shrink-0">
-                <div class="text-lg font-bold text-blue-300">55 425 €</div>
+                <div class="text-lg font-bold text-blue-300">52 875 €</div>
                 <div class="text-[10px] text-slate-500">total 5 labos HT</div>
               </div>
             </div>
@@ -606,8 +606,8 @@ export default function SitesWorkspace(state = {}) {
                 ${[
                   ['10×','HP ProDesk 400 G9','600 €/u','PC fixe','blue'],
                   ['2×','HP 250 G10','560 €/u','Laptop','blue'],
-                  ['1×','FortiGate 40F','450 €/u','Routeur VPN spoke','indigo'],
-                  ['1×','Cisco CBS250-24T','420 €/u','Switch 24 ports','slate'],
+                  ['1×','Ubiquiti UCG-Ultra','130 €/u','Routeur SD-WAN spoke','indigo'],
+                  ['1×','Ubiquiti USW-24','230 €/u','Switch 24 ports','slate'],
                   ['1×','Ubiquiti U6+','145 €/u','Borne Wi-Fi 6 PoE','cyan'],
                   ['1×','Ricoh MPC307SPF','1 600 €','Imprimante MFP','gray'],
                   ['—','Câblage + installation','1 350 €/labo','Prestation locale','gray'],
@@ -665,7 +665,7 @@ export default function SitesWorkspace(state = {}) {
                   ['20','Postes admin','10.10.20.0/24','10.10.20.254','10 PC fixes + 2 laptops HP ProDesk/250','indigo'],
                   ['30','Analyse HDS','10.10.30.0/24','10.10.30.254','ISOLÉ STRICT — VLAN 40 BLOQUÉ, VLAN 20 filtré','emerald'],
                   ['40','Wi-Fi invités','10.10.40.0/24','10.10.40.254','Ubiquiti U6+ · Internet only · BLOQUÉ vers VLAN 30','amber'],
-                  ['99','Management','10.10.99.0/24','10.10.99.254','CBS250-24T + FortiGate 40F (hors-bande)','slate'],
+                  ['99','Management','10.10.99.0/24','10.10.99.254','USW-24 + UCG-Ultra (hors-bande)','slate'],
                 ].map(([id, name, subnet, gw, note, color]) => `
                   <div class="flex items-center gap-2 text-[9px]">
                     <span class="w-10 flex-shrink-0 text-center font-mono font-bold bg-${color}-500/15 border border-${color}-500/25 text-${color}-300 rounded px-1 py-0.5">V${id}</span>
@@ -678,7 +678,7 @@ export default function SitesWorkspace(state = {}) {
               </div>
               <div class="mt-3 flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2 text-[9px] text-emerald-300">
                 <svg class="w-3 h-3 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                <span><b>Cloisonnement VLAN 30 HDS</b> — ACL FortiGate : VLAN 40 → VLAN 30 <b>DROP</b> · VLAN 20 → VLAN 30 <b>PERMIT flux métier uniquement</b> (SolarWinds, PBS) · toute autre source <b>BLOQUÉE</b></span>
+                <span><b>Cloisonnement VLAN 30 HDS</b> — ACL UCG-Ultra : VLAN 40 → VLAN 30 <b>DROP</b> · VLAN 20 → VLAN 30 <b>PERMIT flux métier uniquement</b> (SolarWinds, PBS) · toute autre source <b>BLOQUÉE</b></span>
               </div>
             </div>
 
@@ -689,7 +689,7 @@ export default function SitesWorkspace(state = {}) {
                 ${[
                   ['ESET PROTECT Advanced','EDR · 16 €/poste/an (tarif Healthcare)','emerald'],
                   ['BitLocker laptops','Chiffrement AES-256 obligatoire (itinérance)','blue'],
-                  ['VPN IPsec AES-256 IKEv2','FortiGate 40F spoke → Strasbourg hub','indigo'],
+                  ['SD-WAN UniFi AES-256','UCG-Ultra spoke → Strasbourg hub','indigo'],
                   ['Sauvegarde centralisée','PBS Strasbourg via VPN · copie OVH HDS','violet'],
                   ['Exchange Online Plan 1','Cloud Microsoft HDS · OWA · MFA Authenticator','cyan'],
                 ].map(([name, detail, color]) => `
@@ -711,8 +711,8 @@ export default function SitesWorkspace(state = {}) {
                 ${[
                   ['10× HP ProDesk 400 G9','6 000 €'],
                   ['2× HP 250 G10','1 120 €'],
-                  ['FortiGate 40F','450 €'],
-                  ['Cisco CBS250-24T','420 €'],
+                  ['Ubiquiti UCG-Ultra','130 €'],
+                  ['Ubiquiti USW-24','230 €'],
                   ['Ubiquiti U6+','145 €'],
                   ['Ricoh MPC307SPF','1 600 €'],
                   ['Câblage + installation','1 350 €'],
@@ -724,7 +724,7 @@ export default function SitesWorkspace(state = {}) {
                 `).join('')}
                 <div class="flex items-center justify-between text-[10px] pt-1.5 border-t border-blue-500/20 mt-1.5">
                   <span class="font-bold text-slate-200">TOTAL par labo</span>
-                  <span class="font-mono font-bold text-blue-200">≈ 11 085 €</span>
+                  <span class="font-mono font-bold text-blue-200">≈ 10 575 €</span>
                 </div>
               </div>
             </div>
@@ -805,9 +805,9 @@ export default function SitesWorkspace(state = {}) {
             <div class="space-y-2">
               ${[
                 ['5×','HP ProDesk 400 G9','PC fixe · 600 €/u','emerald'],
-                ['1×','HP 250 G10','Laptop · 560 €/u','emerald'],
-                ['1×','FortiGate 40F','Routeur VPN spoke · 450 €/u','indigo'],
-                ['1×','Cisco CBS250-16T','Switch 16 ports · 280 €/u','blue'],
+                ['1×','HP 250 G10 recond.','Laptop · 350 €/u','emerald'],
+                ['1×','Ubiquiti UCG-Ultra','Routeur SD-WAN spoke · 130 €/u','indigo'],
+                ['1×','Ubiquiti USW-Lite-16-PoE','Switch 16 ports · 180 €/u','blue'],
                 ['1×','Ubiquiti U6+','Wi-Fi 6 PoE · 145 €/u','cyan'],
                 ['—','Câblage + install','Prestation locale · 900 €','gray'],
               ].map(([qty, name, desc, color]) => `
@@ -829,9 +829,9 @@ export default function SitesWorkspace(state = {}) {
                   ['Effectifs','17 pers.','11 pers.'],
                   ['PC fixes','10','5'],
                   ['Laptops','2','1'],
-                  ['Switch','CBS250-24T','CBS250-16T'],
+                  ['Switch','USW-24','USW-Lite-16-PoE'],
                   ['Imprimante','Ricoh MFP','—'],
-                  ['Coût / site','≈ 11 085 €','≈ 5 335 €'],
+                  ['Coût / site','≈ 10 575 €','≈ 4 705 €'],
                 ].map(([label, labo, centre]) => `
                   <div class="grid grid-cols-3 gap-1 text-[9px]">
                     <span class="text-slate-500">${label}</span>
@@ -857,11 +857,11 @@ export default function SitesWorkspace(state = {}) {
               <div class="text-[10px] text-emerald-400 font-bold uppercase tracking-wider mb-2">Budget 15 centres (total)</div>
               <div class="space-y-1">
                 ${[
-                  ['15× FortiGate 40F','6 750 €'],
-                  ['15× Cisco CBS250-16T','4 200 €'],
+                  ['15× Ubiquiti UCG-Ultra','1 950 €'],
+                  ['15× Ubiquiti USW-Lite-16-PoE','2 700 €'],
                   ['15× Ubiquiti U6+','2 175 €'],
                   ['75× HP ProDesk 400 G9','45 000 €'],
-                  ['15× HP 250 G10','8 400 €'],
+                  ['15× HP 250 G10 recond.','5 250 €'],
                   ['Câblage + installation','13 500 €'],
                 ].map(([label, cost]) => `
                   <div class="flex items-center justify-between text-[10px]">
@@ -871,7 +871,7 @@ export default function SitesWorkspace(state = {}) {
                 `).join('')}
                 <div class="flex items-center justify-between text-[10px] pt-1.5 border-t border-emerald-500/20 mt-1.5">
                   <span class="font-bold text-slate-200">TOTAL 15 centres</span>
-                  <span class="font-mono font-bold text-emerald-200">80 025 €</span>
+                  <span class="font-mono font-bold text-emerald-200">70 575 €</span>
                 </div>
               </div>
             </div>
@@ -919,7 +919,7 @@ export default function SitesWorkspace(state = {}) {
                   ['20','Postes admin','10.20.20.0/24','10.20.20.254','5 PC fixes + 1 laptop','indigo'],
                   ['30','Analyse HDS','10.20.30.0/24','10.20.30.254','ISOLÉ STRICT — VLAN 40 BLOQUÉ, VLAN 20 filtré','emerald'],
                   ['40','Wi-Fi invités','10.20.40.0/24','10.20.40.254','Ubiquiti U6+ · Internet only · BLOQUÉ vers VLAN 30','amber'],
-                  ['99','Management','10.20.99.0/24','10.20.99.254','CBS250-16T + FortiGate 40F (hors-bande)','slate'],
+                  ['99','Management','10.20.99.0/24','10.20.99.254','USW-Lite-16-PoE + UCG-Ultra (hors-bande)','slate'],
                 ].map(([id, name, subnet, gw, note, color]) => `
                   <div class="flex items-center gap-2 text-[9px]">
                     <span class="w-10 flex-shrink-0 text-center font-mono font-bold bg-${color}-500/15 border border-${color}-500/25 text-${color}-300 rounded px-1 py-0.5">V${id}</span>
@@ -1000,8 +1000,8 @@ export default function SitesWorkspace(state = {}) {
                 <td class="py-2.5 px-3 text-center font-mono text-blue-300">85</td>
                 <td class="py-2.5 px-3 text-center font-mono text-blue-300">50</td>
                 <td class="py-2.5 px-3 text-center font-mono text-blue-300">10</td>
-                <td class="py-2.5 px-3 text-center text-blue-300">FortiGate 40F × 5</td>
-                <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-300">55 425 €</td>
+                <td class="py-2.5 px-3 text-center text-blue-300">UCG-Ultra × 5</td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-blue-300">52 875 €</td>
               </tr>
               <tr class="hover:bg-white/2 transition-colors">
                 <td class="py-2.5 px-3">
@@ -1014,8 +1014,8 @@ export default function SitesWorkspace(state = {}) {
                 <td class="py-2.5 px-3 text-center font-mono text-emerald-300">165</td>
                 <td class="py-2.5 px-3 text-center font-mono text-emerald-300">75</td>
                 <td class="py-2.5 px-3 text-center font-mono text-emerald-300">15</td>
-                <td class="py-2.5 px-3 text-center text-emerald-300">FortiGate 40F × 15</td>
-                <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-300">80 025 €</td>
+                <td class="py-2.5 px-3 text-center text-emerald-300">UCG-Ultra × 15</td>
+                <td class="py-2.5 px-3 text-center font-mono font-bold text-emerald-300">70 575 €</td>
               </tr>
             </tbody>
             <tfoot>
@@ -1025,8 +1025,8 @@ export default function SitesWorkspace(state = {}) {
                 <td class="py-3 px-3 text-center font-mono font-bold text-white">380</td>
                 <td class="py-3 px-3 text-center font-mono font-bold text-white">126+</td>
                 <td class="py-3 px-3 text-center font-mono font-bold text-white">25</td>
-                <td class="py-3 px-3 text-center font-bold text-indigo-300">20 spokes VPN</td>
-                <td class="py-3 px-3 text-center font-mono font-bold text-indigo-300">135 450 €</td>
+                <td class="py-3 px-3 text-center font-bold text-indigo-300">26 spokes SD-WAN</td>
+                <td class="py-3 px-3 text-center font-mono font-bold text-indigo-300">123 450 €</td>
               </tr>
             </tfoot>
           </table>

@@ -5,7 +5,7 @@
   const pillars = [
     { num: '01', label: 'Virtualisation',  before: 'ESXi 6.0 (Dette)',       after: 'Proxmox VE HA',       color: 'blue'    },
     { num: '02', label: 'Stockage',        before: 'SAN SAS (SPOF)',          after: 'Cluster Ceph 3×',     color: 'emerald' },
-    { num: '03', label: 'Sécurité Flux',   before: 'Flat Net sans FW',        after: 'VLANs + FortiGate',   color: 'purple'  },
+    { num: '03', label: 'Sécurité Flux',   before: 'Flat Net sans FW',        after: 'VLANs + Ubiquiti',    color: 'purple'  },
     { num: '04', label: 'Sauvegardes',     before: 'Bandes LTO Manuelles',    after: 'PBS Immuable (DRP)',  color: 'amber'   },
   ];
 
@@ -22,8 +22,8 @@
   const footerMetrics = [
     {
       label: 'Budget Total',
-      value: '440 794 €',
-      sub:   '/ 450 000 € · 2 % réserve',
+      value: '398 733 €',
+      sub:   '/ 450 000 € · 11,4 % réserve',
       color: 'emerald',
       icon:  '<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
     },
@@ -44,7 +44,7 @@
     {
       label: 'Sites Couverts',
       value: '27 sites',
-      sub:   '20 Spokes · IPsec VPN',
+      sub:   '26 Spokes · SD-WAN',
       color: 'purple',
       icon:  '<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
     },
@@ -125,7 +125,7 @@
             </span>
             <span class="badge-emerald">
               <svg class="w-2.5 h-2.5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>440 794 € / 450 000 €</span>
+              <span>398 733 € / 450 000 €</span>
             </span>
             <button id="btn-export-livrable" class="btn-secondary no-print cursor-pointer">
               <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -405,7 +405,7 @@
                   <span class="text-3xl font-black text-white font-mono">27</span>
                   <span class="text-xs font-bold text-slate-400 uppercase tracking-wide">sites</span>
                 </div>
-                <div class="text-[11px] text-emerald-400 leading-normal font-medium font-medium">VPN IPsec maillé &middot; Routeurs FortiGate HA</div>
+                <div class="text-[11px] text-emerald-400 leading-normal font-medium font-medium">SD-WAN Ubiquiti Magic Site-to-Site</div>
               </div>
 
               <div data-reveal-at="5" class="flex flex-col gap-1 transition-all duration-700 opacity-0">
@@ -575,8 +575,8 @@
             <div class="flex items-baseline gap-3 flex-1 min-w-0 flex-wrap">
               <span class="text-lg md:text-xl font-mono font-bold text-slate-500 whitespace-nowrap">450 000€</span>
               <span class="text-slate-600 text-xl flex-shrink-0">→</span>
-              <span class="text-xl md:text-2xl font-mono font-black text-white whitespace-nowrap" style="text-shadow: 0 0 15px rgba(255,255,255,0.1)">440 794€</span>
-              <span class="text-lg md:text-xl font-mono font-bold text-slate-500 whitespace-nowrap">(réserve 2%)</span>
+              <span class="text-xl md:text-2xl font-mono font-black text-white whitespace-nowrap" style="text-shadow: 0 0 15px rgba(255,255,255,0.1)">398 733€</span>
+              <span class="text-lg md:text-xl font-mono font-bold text-slate-500 whitespace-nowrap">(réserve 11,4%)</span>
             </div>
           </div>
 

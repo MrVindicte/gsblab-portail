@@ -55,9 +55,9 @@ export default function BeforeAfterSlider(state) {
             
             <div class="bg-indigo-500/10 border border-indigo-500/20 rounded-2xl p-6 text-center shadow-lg relative overflow-hidden backdrop-blur-sm w-48">
               <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-purple-500/10"></div>
-              <div class="text-xs text-indigo-300 font-bold tracking-widest uppercase mb-2">Bénéfice Annuel</div>
+              <div class="text-xs text-indigo-300 font-bold tracking-widest uppercase mb-2">Bénéfice 5 ans</div>
               <div class="text-4xl font-mono font-extrabold text-white mb-1">+65k€</div>
-              <div class="text-[10px] text-slate-400">Économies de licences</div>
+              <div class="text-[10px] text-slate-400">Économies licences VMware</div>
             </div>
 
             <div class="w-px h-16 bg-gradient-to-b from-indigo-500/50 to-emerald-500/50"></div>
@@ -93,7 +93,7 @@ export default function BeforeAfterSlider(state) {
             <div class="space-y-4 z-10 flex-1">
               ${[
                 ['Proxmox VE HA + Ceph', 'Hyperconvergé · RTO &lt; 5 min · support 5 ans'],
-                ['VLAN HDS + VPN IPsec', 'VLAN 30 isolé strict · 27 spokes FortiGate 40F'],
+                ['VLAN HDS + SD-WAN UniFi', 'VLAN 30 isolé strict · 26 spokes UCG-Ultra'],
                 ['Exchange Online + MFA', 'M365 HDS certifié · BitLocker · Authenticator'],
                 ['PBS + OVH Object Storage', 'Sauvegarde 3-2-1 · RPO 1h · chiffré AES-256'],
               ].map(([t, d]) => `
@@ -183,11 +183,11 @@ export default function BeforeAfterSlider(state) {
               <div class="space-y-3">
                 <div>
                   <div class="text-xs font-bold text-emerald-400 uppercase">Stockage Isolé sous Proxmox VE / Ceph</div>
-                  <p class="text-xs text-slate-400">La baie de stockage et les hyperviseurs sont isolés dans des VLANs étanches et protégés par un cluster FortiGate HA.</p>
+                  <p class="text-xs text-slate-400">La baie de stockage et les hyperviseurs sont isolés dans des VLANs étanches et protégés par un firewall UCG-Ultra HA.</p>
                 </div>
                 <div>
                   <div class="text-xs font-bold text-emerald-400 uppercase">Segmentation Réseau Hub & Spoke</div>
-                  <p class="text-xs text-slate-400">Flux d'administration (VLAN 99) et cliniques (VLAN 10) hermétiques. VPN IPsec SD-WAN durcis pour les 17 centres.</p>
+                  <p class="text-xs text-slate-400">Flux d'administration (VLAN 99) et cliniques (VLAN 10) hermétiques. SD-WAN UniFi pour les 26 spokes.</p>
                 </div>
               </div>
               
