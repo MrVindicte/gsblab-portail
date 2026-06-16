@@ -1,4 +1,4 @@
-export default function ExecutiveSummary(state) {
+﻿export default function ExecutiveSummary(state) {
   const isPres = state.presentationMode;
 
   // ─── Data ────────────────────────────────────────────────────────────────
@@ -77,15 +77,15 @@ export default function ExecutiveSummary(state) {
       <div class="w-16 h-1 bg-gradient-to-r from-blue-600 to-indigo-500 rounded-full shadow-[0_0_8px_rgba(99,102,241,0.5)]"></div>
 
       <div class="grid grid-cols-3 gap-6 max-w-lg w-full pt-4">
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <div class="pres-card">
           <span class="text-white font-bold block text-sm">Romain</span>
           <span class="text-[9px] text-slate-500 uppercase font-semibold mt-1 block">Chiffrage &amp; PMO</span>
         </div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <div class="pres-card">
           <span class="text-white font-bold block text-sm">Jérôme</span>
           <span class="text-[9px] text-slate-500 uppercase font-semibold mt-1 block">Portail &amp; Doc</span>
         </div>
-        <div class="bg-white/5 border border-white/10 rounded-xl p-4 text-center">
+        <div class="pres-card">
           <span class="text-white font-bold block text-sm">Léo</span>
           <span class="text-[9px] text-slate-500 uppercase font-semibold mt-1 block">Architecture &amp; IaC</span>
         </div>
@@ -123,11 +123,11 @@ export default function ExecutiveSummary(state) {
               <span class="text-slate-600">/</span>
               <span class="font-bold text-blue-400">GRP.01</span>
             </span>
-            <span class="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1.5 rounded-lg">
+            <span class="badge-emerald">
               <svg class="w-2.5 h-2.5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-              <span class="text-[9px] font-mono font-bold text-emerald-400">440 794 € / 450 000 €</span>
+              <span>440 794 € / 450 000 €</span>
             </span>
-            <button id="btn-export-livrable" class="no-print bg-slate-800/80 hover:bg-slate-700 border border-white/8 hover:border-white/15 text-slate-400 hover:text-slate-200 px-2.5 py-1.5 rounded-lg text-[9px] font-semibold flex items-center gap-1.5 transition cursor-pointer">
+            <button id="btn-export-livrable" class="btn-secondary no-print cursor-pointer">
               <svg class="w-3 h-3 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
               <span>Livrable PDF</span>
             </button>
@@ -141,30 +141,30 @@ export default function ExecutiveSummary(state) {
             <!-- KPIs 2×2 -->
             <div class="grid grid-cols-2 gap-3 flex-shrink-0">
               <div class="glass-panel rounded-xl p-3.5 flex items-center gap-3 hover:border-white/15 transition">
-                <div class="w-9 h-9 rounded-lg bg-blue-500/10 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <div class="icon-box-blue">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                 </div>
                 <div>
-                  <div style="font-size:clamp(20px,2.4vw,32px);" class="font-mono font-extrabold text-white leading-none">${state.usersCount}</div>
-                  <div class="text-[8px] text-slate-500 uppercase tracking-wider mt-0.5">Utilisateurs</div>
+                  <div style="font-size:clamp(20px,2.4vw,32px);" class="metric-value">${state.usersCount}</div>
+                  <div class="label-subtext">Utilisateurs</div>
                 </div>
               </div>
               <div class="glass-panel rounded-xl p-3.5 flex items-center gap-3 hover:border-white/15 transition">
-                <div class="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                <div class="icon-box-emerald">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 </div>
                 <div>
-                  <div style="font-size:clamp(20px,2.4vw,32px);" class="font-mono font-extrabold text-white leading-none">${state.sitesCount}</div>
-                  <div class="text-[8px] text-slate-500 uppercase tracking-wider mt-0.5">Sites (Spokes)</div>
+                  <div style="font-size:clamp(20px,2.4vw,32px);" class="metric-value">${state.sitesCount}</div>
+                  <div class="label-subtext">Sites (Spokes)</div>
                 </div>
               </div>
               <div class="glass-panel rounded-xl p-3.5 flex items-center gap-3 hover:border-white/15 transition">
-                <div class="w-9 h-9 rounded-lg bg-purple-500/10 flex items-center justify-center flex-shrink-0">
-                  <svg class="w-4 h-4 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                <div class="icon-box-purple">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
                 </div>
                 <div>
-                  <div style="font-size:clamp(20px,2.4vw,32px);" class="font-mono font-extrabold text-white leading-none">${state.serversCount}</div>
-                  <div class="text-[8px] text-slate-500 uppercase tracking-wider mt-0.5">Serveurs HA</div>
+                  <div style="font-size:clamp(20px,2.4vw,32px);" class="metric-value">${state.serversCount}</div>
+                  <div class="label-subtext">Serveurs HA</div>
                 </div>
               </div>
               <div class="glass-panel rounded-xl p-3.5 flex items-center gap-3 hover:border-white/15 transition">
@@ -186,11 +186,11 @@ export default function ExecutiveSummary(state) {
             <div class="flex-1 min-h-0 glass-panel rounded-xl p-4 flex flex-col overflow-hidden">
               <div class="flex items-center gap-2 mb-3 flex-shrink-0">
                 <span class="w-0.5 h-3.5 bg-blue-500 rounded-full flex-shrink-0"></span>
-                <span class="text-[9px] font-bold text-slate-300 uppercase tracking-widest">Matrice de Transition — Dette Technique → Cible HDS</span>
+                <span class="panel-header-title">Matrice de Transition — Dette Technique → Cible HDS</span>
               </div>
               <div class="flex-1 min-h-0 grid grid-cols-2 grid-rows-2 gap-3">
                 ${pillars.map(p => `
-                  <div class="bg-slate-900/60 border border-white/5 rounded-xl p-3 flex flex-col justify-between hover:border-${p.color}-500/20 transition-all group overflow-hidden">
+                  <div class="inner-panel flex flex-col justify-between hover:border-${p.color}-500/20 transition-all group overflow-hidden">
                     <div class="text-[8px] font-bold text-${p.color}-400 uppercase tracking-widest leading-none">${p.num} · ${p.label}</div>
                     <div class="space-y-1.5 mt-auto">
                       <div class="text-[9px] text-red-400 flex items-center gap-1 leading-none">
@@ -249,7 +249,7 @@ export default function ExecutiveSummary(state) {
                 <div class="grid grid-cols-3 gap-2 text-center">
                   ${[['256', 'vCPUs'], ['1,5 To', 'RAM'], ['48 To', 'Ceph SSD']].map(([v, l]) => `
                     <div>
-                      <div style="font-size:clamp(13px,1.6vw,20px);" class="font-mono font-extrabold text-white leading-none">${v}</div>
+                      <div style="font-size:clamp(13px,1.6vw,20px);" class="metric-value">${v}</div>
                       <div class="text-[7px] text-slate-500 uppercase mt-0.5 tracking-wide">${l}</div>
                     </div>
                   `).join('')}
@@ -264,7 +264,7 @@ export default function ExecutiveSummary(state) {
                 <div class="grid grid-cols-2 gap-3 text-center">
                   ${[["< 5'", 'RTO Reprise'], ['< 1h', 'RPO Perte Max']].map(([v, l]) => `
                     <div>
-                      <div style="font-size:clamp(13px,1.6vw,20px);" class="font-mono font-extrabold text-white leading-none">${v}</div>
+                      <div style="font-size:clamp(13px,1.6vw,20px);" class="metric-value">${v}</div>
                       <div class="text-[7px] text-slate-500 uppercase mt-0.5 tracking-wide">${l}</div>
                     </div>
                   `).join('')}
@@ -432,7 +432,7 @@ export default function ExecutiveSummary(state) {
             </div>
             <div>
               <div class="text-sm font-bold text-slate-200">450 000 € HT</div>
-              <div class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5 font-medium">Budget DAF &middot; Plafond strict</div>
+              <div class="label-subtext font-medium">Budget DAF &middot; Plafond strict</div>
             </div>
           </div>
 
@@ -444,7 +444,7 @@ export default function ExecutiveSummary(state) {
             </div>
             <div>
               <div class="text-sm font-bold text-slate-200">HDS v2 &middot; RGPD</div>
-              <div class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5 font-medium">Obligation légale &middot; ANS</div>
+              <div class="label-subtext font-medium">Obligation légale &middot; ANS</div>
             </div>
           </div>
 
@@ -457,7 +457,7 @@ export default function ExecutiveSummary(state) {
             </div>
             <div>
               <div class="text-sm font-bold text-slate-200">2026 → 2028</div>
-              <div class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5 font-medium">Horizon projet &middot; 3 équipiers</div>
+              <div class="label-subtext font-medium">Horizon projet &middot; 3 équipiers</div>
             </div>
           </div>
 

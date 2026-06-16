@@ -1,4 +1,4 @@
-export default function SitesWorkspace(state = {}) {
+﻿export default function SitesWorkspace(state = {}) {
   const isPres = state.presentationMode;
 
   // ── MODE PRÉSENTATION — 2 slides visuelles ──────────────────────────────────
@@ -754,7 +754,7 @@ export default function SitesWorkspace(state = {}) {
             </div>
 
             <!-- Comparaison Labo vs Centre -->
-            <div class="bg-slate-900/60 border border-white/5 rounded-xl p-3">
+            <div class="inner-panel">
               <div class="text-[10px] text-slate-500 uppercase tracking-wider mb-2 font-semibold">Labo vs Centre — différences clés</div>
               <div class="space-y-1">
                 ${[

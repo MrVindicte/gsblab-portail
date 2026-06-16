@@ -1,4 +1,4 @@
-import { calculateFinancials, generateTcoProjections } from '../utils/financialMath.js?v=3';
+﻿import { calculateFinancials, generateTcoProjections } from '../utils/financialMath.js?v=3';
 import { parseCSVUsers, parseJSONBudget } from '../utils/dataParsers.js?v=5';
 
 let chartInstance = null;
@@ -178,7 +178,7 @@ export default function FinanceWorkspace(state) {
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             
             <div class="glass-panel print-card rounded-xl p-5 border-l-4 border-l-emerald-500 shadow-[0_0_18px_rgba(16,185,129,0.08)]">
-              <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Économie Nette (5 ans)</span>
+              <span class="panel-header-title text-slate-500">Économie Nette (5 ans)</span>
               <div class="flex items-end gap-2 my-1.5">
                 <div class="text-2xl font-mono font-extrabold text-emerald-400 leading-none" id="kpi-savings">-- €</div>
                 <span class="text-emerald-500 text-lg font-bold leading-none mb-0.5">↑</span>
@@ -187,7 +187,7 @@ export default function FinanceWorkspace(state) {
             </div>
 
             <div class="glass-panel print-card rounded-xl p-5 border-l-4 border-l-red-500 shadow-[0_0_18px_rgba(239,68,68,0.05)]">
-              <span class="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Surcoût VMware Broadcom</span>
+              <span class="panel-header-title text-slate-500">Surcoût VMware Broadcom</span>
               <div class="flex items-end gap-2 my-1.5">
                 <div class="text-2xl font-mono font-extrabold text-red-400 leading-none" id="kpi-pct-vmware">--%</div>
                 <span class="text-red-500 text-lg font-bold leading-none mb-0.5">↑</span>

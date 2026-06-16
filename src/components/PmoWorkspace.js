@@ -1,4 +1,4 @@
-import { defaultRaci } from '../config/defaultData.js?v=3';
+﻿import { defaultRaci } from '../config/defaultData.js?v=3';
 
 export default function PmoWorkspace(state) {
   // Sort risks by criticality descending
@@ -132,7 +132,7 @@ export default function PmoWorkspace(state) {
               <div class="text-center">
                 <div class="text-2xl font-black text-${y.color}-300 font-mono">${y.year}</div>
                 <div class="text-lg font-mono font-bold text-white">${y.budget}</div>
-                <div class="text-[10px] text-slate-500 uppercase tracking-wider mt-0.5">${y.phase}</div>
+                <div class="label-subtext">${y.phase}</div>
               </div>
               <div class="flex justify-around text-center border-t border-white/5 pt-2">
                 <div><div class="font-mono font-bold text-${y.color}-300 text-sm">${y.users}</div><div class="text-[9px] text-slate-600">pers.</div></div>

@@ -2,7 +2,7 @@
 // CORE ORCHESTRATOR - PORTAIL GSBLAB ES6 NATIVE
 // ==============================================================================
 import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
-import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
+import Sidebar, { bindSidebarEvents, menuSections } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=21';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=28';
 import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=17';
@@ -32,7 +32,7 @@ window.appState = {
   beforeAfterSliderVal: 50,
   
   // Presentation Mode — global continuous counter
-  presentationMode: false,
+  presentationMode: true,     // ACTIVATED BY DEFAULT
   globalPresentationStep: 1,  // never resets between tabs
   presentationStep: 1         // local step for the current tab (derived)
 };
@@ -274,7 +274,7 @@ const renderApp = () => {
       
       <div class="flex items-center gap-3">
         <div class="group relative cursor-help">
-          <div class="bg-emerald-500/5 hover:bg-emerald-500/10 border border-emerald-500/20 hover:border-emerald-500/40 text-emerald-400 px-3 py-1.5 rounded-md text-xs font-mono font-bold tracking-wider flex items-center gap-1.5 transition duration-200 shadow-[0_0_12px_rgba(16,185,129,0.05)]">
+          <div class="badge-emerald">
             <svg class="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             <span>CERTIFIÉ HDS V2</span>
           </div>
@@ -304,10 +304,7 @@ const renderApp = () => {
 
         <button 
           id="btn-toggle-presentation"
-          class="${isPres 
-            ? 'bg-slate-800/80 border-slate-700 hover:bg-slate-700 hover:border-slate-500 text-slate-300' 
-            : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-500 hover:via-indigo-500 hover:to-purple-500 border-indigo-400/50 hover:border-indigo-300 shadow-[0_0_20px_rgba(99,102,241,0.5)] hover:shadow-[0_0_30px_rgba(99,102,241,0.8)] text-white transform hover:scale-105'
-          } border px-5 py-2 rounded-xl text-xs font-extrabold uppercase tracking-widest flex items-center gap-2.5 transition-all duration-300 relative overflow-hidden"
+          class="${isPres ? 'hidden' : 'btn-primary'}"
           title="Basculer le mode présentation (Diaporama)"
         >
           <svg class="w-4 h-4 ${isPres ? 'text-slate-400' : 'text-white/90 animate-pulse'}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
@@ -316,7 +313,7 @@ const renderApp = () => {
         
         <button 
           id="btn-global-print"
-          class="bg-white/5 border border-white/5 hover:bg-white/10 hover:border-slate-400 text-[#f1f5f9] px-3.5 py-1.5 rounded-lg text-xs font-medium flex items-center gap-2 transition"
+          class="btn-secondary"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
           Exporter en PDF
@@ -357,25 +354,20 @@ const renderApp = () => {
   }
 
   const footerHtml = isPres ? `
-    <footer class="bg-slate-900 border-t border-white/10 px-8 flex justify-between items-center no-print h-16 flex-shrink-0 z-50">
+    <footer class="bg-slate-900 border-t border-white/10 px-8 flex justify-between items-center no-print h-16 flex-shrink-0 z-50 relative">
       
       <!-- Page Switcher -->
       <div class="flex items-center gap-2">
         <span class="text-[10px] uppercase font-extrabold text-slate-500 tracking-wider">Espace :</span>
         <select id="pres-page-select" class="bg-slate-950 border border-white/10 text-white text-xs font-bold rounded-lg px-3 py-1 cursor-pointer focus:outline-none focus:border-blue-500 transition">
-          <option value="dashboard" ${state.activeTab === 'dashboard' ? 'selected' : ''}>Synthèse Générale</option>
-          <option value="finance" ${state.activeTab === 'finance' ? 'selected' : ''}>Espace Chiffrage & TCO</option>
-          <option value="tech" ${state.activeTab === 'tech' ? 'selected' : ''}>Technique & Architecture</option>
-          <option value="drp" ${state.activeTab === 'drp' ? 'selected' : ''}>Simulateur PRA / DRP</option>
-          <option value="pmo" ${state.activeTab === 'pmo' ? 'selected' : ''}>PMO : Risques & RACI</option>
-          <option value="comparison" ${state.activeTab === 'comparison' ? 'selected' : ''}>Dette : Avant / Après</option>
-          <option value="sites" ${state.activeTab === 'sites' ? 'selected' : ''}>Présentation des Sites</option>
-          <option value="conclusion" ${state.activeTab === 'conclusion' ? 'selected' : ''}>Conclusion</option>
+          ${menuSections.flatMap(section => section.items.map(item => `
+            <option value="${item.id}" ${state.activeTab === item.id ? 'selected' : ''}>${item.name.replace(/&amp;/g, '&')}</option>
+          `)).join('')}
         </select>
       </div>
 
       <!-- Navigation center: dots + label -->
-      <div class="flex flex-col items-center gap-1.5">
+      <div class="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5">
         <div class="flex items-center gap-3">
           <button 
             id="btn-pres-prev" 
@@ -407,10 +399,10 @@ const renderApp = () => {
       </div>
 
       <!-- Mode exit button on the right -->
-      <div>
+      <div class="invisible pointer-events-none">
         <button 
           id="btn-pres-exit" 
-          class="bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 hover:border-red-500/40 px-3 py-1 rounded-md text-xs font-semibold uppercase tracking-wider transition"
+          class="btn-danger"
           title="Quitter le mode présentation (Echap)"
         >
           Vue Globale
@@ -556,8 +548,8 @@ window.addEventListener('keydown', (e) => {
     e.preventDefault();
     navigatePresentation(-1);
   } else if (e.key === 'Escape') {
-    e.preventDefault();
-    togglePresentationMode(false);
+    // e.preventDefault();
+    // togglePresentationMode(false); // DISABLED: cannot exit presentation
   }
 });
 

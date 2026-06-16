@@ -5,10 +5,11 @@ const icons = {
   drp:        `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>`,
   pmo:        `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>`,
   comparison: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>`,
-  sites:      `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`
+  sites:      `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`,
+  conclusion: `<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`
 };
 
-const menuSections = [
+export const menuSections = [
   {
     title: 'Vision &amp; Contexte',
     items: [
@@ -30,6 +31,12 @@ const menuSections = [
       { id: 'finance', name: 'Ingénierie Financière — TCO',   icon: 'finance' },
       { id: 'pmo',     name: 'Registre PMO &amp; RACI',       icon: 'pmo'     }
     ]
+  },
+  {
+    title: 'Clôture du Projet',
+    items: [
+      { id: 'conclusion', name: 'Conclusion &amp; Bilan',     icon: 'conclusion' }
+    ]
   }
 ];
 
@@ -48,10 +55,10 @@ export default function Sidebar(activeTab) {
       return `
         <button
           data-tab="${item.id}"
-          class="sidebar-nav-btn w-full flex items-start gap-2.5 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-left relative group overflow-hidden ${
+          class="sidebar-nav-btn nav-item-base ${
             isActive
-              ? 'bg-gradient-to-r from-blue-600/20 to-blue-600/5 border border-blue-500/20 text-blue-300 font-bold'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent hover:border-white/8'
+              ? 'nav-item-active'
+              : 'nav-item-inactive'
           }"
         >
           ${isActive ? '<div class="absolute left-0 top-2 bottom-2 w-[3px] bg-blue-500 rounded-r-full shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>' : ''}
@@ -64,7 +71,7 @@ export default function Sidebar(activeTab) {
 
     return `
       <div class="mb-5 last:mb-0">
-        <h3 class="text-[9px] font-extrabold text-slate-600 uppercase tracking-[0.14em] px-3 mb-1.5 flex items-center gap-2">
+        <h3 class="nav-section-title">
           <span class="w-3 h-px bg-slate-700 rounded-full"></span>
           ${section.title}
         </h3>

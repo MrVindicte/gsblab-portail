@@ -80,8 +80,14 @@ export default function TechnicalWorkspace(state) {
               <button id="btn-code-ansible" class="px-3 py-1 rounded-md font-medium transition text-slate-400">Ansible (Securisation)</button>
             </div>
           </div>
-          <div class="bg-slate-950 rounded-lg p-4 font-mono text-[10px] text-slate-300 overflow-x-auto h-[130px] border border-white/5 flex-grow" id="code-content-box"></div>
-          <div class="flex justify-between items-center text-[10px] text-slate-500 mt-3 border-t border-white/5 pt-2"><span id="code-file-path">Chemin : /Scripts/03_Proxmox_Provisioning.tf</span><span>IaC Validé</span></div>
+          <div class="code-panel" id="code-content-box">
+            <!-- Populated -->
+          </div>
+          
+          <div class="flex justify-between items-center text-[10px] text-slate-500 mt-3 border-t border-white/5 pt-2">
+            <span id="code-file-path">Chemin : /Scripts/03_Proxmox_Provisioning.tf</span>
+            <span class="flex items-center gap-1">IaC Validé</span>
+          </div>
         </div>
       </div>`;
 
