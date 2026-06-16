@@ -35,105 +35,87 @@ export default function DrpSimulator(state) {
             </div>
           </div>
 
-          <!-- KPI strip — staggered entry -->
-          <div class="grid grid-cols-4 gap-3 shrink-0">
-            <div class="drp-1 glass-panel rounded-xl p-4 text-center border-l-[3px] border-l-indigo-500" style="background:rgba(99,102,241,0.05)">
+          <!-- KPI strip — 1 bloc unifié, séparateurs internes -->
+          <div class="grid grid-cols-4 gap-0 rounded-xl overflow-hidden shrink-0" style="background:#13141a">
+            <div class="drp-1 p-4 text-center border-r border-white/8">
               <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">RTO</div>
-              <div class="text-[2.2rem] font-extrabold font-mono text-white leading-none">4h</div>
-              <div class="text-[10px] text-slate-400 mt-1.5">Reprise d'activité max.</div>
+              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-300 leading-none">4h</div>
+              <div class="text-[10px] text-slate-500 mt-1.5">Reprise d'activité max.</div>
             </div>
-            <div class="drp-2 glass-panel rounded-xl p-4 text-center border-l-[3px] border-l-indigo-500" style="background:rgba(99,102,241,0.05)">
+            <div class="drp-2 p-4 text-center border-r border-white/8">
               <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">RPO</div>
-              <div class="text-[2.2rem] font-extrabold font-mono text-white leading-none">1h</div>
-              <div class="text-[10px] text-slate-400 mt-1.5">Perte de données max.</div>
+              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-300 leading-none">1h</div>
+              <div class="text-[10px] text-slate-500 mt-1.5">Perte de données max.</div>
             </div>
-            <div class="drp-3 glass-panel rounded-xl p-4 text-center border-l-[3px] border-l-indigo-500" style="background:rgba(99,102,241,0.05)">
+            <div class="drp-3 p-4 text-center border-r border-white/8">
               <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Sites couverts</div>
-              <div class="text-[2.2rem] font-extrabold font-mono text-white leading-none">27</div>
-              <div class="text-[10px] text-slate-400 mt-1.5">Spokes VPN IPsec</div>
+              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-300 leading-none">27</div>
+              <div class="text-[10px] text-slate-500 mt-1.5">Spokes VPN IPsec</div>
             </div>
-            <div class="drp-4 glass-panel rounded-xl p-4 text-center border-l-[3px] border-l-indigo-500" style="background:rgba(99,102,241,0.05)">
+            <div class="drp-4 p-4 text-center">
               <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Scénarios</div>
-              <div class="text-[2.2rem] font-extrabold font-mono text-white leading-none">2</div>
-              <div class="text-[10px] text-slate-400 mt-1.5">Testés &amp; documentés</div>
+              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-300 leading-none">2</div>
+              <div class="text-[10px] text-slate-500 mt-1.5">Testés &amp; documentés</div>
             </div>
           </div>
 
           <!-- Scenarios — reveal at step 2 -->
-          <div data-reveal-at="2" class="grid grid-cols-2 gap-4 opacity-0 transition-all duration-700">
+          <div data-reveal-at="2" class="grid grid-cols-2 gap-3 opacity-0 transition-all duration-700">
 
             <!-- Scénario A : Ransomware -->
-            <div class="glass-panel rounded-2xl p-5 flex flex-col gap-3 border-l-[4px] border-l-indigo-500/60" style="background:rgba(99,102,241,0.04)">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-indigo-900/40 border border-indigo-500/25 flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <div class="rounded-xl overflow-hidden flex flex-col" style="background:#13141a">
+              <div class="h-[3px] bg-indigo-500"></div>
+              <div class="p-4 flex flex-col gap-3 flex-1">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background:#1e2040">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-[11px] font-extrabold text-white">Scénario A — Ransomware</div>
+                    <div class="text-[9px] text-slate-500 font-mono">Cyberattaque · propagation active</div>
+                  </div>
                 </div>
-                <div>
-                  <div class="text-[11px] font-extrabold text-white">Scénario A — Ransomware</div>
-                  <div class="text-[9.5px] text-slate-500 font-mono">Cyberattaque · propagation active</div>
+                <div class="flex flex-col gap-1.5 pl-1">
+                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-indigo-400 font-bold shrink-0">01</span><span class="text-slate-300">Isolation VM infectée sur VLAN 999</span></div>
+                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-indigo-400 font-bold shrink-0">02</span><span class="text-slate-300">Snapshot figé — cluster Proxmox</span></div>
+                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-indigo-400 font-bold shrink-0">03</span><span class="text-slate-300">Restauration depuis PBS · snapshot J-1</span></div>
+                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-indigo-400 font-bold shrink-0">04</span><span class="text-slate-300">Scan EDR + remise en production</span></div>
                 </div>
-              </div>
-              <div class="flex flex-col gap-1.5">
-                <div class="flex items-center gap-2 text-[10.5px]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
-                  <span class="text-slate-300">Isolation VM infectée sur VLAN 999</span>
+                <div class="mt-auto pt-2 border-t border-white/5">
+                  <span class="text-[9px] font-mono text-slate-400">RTO effectif : ~2h30</span>
                 </div>
-                <div class="flex items-center gap-2 text-[10.5px]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
-                  <span class="text-slate-300">Snapshot figé — cluster Proxmox</span>
-                </div>
-                <div class="flex items-center gap-2 text-[10.5px]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
-                  <span class="text-slate-300">Restauration depuis PBS · snapshot J-1</span>
-                </div>
-                <div class="flex items-center gap-2 text-[10.5px]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
-                  <span class="text-slate-300">Scan EDR + remise en production</span>
-                </div>
-              </div>
-              <div class="flex items-center gap-2 mt-auto pt-2 border-t border-white/5">
-                <span class="text-[9px] font-mono bg-white/5 text-slate-400 border border-white/10 rounded px-2 py-0.5">RTO effectif : ~2h30</span>
               </div>
             </div>
 
             <!-- Scénario B : Sinistre physique -->
-            <div class="glass-panel rounded-2xl p-5 flex flex-col gap-3 border-l-[4px] border-l-amber-600/50" style="background:rgba(180,130,20,0.04)">
-              <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-900/30 border border-amber-600/25 flex items-center justify-center shrink-0">
-                  <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            <div class="rounded-xl overflow-hidden flex flex-col" style="background:#13141a">
+              <div class="h-[3px] bg-amber-500/70"></div>
+              <div class="p-4 flex flex-col gap-3 flex-1">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background:#221c0e">
+                    <svg class="w-4 h-4 text-amber-400/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                  </div>
+                  <div>
+                    <div class="text-[11px] font-extrabold text-white">Scénario B — Sinistre Physique</div>
+                    <div class="text-[9px] text-slate-500 font-mono">Incendie · destruction totale du Hub</div>
+                  </div>
                 </div>
-                <div>
-                  <div class="text-[11px] font-extrabold text-white">Scénario B — Sinistre Physique</div>
-                  <div class="text-[9.5px] text-slate-500 font-mono">Incendie · destruction totale du Hub</div>
+                <div class="flex flex-col gap-1.5 pl-1">
+                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-amber-500/80 font-bold shrink-0">01</span><span class="text-slate-300">Failover DNS AD → contrôleur Nantes</span></div>
+                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-amber-500/80 font-bold shrink-0">02</span><span class="text-slate-300">Tunnels VPN spokes redirigés sur Nantes</span></div>
+                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-amber-500/80 font-bold shrink-0">03</span><span class="text-slate-300">Restauration SGL sur R730 standby</span></div>
+                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-amber-500/80 font-bold shrink-0">04</span><span class="text-slate-300">Validation PostgreSQL · 14 321 patients</span></div>
                 </div>
-              </div>
-              <div class="flex flex-col gap-1.5">
-                <div class="flex items-center gap-2 text-[10.5px]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
-                  <span class="text-slate-300">Failover DNS AD → contrôleur Nantes</span>
+                <div class="mt-auto pt-2 border-t border-white/5">
+                  <span class="text-[9px] font-mono text-slate-400">RTO effectif : 1h42</span>
                 </div>
-                <div class="flex items-center gap-2 text-[10.5px]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
-                  <span class="text-slate-300">Tunnels VPN spokes redirigés sur Nantes</span>
-                </div>
-                <div class="flex items-center gap-2 text-[10.5px]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
-                  <span class="text-slate-300">Restauration SGL sur R730 standby</span>
-                </div>
-                <div class="flex items-center gap-2 text-[10.5px]">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-500 shrink-0"></span>
-                  <span class="text-slate-300">Validation PostgreSQL · 14 321 patients</span>
-                </div>
-              </div>
-              <div class="flex items-center gap-2 mt-auto pt-2 border-t border-white/5">
-                <span class="text-[9px] font-mono bg-white/5 text-slate-400 border border-white/10 rounded px-2 py-0.5">RTO effectif : 1h42</span>
               </div>
             </div>
           </div>
 
           <!-- Backup chain — reveal at step 3 -->
           <div data-reveal-at="3" class="opacity-0 transition-all duration-700 shrink-0">
-            <div class="glass-panel rounded-2xl p-4 border border-white/8" style="background:rgba(255,255,255,0.02)">
+            <div class="rounded-xl p-4" style="background:#13141a">
               <div class="text-[8.5px] font-mono tracking-[0.22em] uppercase text-slate-600 mb-3">Chaîne de sauvegarde 3-2-1-1-0</div>
               <div class="flex items-center gap-0">
 
