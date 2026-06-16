@@ -1,4 +1,4 @@
-﻿export default function SitesWorkspace(state = {}) {
+export default function SitesWorkspace(state = {}) {
   const isPres = state.presentationMode;
 
   // ── MODE PRÉSENTATION — 2 slides visuelles ──────────────────────────────────
@@ -14,85 +14,118 @@
           <p class="text-slate-400 text-sm">380 utilisateurs au plateau · Déploiement 2026-2028</p>
         </div>
 
-        <div class="grid grid-cols-3 gap-6 w-full flex-1 min-h-0">
+        <div class="flex flex-col gap-6 w-full max-w-5xl mx-auto flex-1 min-h-0 justify-center">
 
           <!-- Siège -->
-          <div class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-violet-500 flex flex-col gap-4 bg-slate-900/60">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-violet-500/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-violet-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <div class="bg-[#13141a] rounded-2xl p-6 border border-violet-500/20 flex items-center gap-6 shadow-[0_8px_40px_-12px_rgba(139,92,246,0.15)] relative overflow-hidden group">
+            <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-violet-500/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-violet-500/5 to-transparent pointer-events-none"></div>
+            
+            <div class="w-72 shrink-0 flex flex-col gap-4 relative z-10 border-r border-white/5 pr-6">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-violet-500/10 border border-violet-500/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(139,92,246,0.2)]">
+                  <svg class="w-6 h-6 text-violet-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <div>
+                  <div class="text-[10px] font-bold text-violet-400 uppercase tracking-wider">Siège Social</div>
+                  <div class="text-base font-bold text-white">Strasbourg DG</div>
+                </div>
               </div>
-              <div>
-                <div class="text-xs font-bold text-violet-400 uppercase tracking-wider">Siège Social</div>
-                <div class="text-base font-bold text-white">Strasbourg DG</div>
+              <div class="flex items-center gap-6">
+                <div><div class="text-2xl font-mono font-extrabold text-violet-300">1</div><div class="text-[9px] text-slate-500 uppercase mt-0.5 font-bold">Site HUB</div></div>
+                <div><div class="text-2xl font-mono font-extrabold text-violet-300">75</div><div class="text-[9px] text-slate-500 uppercase mt-0.5 font-bold">Utilisateurs</div></div>
               </div>
             </div>
-            <div class="flex justify-around border-t border-white/5 pt-4">
-              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-violet-300">1</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Site HUB</div></div>
-              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-violet-300">75</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Utilisateurs</div></div>
-            </div>
-            <div class="space-y-2 flex-1">
+
+            <div class="flex-1 grid grid-cols-2 gap-3 relative z-10">
               ${[
                 'Cluster Proxmox VE HA — 2× Dell R760',
                 'Baie Dell PowerVault ME484 + Ceph',
                 'FortiGate 1100E — Hub VPN hub-and-spoke',
                 'Exchange Online HDS + Entra ID',
                 'PBS + OVH Object Storage HDS',
-              ].map(b => `<div class="flex items-start gap-2 text-[11px] text-slate-400"><span class="text-violet-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span></div>`).join('')}
+              ].map(b => `
+                <div class="flex items-center gap-3 bg-black/40 border border-white/5 rounded-xl p-3 group-hover:border-violet-500/20 transition-colors">
+                  <div class="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0 shadow-[0_0_8px_rgba(139,92,246,0.8)]"></div>
+                  <span class="text-[11px] font-semibold text-slate-300 leading-snug">${b}</span>
+                </div>
+              `).join('')}
             </div>
           </div>
 
           <!-- Labos -->
-          <div data-reveal-at="2" class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-blue-500 flex flex-col gap-4 bg-slate-900/60 opacity-0 transition-all duration-700">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div data-reveal-at="2" class="bg-[#13141a] rounded-2xl p-6 border border-blue-500/20 flex items-center gap-6 shadow-[0_8px_40px_-12px_rgba(59,130,246,0.15)] relative overflow-hidden group opacity-0 transition-all duration-700">
+            <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-blue-500/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-transparent pointer-events-none"></div>
+            
+            <div class="w-72 shrink-0 flex flex-col gap-4 relative z-10 border-r border-white/5 pr-6">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(59,130,246,0.2)]">
+                  <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <div class="text-[10px] font-bold text-blue-400 uppercase tracking-wider">Phase 2026</div>
+                  <div class="text-base font-bold text-white">5 Laboratoires</div>
+                </div>
               </div>
-              <div>
-                <div class="text-xs font-bold text-blue-400 uppercase tracking-wider">Phase 2026</div>
-                <div class="text-base font-bold text-white">5 Laboratoires</div>
+              <div class="flex items-center gap-6">
+                <div><div class="text-2xl font-mono font-extrabold text-blue-300">5</div><div class="text-[9px] text-slate-500 uppercase mt-0.5 font-bold">Sites</div></div>
+                <div><div class="text-2xl font-mono font-extrabold text-blue-300">60</div><div class="text-[9px] text-slate-500 uppercase mt-0.5 font-bold">Utilisateurs</div></div>
+                <div><div class="text-2xl font-mono font-extrabold text-blue-300">11k€</div><div class="text-[9px] text-slate-500 uppercase mt-0.5 font-bold">/Labo</div></div>
               </div>
             </div>
-            <div class="flex justify-around border-t border-white/5 pt-4">
-              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-blue-300">5</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Sites</div></div>
-              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-blue-300">60</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Utilisateurs</div></div>
-              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-blue-300">11k€</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">/labo</div></div>
-            </div>
-            <div class="space-y-2 flex-1">
+
+            <div class="flex-1 grid grid-cols-2 gap-3 relative z-10">
               ${[
                 'Toulouse · Marseille · Nantes · Lyon · Lille',
                 '10 HP ProDesk 400 G9 + 2 HP 250 G10',
                 'FortiGate 40F spoke + CBS250-24T',
                 'Ubiquiti U6+ Wi-Fi 6',
                 'VLAN 10/20/30/40/99 — règle 10.S.V.0/24',
-              ].map(b => `<div class="flex items-start gap-2 text-[11px] text-slate-400"><span class="text-blue-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span></div>`).join('')}
+              ].map(b => `
+                <div class="flex items-center gap-3 bg-black/40 border border-white/5 rounded-xl p-3 group-hover:border-blue-500/20 transition-colors">
+                  <div class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></div>
+                  <span class="text-[11px] font-semibold text-slate-300 leading-snug">${b}</span>
+                </div>
+              `).join('')}
             </div>
           </div>
 
           <!-- Centres -->
-          <div data-reveal-at="3" class="glass-panel rounded-3xl p-7 border-l-[6px] border-l-emerald-500 flex flex-col gap-4 bg-slate-900/60 opacity-0 transition-all duration-700">
-            <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center flex-shrink-0">
-                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 15a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 4.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 11a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.92z"/></svg>
+          <div data-reveal-at="3" class="bg-[#13141a] rounded-2xl p-6 border border-emerald-500/20 flex items-center gap-6 shadow-[0_8px_40px_-12px_rgba(16,185,129,0.15)] relative overflow-hidden group opacity-0 transition-all duration-700">
+            <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-emerald-500/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-transparent pointer-events-none"></div>
+            
+            <div class="w-72 shrink-0 flex flex-col gap-4 relative z-10 border-r border-white/5 pr-6">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                  <svg class="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.99 15a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.92 4.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 11a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 17.92z"/></svg>
+                </div>
+                <div>
+                  <div class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Phase 2027-2028</div>
+                  <div class="text-base font-bold text-white">15 Centres</div>
+                </div>
               </div>
-              <div>
-                <div class="text-xs font-bold text-emerald-400 uppercase tracking-wider">Phase 2027-2028</div>
-                <div class="text-base font-bold text-white">15 Centres prélèvement</div>
+              <div class="flex items-center gap-6">
+                <div><div class="text-2xl font-mono font-extrabold text-emerald-300">15</div><div class="text-[9px] text-slate-500 uppercase mt-0.5 font-bold">Sites</div></div>
+                <div><div class="text-2xl font-mono font-extrabold text-emerald-300">245</div><div class="text-[9px] text-slate-500 uppercase mt-0.5 font-bold">Utilisateurs</div></div>
+                <div><div class="text-2xl font-mono font-extrabold text-emerald-300">5k€</div><div class="text-[9px] text-slate-500 uppercase mt-0.5 font-bold">/Centre</div></div>
               </div>
             </div>
-            <div class="flex justify-around border-t border-white/5 pt-4">
-              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-emerald-300">15</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Sites</div></div>
-              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-emerald-300">245</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">Utilisateurs</div></div>
-              <div class="text-center"><div class="text-3xl font-mono font-extrabold text-emerald-300">5k€</div><div class="text-[10px] text-slate-500 uppercase mt-0.5">/centre</div></div>
-            </div>
-            <div class="space-y-2 flex-1">
+
+            <div class="flex-1 grid grid-cols-2 gap-3 relative z-10">
               ${[
                 '3 centres par laboratoire (rayon &lt; 50 km)',
                 '5 HP ProDesk 400 G9 + 1 HP 250 G10',
                 'FortiGate 40F spoke + CBS250-16T',
                 'VLAN 20/30/40/99 — VLAN 10 via VPN hub',
                 'Lot 1 : 8 centres 2027 · Lot 2 : 7 centres 2028',
-              ].map(b => `<div class="flex items-start gap-2 text-[11px] text-slate-400"><span class="text-emerald-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span></div>`).join('')}
+              ].map(b => `
+                <div class="flex items-center gap-3 bg-black/40 border border-white/5 rounded-xl p-3 group-hover:border-emerald-500/20 transition-colors">
+                  <div class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+                  <span class="text-[11px] font-semibold text-slate-300 leading-snug">${b}</span>
+                </div>
+              `).join('')}
             </div>
           </div>
 
@@ -113,9 +146,11 @@
         <div class="grid grid-cols-2 gap-8 w-full flex-1 min-h-0">
 
           <!-- Topologie hub-and-spoke -->
-          <div class="glass-panel rounded-3xl p-7 flex flex-col justify-center gap-5 bg-slate-900/60">
-            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">Topologie réseau</div>
-            <div class="flex flex-col items-center gap-3">
+          <div class="bg-[#13141a] rounded-3xl p-7 border border-indigo-500/20 flex flex-col justify-center gap-5 shadow-[0_8px_40px_-12px_rgba(99,102,241,0.15)] relative overflow-hidden group">
+            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-indigo-500/5 to-transparent pointer-events-none"></div>
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest relative z-10">Topologie réseau</div>
+            <div class="flex flex-col items-center gap-3 relative z-10">
               <!-- HUB -->
               <div class="bg-violet-500/20 border border-violet-500/40 rounded-xl px-5 py-3 text-center">
                 <div class="text-violet-300 font-bold text-sm">HUB — Strasbourg</div>
@@ -151,9 +186,11 @@
           </div>
 
           <!-- VLAN palette -->
-          <div data-reveal-at="5" class="glass-panel rounded-3xl p-7 flex flex-col gap-4 bg-slate-900/60 opacity-0 transition-all duration-700">
-            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest">Segmentation VLAN (identique sur tous les spokes)</div>
-            <div class="space-y-3 flex-1">
+          <div data-reveal-at="5" class="bg-[#13141a] rounded-3xl p-7 border border-slate-500/20 flex flex-col gap-4 shadow-[0_8px_40px_-12px_rgba(148,163,184,0.1)] relative overflow-hidden group opacity-0 transition-all duration-700">
+            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-400/50 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-slate-500/5 to-transparent pointer-events-none"></div>
+            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest relative z-10">Segmentation VLAN (identique sur tous les spokes)</div>
+            <div class="space-y-3 flex-1 relative z-10">
               ${[
                 ['10','Admin / Serveurs','blue','Routé via tunnel VPN vers Siège'],
                 ['20','Postes de travail','indigo','HP ProDesk + laptops · accès métier'],
@@ -170,7 +207,7 @@
                 </div>
               `).join('')}
             </div>
-            <div class="flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3 text-[10px] text-emerald-300">
+            <div class="flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3 text-[10px] text-emerald-300 relative z-10">
               <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               <span><b>ACL FortiGate HDS</b> — VLAN 40 → VLAN 30 : DROP · VLAN 20 → VLAN 30 : PERMIT flux métier</span>
             </div>
