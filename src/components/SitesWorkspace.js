@@ -143,73 +143,104 @@ export default function SitesWorkspace(state = {}) {
           <p class="text-slate-400 text-sm">VPN IPsec AES-256 IKEv2 · Règle d'adressage 10.S.V.0/24</p>
         </div>
 
-        <div class="grid grid-cols-2 gap-8 w-full flex-1 min-h-0">
+        <div class="flex flex-col gap-6 w-full max-w-5xl mx-auto flex-1 min-h-0 justify-center">
 
           <!-- Topologie hub-and-spoke -->
-          <div class="bg-[#13141a] rounded-3xl p-7 border border-indigo-500/20 flex flex-col justify-center gap-5 shadow-[0_8px_40px_-12px_rgba(99,102,241,0.15)] relative overflow-hidden group">
-            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-indigo-500/60 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-indigo-500/5 to-transparent pointer-events-none"></div>
-            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest relative z-10">Topologie réseau</div>
-            <div class="flex flex-col items-center gap-3 relative z-10">
+          <div class="bg-[#13141a] rounded-2xl p-6 border border-indigo-500/20 flex items-center gap-6 shadow-[0_8px_40px_-12px_rgba(99,102,241,0.15)] relative overflow-hidden group">
+            <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-indigo-500/60 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-500/5 to-transparent pointer-events-none"></div>
+            
+            <div class="w-72 shrink-0 flex flex-col gap-4 relative z-10 border-r border-white/5 pr-6">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                  <svg class="w-6 h-6 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </div>
+                <div>
+                  <div class="text-[10px] font-bold text-indigo-400 uppercase tracking-wider">Topologie Globale</div>
+                  <div class="text-base font-bold text-white">Hub-and-Spoke</div>
+                </div>
+              </div>
+              <div class="text-[10px] text-slate-400 leading-relaxed">
+                Connectivité IPsec hautement sécurisée entre le Hub central et les 20 sites périphériques.
+              </div>
+            </div>
+
+            <div class="flex-1 flex flex-col items-center justify-center gap-3 relative z-10">
               <!-- HUB -->
-              <div class="bg-violet-500/20 border border-violet-500/40 rounded-xl px-5 py-3 text-center">
+              <div class="bg-violet-500/10 border border-violet-500/30 rounded-xl px-6 py-2.5 text-center shadow-[0_0_15px_rgba(139,92,246,0.15)]">
                 <div class="text-violet-300 font-bold text-sm">HUB — Strasbourg</div>
-                <div class="text-[10px] text-slate-500 mt-0.5">FortiGate 1100E · Cluster Proxmox</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">FortiGate 1100E · Cluster Proxmox</div>
               </div>
+
               <!-- VPN bar -->
-              <div class="flex items-center gap-2 text-[9px] text-slate-600 font-mono">
-                <div class="h-px w-16 bg-indigo-500/40"></div>VPN IPsec AES-256 IKEv2<div class="h-px w-16 bg-indigo-500/40"></div>
+              <div class="flex items-center gap-3 text-[9px] text-indigo-400 font-mono w-full justify-center">
+                <div class="h-[1px] w-12 bg-gradient-to-r from-transparent to-indigo-500/50"></div>
+                <div class="bg-indigo-500/10 border border-indigo-500/20 rounded px-3 py-1 text-center shadow-[0_0_10px_rgba(99,102,241,0.2)]">VPN IPsec AES-256 IKEv2</div>
+                <div class="h-[1px] w-12 bg-gradient-to-l from-transparent to-indigo-500/50"></div>
               </div>
+
               <!-- Spokes -->
-              <div class="grid grid-cols-3 gap-3 w-full">
+              <div class="grid grid-cols-3 gap-3 w-full max-w-sm">
                 ${[
                   ['S10–14','5 Labos','blue'],
                   ['S20–27','8 Centres 2027','emerald'],
                   ['S28–34','7 Centres 2028','emerald'],
                 ].map(([s,l,c]) => `
-                  <div class="bg-${c}-500/10 border border-${c}-500/25 rounded-lg px-2 py-2 text-center">
+                  <div class="bg-${c}-500/10 border border-${c}-500/25 rounded-xl px-2 py-1.5 text-center group-hover:border-${c}-500/50 transition-colors">
                     <div class="text-${c}-300 font-mono font-bold text-xs">${s}</div>
-                    <div class="text-[9px] text-slate-500 mt-0.5">${l}</div>
-                    <div class="text-[8px] text-slate-600 mt-0.5">FortiGate 40F</div>
+                    <div class="text-[9px] text-slate-400 mt-0.5">${l}</div>
                   </div>
                 `).join('')}
               </div>
+
               <!-- Infra per site -->
-              <div class="flex items-center gap-2 text-[9px] text-slate-600 w-full justify-center">
-                <span class="bg-slate-800/60 border border-white/5 rounded px-2 py-0.5">CBS250-24T/16T</span>
+              <div class="flex items-center gap-2 text-[9px] text-slate-400 bg-black/40 border border-white/5 rounded-lg px-4 py-1.5 mt-1">
+                <span class="text-white font-semibold">LAN Spoke</span>
                 <span>→</span>
-                <span class="bg-slate-800/60 border border-white/5 rounded px-2 py-0.5">Ubiquiti U6+</span>
+                <span>FortiGate 40F</span>
                 <span>→</span>
-                <span class="bg-slate-800/60 border border-white/5 rounded px-2 py-0.5">PBS Strasbourg</span>
+                <span>CBS250-24T/16T</span>
+                <span>→</span>
+                <span>Ubiquiti U6+</span>
               </div>
             </div>
           </div>
 
           <!-- VLAN palette -->
-          <div data-reveal-at="5" class="bg-[#13141a] rounded-3xl p-7 border border-slate-500/20 flex flex-col gap-4 shadow-[0_8px_40px_-12px_rgba(148,163,184,0.1)] relative overflow-hidden group opacity-0 transition-all duration-700">
-            <div class="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-slate-400/50 to-transparent"></div>
-            <div class="absolute inset-0 bg-gradient-to-b from-slate-500/5 to-transparent pointer-events-none"></div>
-            <div class="text-xs font-bold text-slate-500 uppercase tracking-widest relative z-10">Segmentation VLAN (identique sur tous les spokes)</div>
-            <div class="space-y-3 flex-1 relative z-10">
+          <div data-reveal-at="5" class="bg-[#13141a] rounded-2xl p-6 border border-slate-500/20 flex items-center gap-6 shadow-[0_8px_40px_-12px_rgba(148,163,184,0.1)] relative overflow-hidden group opacity-0 transition-all duration-700">
+            <div class="absolute left-0 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-slate-400/50 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-slate-500/5 to-transparent pointer-events-none"></div>
+            
+            <div class="w-72 shrink-0 flex flex-col gap-4 relative z-10 border-r border-white/5 pr-6">
+              <div class="flex items-center gap-3">
+                <div class="w-12 h-12 rounded-xl bg-slate-500/10 border border-slate-500/20 flex items-center justify-center flex-shrink-0 shadow-[0_0_15px_rgba(148,163,184,0.2)]">
+                  <svg class="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                </div>
+                <div>
+                  <div class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Modèle Spoke</div>
+                  <div class="text-base font-bold text-white leading-tight">Segmentation<br>VLAN unifiée</div>
+                </div>
+              </div>
+              <div class="flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-2.5 text-[9px] text-emerald-300">
+                <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span class="leading-relaxed"><b>ACL FortiGate HDS</b><br>VLAN 40 → 30 : DROP<br>VLAN 20 → 30 : PERMIT métier</span>
+              </div>
+            </div>
+
+            <div class="flex-1 grid grid-cols-3 gap-3 relative z-10">
               ${[
-                ['10','Admin / Serveurs','blue','Routé via tunnel VPN vers Siège'],
-                ['20','Postes de travail','indigo','HP ProDesk + laptops · accès métier'],
-                ['30','Analyse HDS','emerald','ISOLÉ STRICT — VLAN 40 BLOQUÉ'],
-                ['40','Wi-Fi invités','amber','Ubiquiti U6+ · Internet only'],
-                ['99','Management','slate','CBS250 + FortiGate 40F hors-bande'],
+                ['10','Admin / Serveurs','blue','Routé VPN vers Siège'],
+                ['20','Postes de travail','indigo','Accès métier local'],
+                ['30','Analyse HDS','emerald','ISOLÉ STRICT — V40 BLOQUÉ'],
+                ['40','Wi-Fi invités','amber','Internet uniquement'],
+                ['99','Management','slate','CBS250 + 40F hors-bande'],
               ].map(([id, name, color, note]) => `
-                <div class="flex items-center gap-3">
-                  <span class="w-12 flex-shrink-0 text-center font-mono font-extrabold text-lg bg-${color}-500/15 border border-${color}-500/25 text-${color}-300 rounded-lg py-1">${id}</span>
-                  <div class="flex-1 min-w-0">
-                    <div class="font-semibold text-white text-sm">${name}</div>
-                    <div class="text-[10px] text-slate-500 mt-0.5 truncate">${note}</div>
-                  </div>
+                <div class="bg-black/40 border border-white/5 rounded-xl p-3 flex flex-col items-center text-center group-hover:border-${color}-500/30 transition-colors">
+                  <div class="text-xl font-mono font-bold text-${color}-400 mb-0.5">${id}</div>
+                  <div class="text-[11px] text-white font-semibold leading-tight">${name}</div>
+                  <div class="text-[9px] text-slate-500 mt-1.5 leading-tight">${note}</div>
                 </div>
               `).join('')}
-            </div>
-            <div class="flex items-start gap-2 bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3 text-[10px] text-emerald-300 relative z-10">
-              <svg class="w-3.5 h-3.5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              <span><b>ACL FortiGate HDS</b> — VLAN 40 → VLAN 30 : DROP · VLAN 20 → VLAN 30 : PERMIT flux métier</span>
             </div>
           </div>
 
