@@ -97,7 +97,7 @@ export default function TechnicalWorkspace(state) {
   const presSlide1 = `
     <div data-pres-slide="1" data-pres-label="Cartographie SD-WAN — France" class="flex-1 min-h-0 overflow-y-auto w-full">
       <style>
-        .fmap-shape{fill:#0d1420;stroke:#6366f1;stroke-width:1.6;stroke-linejoin:round;filter:drop-shadow(0 0 18px rgba(99,102,241,.18))}
+        .fmap-shape{fill:#0f1e3d;stroke:#6366f1;stroke-width:2.5;stroke-linejoin:round;filter:drop-shadow(0 0 22px rgba(99,102,241,.35))}
         .fmap-corse{fill:#0d1420;stroke:#475569;stroke-width:1.3;stroke-linejoin:round;opacity:.7}
         .fmap-sealabel{font-family:monospace;font-size:10px;fill:#334155;letter-spacing:.2em;text-transform:uppercase}
         .fmap-link{fill:none;stroke-linecap:round;transition:opacity .5s}
@@ -280,12 +280,6 @@ export default function TechnicalWorkspace(state) {
           </div>
         </div>
 
-        <!-- VLAN grid (reveal at 2) -->
-        <div class="opacity-0 transition-all duration-700" data-reveal-at="2">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2"><span class="w-2 h-2 rounded-sm bg-emerald-400"></span>Plan VLAN déployé</h3>
-          <div id="siegeVlans" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3"></div>
-        </div>
-
       </div>
     </div>
   `;
@@ -299,7 +293,7 @@ export default function TechnicalWorkspace(state) {
           <div class="w-14 h-1 bg-gradient-to-r from-indigo-500 to-indigo-300 mx-auto rounded-full"></div>
         </div>
         <div class="glass-panel rounded-xl p-5">
-          <svg width="100%" viewBox="0 0 680 530" role="img" style="display:block"><title>Schéma réseau du siège GSBLAB</title><defs>
+          <svg class="pres-schema-svg" viewBox="0 0 680 530" role="img" preserveAspectRatio="xMidYMid meet"><title>Schéma réseau du siège GSBLAB</title><defs>
   <marker id="arsg2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
     <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </marker>
@@ -352,10 +346,6 @@ export default function TechnicalWorkspace(state) {
         </table>
           </div>
         </div>
-        <div class="opacity-0 transition-all duration-700" data-reveal-at="2">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2"><span class="w-2 h-2 rounded-sm bg-emerald-400"></span>Plan VLAN déployé</h3>
-          <div id="laboVlans" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3"></div>
-        </div>
       </div>
     </div>
   `;
@@ -369,7 +359,7 @@ export default function TechnicalWorkspace(state) {
           <div class="w-14 h-1 bg-gradient-to-r from-indigo-500 to-emerald-400 mx-auto rounded-full"></div>
         </div>
         <div class="glass-panel rounded-xl p-5">
-          <svg width="100%" viewBox="0 0 680 430" role="img" style="display:block"><title>Schéma réseau laboratoire régional GSBLAB</title><defs>
+          <svg class="pres-schema-svg" viewBox="0 0 680 430" role="img" preserveAspectRatio="xMidYMid meet"><title>Schéma réseau laboratoire régional GSBLAB</title><defs>
   <marker id="arlb2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
     <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </marker>
@@ -421,10 +411,6 @@ export default function TechnicalWorkspace(state) {
         </table>
           </div>
         </div>
-        <div class="opacity-0 transition-all duration-700" data-reveal-at="2">
-          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2"><span class="w-2 h-2 rounded-sm bg-emerald-400"></span>Plan VLAN déployé</h3>
-          <div id="centreVlans" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3"></div>
-        </div>
       </div>
     </div>
   `;
@@ -438,7 +424,7 @@ export default function TechnicalWorkspace(state) {
           <div class="w-14 h-1 bg-gradient-to-r from-indigo-400 to-purple-400 mx-auto rounded-full"></div>
         </div>
         <div class="glass-panel rounded-xl p-5">
-          <svg width="100%" viewBox="0 0 680 415" role="img" style="display:block"><title>Schéma réseau centre de prélèvement GSBLAB</title><defs>
+          <svg class="pres-schema-svg" viewBox="0 0 680 415" role="img" preserveAspectRatio="xMidYMid meet"><title>Schéma réseau centre de prélèvement GSBLAB</title><defs>
   <marker id="arcp2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
     <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </marker>

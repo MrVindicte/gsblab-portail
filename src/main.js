@@ -5,7 +5,7 @@ import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=21';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=28';
-import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=15';
+import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=16';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=5';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=6';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=5';
@@ -102,8 +102,15 @@ const scalePresentationSlide = () => {
   requestAnimationFrame(() => requestAnimationFrame(() => {
     const cH = container.clientHeight;
     const cW = container.clientWidth;
+
+    // Exclure temporairement les éléments opacity-0 (reveals cachés) du calcul de hauteur
+    // car ils occupent de la place dans le DOM mais ne sont pas visibles
+    const hiddenReveals = [...slide.querySelectorAll('.opacity-0[data-reveal-at]')];
+    hiddenReveals.forEach(el => { el.style.display = 'none'; });
     const sH = slide.scrollHeight;
     const sW = slide.scrollWidth;
+    hiddenReveals.forEach(el => { el.style.display = ''; });
+
     const scale = Math.min(cH / sH, cW / sW, 1);
     if (scale < 0.985) {
       slide.style.transformOrigin = 'top center';

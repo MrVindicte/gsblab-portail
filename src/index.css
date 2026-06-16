@@ -220,3 +220,10 @@ input[type="range"]::-moz-range-track {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* SVG dans les slides schéma : limiter la hauteur pour éviter l'expansion à 100% largeur */
+.pres-slides-container [data-pres-slide] .pres-schema-svg {
+  max-height: 62vh;
+  width: 100%;
+  display: block;
+}
