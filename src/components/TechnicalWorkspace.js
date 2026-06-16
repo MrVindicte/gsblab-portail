@@ -122,7 +122,7 @@ export default function TechnicalWorkspace(state) {
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 01 — Maillage national</p>
           <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Cartographie des sites GSBLAB</h2>
           <div class="w-14 h-1 bg-gradient-to-r from-indigo-500 to-emerald-500 mx-auto rounded-full"></div>
-          <p class="text-slate-400 text-sm max-w-2xl mx-auto">D'un réseau régional de <b class="text-slate-200">7 sites</b> Grand Est à un maillage national de <b class="text-slate-200">27 sites</b> interconnectés via <b class="text-emerald-400">SD-WAN Ubiquiti Magic Site-to-Site</b></p>
+          <p class="text-slate-400 text-sm max-w-2xl mx-auto">D'un réseau régional de <b class="text-slate-200">7 sites</b> Grand Est à un maillage national de <b class="text-slate-200">27 sites</b> interconnectés</p>
         </div>
 
         <!-- Era toggle (reveal at 1) -->
@@ -152,6 +152,7 @@ export default function TechnicalWorkspace(state) {
         <div class="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-4 opacity-0 transition-all duration-700" data-reveal-at="1">
           <!-- France map -->
           <div class="glass-panel rounded-xl p-4">
+            <div class="text-sm font-bold mb-2" id="fmapEraLabel" style="color: rgb(251, 146, 60);">2026 — Avant migration</div>
             <svg viewBox="0 0 600 600" id="franceMap" class="w-full h-auto">
               <text class="fmap-sealabel" x="34" y="340" transform="rotate(-90 34 340)">Océan Atlantique</text>
               <text class="fmap-sealabel" x="340" y="565">Mer Méditerranée</text>
@@ -829,6 +830,12 @@ export function bindTechEvents(state) {
     if (kVlanEl)  kVlanEl.style.color = d.vlanColor;
     if (kVlanL)   kVlanL.textContent  = d.vlanL;
     if (kpiVlan){ kpiVlan.style.borderColor = era==='avant' ? 'rgba(239,68,68,0.2)' : 'rgba(16,185,129,0.2)'; }
+    // Map era label
+    const fmapEraLabel = document.getElementById('fmapEraLabel');
+    if (fmapEraLabel) {
+      fmapEraLabel.textContent = era === 'avant' ? '2026 — Avant migration' : '2030 — Cible SD-WAN';
+      fmapEraLabel.style.color = era === 'avant' ? 'rgb(251, 146, 60)' : 'rgb(52, 211, 153)';
+    }
     // Panels
     const pAvant = document.getElementById('fmapPanelAvant');
     const pApres = document.getElementById('fmapPanelApres');
