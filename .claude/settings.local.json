@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(& \"C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\" --headless=new --disable-gpu --window-size=1600,900 --screenshot=\"C:\\\\Users\\\\SKZ\\\\Desktop\\\\GSBLAB\\\\gsblab-portail\\\\_test_map_v3_hover.png\" --virtual-time-budget=4000 \"http://127.0.0.1:5173/_test_map.html\" 2>&1)"
+    ]
+  }
+}

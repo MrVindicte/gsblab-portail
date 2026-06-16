@@ -187,9 +187,9 @@ const updatePresentationDOM = () => {
       requestAnimationFrame(() => {
         // Find any element containing the step (e.g. "21,22,23" or "21")
         const targets = Array.from(activeSlide.querySelectorAll('[data-reveal-at]')).filter(el => el.getAttribute('data-reveal-at').split(',').map(Number).includes(window.appState.presentationStep));
-        const target = targets.find(el => el.offsetTop !== undefined); // find first HTML element
-        if (target && target.offsetTop !== undefined) {
-            activeSlide.scrollTo({ top: target.offsetTop - 20, behavior: 'smooth' });
+        const target = targets.find(el => el.getBoundingClientRect !== undefined);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
       });
     }
