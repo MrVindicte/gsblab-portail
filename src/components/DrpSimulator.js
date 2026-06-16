@@ -1,324 +1,268 @@
 export default function DrpSimulator(state) {
-  const isPres = state.presentationMode;
-
-  // ── MODE PRÉSENTATION — slide visuelle full-screen ──────────────────────────
-  if (isPres) {
-    return `
-      <div data-pres-slide="1,2,3" data-pres-label="Plan de Reprise d'Activité" class="flex-1 min-h-0 w-full overflow-y-auto">
-        <style>
-          @keyframes drpIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-          .drp-1{animation:drpIn .45s cubic-bezier(.16,1,.3,1) forwards;opacity:0;animation-delay:.1s}
-          .drp-2{animation:drpIn .45s cubic-bezier(.16,1,.3,1) forwards;opacity:0;animation-delay:.35s}
-          .drp-3{animation:drpIn .45s cubic-bezier(.16,1,.3,1) forwards;opacity:0;animation-delay:.6s}
-          .drp-4{animation:drpIn .45s cubic-bezier(.16,1,.3,1) forwards;opacity:0;animation-delay:.85s}
-          @keyframes alertBlink{0%,100%{opacity:1}50%{opacity:.3}}
-          .drp-alert{animation:alertBlink 1.6s ease-in-out infinite}
-          @keyframes drpChainIn{from{opacity:0;transform:scaleX(0)}to{opacity:1;transform:scaleX(1)}}
-          .drp-chain-line{transform-origin:left;animation:drpChainIn .6s ease forwards}
-        </style>
-
-        <div class="max-w-6xl w-full mx-auto px-4 py-4 flex flex-col gap-2 justify-center" style="min-height:100%">
-
-          <!-- Header -->
-          <div class="flex items-start justify-between shrink-0">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="drp-alert w-2 h-2 rounded-full bg-slate-500"></span>
-                <span class="text-[9px] font-mono tracking-[0.28em] uppercase text-slate-500">Plan de Reprise d'Activité · HDS v2 Activité 6</span>
-              </div>
-              <h2 class="text-[1.9rem] font-extrabold tracking-tight leading-tight text-white">Plan de Reprise d'Activité</h2>
-              <p class="text-slate-400 text-[12px] max-w-lg mt-1 leading-snug">Procédures testées garantissant la reprise de toute activité en moins de <b class="text-slate-200">4h</b> après un sinistre majeur sur le Hub Strasbourg.</p>
-            </div>
-            <div class="flex flex-col items-end gap-1.5 shrink-0">
-              <span class="font-mono text-[9px] bg-white/5 text-slate-400 border border-white/10 rounded-lg px-2.5 py-1.5">CRITIQUE · PRIORITÉ 1</span>
-              <span class="font-mono text-[9px] text-slate-600">Hub Strasbourg · Site principal</span>
-            </div>
-          </div>
-
-          <!-- KPI strip — 1 bloc unifié, séparateurs internes -->
-          <div class="grid grid-cols-4 gap-0 rounded-xl overflow-hidden shrink-0" style="background:#13141a">
-            <div class="drp-1 p-4 text-center border-r border-white/8">
-              <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">RTO</div>
-              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-300 leading-none">4h</div>
-              <div class="text-[10px] text-slate-500 mt-1.5">Reprise d'activité max.</div>
-            </div>
-            <div class="drp-2 p-4 text-center border-r border-white/8">
-              <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">RPO</div>
-              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-300 leading-none">1h</div>
-              <div class="text-[10px] text-slate-500 mt-1.5">Perte de données max.</div>
-            </div>
-            <div class="drp-3 p-4 text-center border-r border-white/8">
-              <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Sites couverts</div>
-              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-300 leading-none">27</div>
-              <div class="text-[10px] text-slate-500 mt-1.5">Spokes VPN IPsec</div>
-            </div>
-            <div class="drp-4 p-4 text-center">
-              <div class="text-[9px] font-bold text-slate-500 uppercase tracking-widest mb-1">Scénarios</div>
-              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-300 leading-none">2</div>
-              <div class="text-[10px] text-slate-500 mt-1.5">Testés &amp; documentés</div>
-            </div>
-          </div>
-
-          <!-- Scenarios — reveal at step 2 -->
-          <div data-reveal-at="2" class="grid grid-cols-2 gap-3 opacity-0 transition-all duration-700">
-
-            <!-- Scénario A : Ransomware -->
-            <div class="rounded-xl overflow-hidden flex flex-col" style="background:#13141a">
-              <div class="h-[3px] bg-indigo-500"></div>
-              <div class="p-4 flex flex-col gap-3 flex-1">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background:#1e2040">
-                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                  </div>
-                  <div>
-                    <div class="text-[11px] font-extrabold text-white">Scénario A — Ransomware</div>
-                    <div class="text-[9px] text-slate-500 font-mono">Cyberattaque · propagation active</div>
-                  </div>
-                </div>
-                <div class="flex flex-col gap-1.5 pl-1">
-                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-indigo-400 font-bold shrink-0">01</span><span class="text-slate-300">Isolation VM infectée sur VLAN 999</span></div>
-                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-indigo-400 font-bold shrink-0">02</span><span class="text-slate-300">Snapshot figé — cluster Proxmox</span></div>
-                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-indigo-400 font-bold shrink-0">03</span><span class="text-slate-300">Restauration depuis PBS · snapshot J-1</span></div>
-                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-indigo-400 font-bold shrink-0">04</span><span class="text-slate-300">Scan EDR + remise en production</span></div>
-                </div>
-                <div class="mt-auto pt-2 border-t border-white/5">
-                  <span class="text-[9px] font-mono text-slate-400">RTO effectif : ~2h30</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Scénario B : Sinistre physique -->
-            <div class="rounded-xl overflow-hidden flex flex-col" style="background:#13141a">
-              <div class="h-[3px] bg-amber-500/70"></div>
-              <div class="p-4 flex flex-col gap-3 flex-1">
-                <div class="flex items-center gap-3">
-                  <div class="w-9 h-9 rounded-lg flex items-center justify-center shrink-0" style="background:#221c0e">
-                    <svg class="w-4 h-4 text-amber-400/80" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-                  </div>
-                  <div>
-                    <div class="text-[11px] font-extrabold text-white">Scénario B — Sinistre Physique</div>
-                    <div class="text-[9px] text-slate-500 font-mono">Incendie · destruction totale du Hub</div>
-                  </div>
-                </div>
-                <div class="flex flex-col gap-1.5 pl-1">
-                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-amber-500/80 font-bold shrink-0">01</span><span class="text-slate-300">Failover DNS AD → contrôleur Nantes</span></div>
-                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-amber-500/80 font-bold shrink-0">02</span><span class="text-slate-300">Tunnels VPN spokes redirigés sur Nantes</span></div>
-                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-amber-500/80 font-bold shrink-0">03</span><span class="text-slate-300">Restauration SGL sur R730 standby</span></div>
-                  <div class="flex items-center gap-2 text-[10.5px]"><span class="text-amber-500/80 font-bold shrink-0">04</span><span class="text-slate-300">Validation PostgreSQL · 14 321 patients</span></div>
-                </div>
-                <div class="mt-auto pt-2 border-t border-white/5">
-                  <span class="text-[9px] font-mono text-slate-400">RTO effectif : 1h42</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Backup chain — reveal at step 3 -->
-          <div data-reveal-at="3" class="opacity-0 transition-all duration-700 shrink-0">
-            <div class="rounded-xl p-4" style="background:#13141a">
-              <div class="text-[8.5px] font-mono tracking-[0.22em] uppercase text-slate-600 mb-3">Chaîne de sauvegarde 3-2-1-1-0</div>
-              <div class="flex items-center gap-0">
-
-                <!-- Node 1 -->
-                <div class="flex flex-col items-center gap-1.5 flex-1">
-                  <div class="w-9 h-9 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center">
-                    <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-[10px] font-bold text-slate-300">PBS Local</div>
-                    <div class="text-[9px] text-slate-500">J-1 incrémental</div>
-                    <div class="text-[8.5px] font-mono text-slate-600">Strasbourg</div>
-                  </div>
-                </div>
-
-                <!-- Arrow -->
-                <div class="flex flex-col items-center gap-0.5 px-1">
-                  <div class="drp-chain-line h-px w-12 bg-slate-600/60" style="animation-delay:.2s"></div>
-                  <div class="text-[8px] text-slate-700 font-mono">hebdo</div>
-                </div>
-
-                <!-- Node 2 -->
-                <div class="flex flex-col items-center gap-1.5 flex-1">
-                  <div class="w-9 h-9 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center">
-                    <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-[10px] font-bold text-slate-300">PBS Nantes</div>
-                    <div class="text-[9px] text-slate-500">Hebdomadaire</div>
-                    <div class="text-[8.5px] font-mono text-slate-600">Site de secours</div>
-                  </div>
-                </div>
-
-                <!-- Arrow -->
-                <div class="flex flex-col items-center gap-0.5 px-1">
-                  <div class="drp-chain-line h-px w-12 bg-slate-600/60" style="animation-delay:.5s"></div>
-                  <div class="text-[8px] text-slate-700 font-mono">mensuel</div>
-                </div>
-
-                <!-- Node 3 -->
-                <div class="flex flex-col items-center gap-1.5 flex-1">
-                  <div class="w-9 h-9 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center">
-                    <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-[10px] font-bold text-slate-300">OVHcloud HDS</div>
-                    <div class="text-[9px] text-slate-500">Object Storage</div>
-                    <div class="text-[8.5px] font-mono text-slate-600">Cold Archive</div>
-                  </div>
-                </div>
-
-                <!-- Immuable badge -->
-                <div class="ml-4 flex flex-col items-center gap-1.5">
-                  <div class="w-9 h-9 rounded-xl bg-slate-800 border border-white/10 flex items-center justify-center">
-                    <svg class="w-4 h-4 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                  </div>
-                  <div class="text-center">
-                    <div class="text-[10px] font-bold text-slate-200">3-2-1-1-0</div>
-                    <div class="text-[9px] text-slate-500">Immuable</div>
-                    <div class="text-[8.5px] font-mono text-slate-600">0 erreur</div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    `;
-  }
-
-  // ── MODE NORMAL ──────────────────────────────────────────────────────────────
   if (state.activeCrisis === 'none') {
     return `
-      <div class="space-y-6 animate-fade-in">
-        
-        <!-- Title -->
-        <div>
-          <h2 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-            Simulateur de Secours & Reprise après Sinistre (DRP / PRA)
-          </h2>
-          <p class="text-slate-400 text-sm">
-            Simulez en temps réel une cyberattaque ou un incendie sur le Hub central de Strasbourg et validez le plan de secours HDS.
-          </p>
+      <div data-pres-slide="1,2,3" data-pres-label="Dispositif PRA & Continuité" class="h-full w-full flex flex-col font-sans animate-fade-in text-slate-300">
+        <!-- Top Header -->
+        <div class="flex justify-between items-start mb-8">
+          <div>
+            <div class="text-[10px] text-slate-400 font-mono tracking-widest uppercase mb-3 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-slate-400"></span>
+              Plan de Reprise d'Activité · HDS V2 Activité 6
+            </div>
+            <h1 class="text-4xl font-bold tracking-tight text-white mb-2">Plan de Reprise d'Activité</h1>
+            <p class="text-slate-400 text-sm max-w-xl leading-relaxed">
+              Procédures testées garantissant la reprise de toute activité en moins de 4h après un sinistre majeur sur le Hub Strasbourg.
+            </p>
+          </div>
+          <div class="text-right">
+            <div class="inline-block border border-slate-700/50 rounded px-3 py-1.5 text-[10px] font-mono tracking-widest text-slate-300 mb-2">
+              CRITIQUE - PRIORITÉ 1
+            </div>
+            <div class="text-[10px] font-mono text-slate-500">Hub Strasbourg · Site principal</div>
+          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- KPI Grid -->
+        <div class="grid grid-cols-4 gap-[1px] bg-slate-800/60 rounded-xl overflow-hidden mb-6 border border-slate-800/60">
+          <div class="bg-[#13141a] p-6 flex flex-col items-center justify-center">
+            <div class="text-[10px] font-bold text-slate-400 tracking-widest mb-2 uppercase">RTO</div>
+            <div class="text-4xl font-bold text-indigo-300 mb-2">4h</div>
+            <div class="text-[10px] text-slate-500">Reprise d'activité max.</div>
+          </div>
+          <div class="bg-[#13141a] p-6 flex flex-col items-center justify-center">
+            <div class="text-[10px] font-bold text-slate-400 tracking-widest mb-2 uppercase">RPO</div>
+            <div class="text-4xl font-bold text-slate-200 mb-2">1h</div>
+            <div class="text-[10px] text-slate-500">Perte de données max.</div>
+          </div>
+          <div class="bg-[#13141a] p-6 flex flex-col items-center justify-center">
+            <div class="text-[10px] font-bold text-slate-400 tracking-widest mb-2 uppercase">Sites Couverts</div>
+            <div class="text-4xl font-bold text-slate-200 mb-2">27</div>
+            <div class="text-[10px] text-slate-500">Spokes VPN IPsec</div>
+          </div>
+          <div class="bg-[#13141a] p-6 flex flex-col items-center justify-center">
+            <div class="text-[10px] font-bold text-slate-400 tracking-widest mb-2 uppercase">Scénarios</div>
+            <div class="text-4xl font-bold text-slate-200 mb-2">2</div>
+            <div class="text-[10px] text-slate-500">Testés & documentés</div>
+          </div>
+        </div>
+
+        <!-- Scenarios Grid -->
+        <div data-reveal-at="2" class="grid grid-cols-2 gap-6 mb-6 opacity-0 transition-all duration-700">
+          <!-- Ransomware -->
+          <div id="btn-start-ransomware" class="bg-[#13141a] border-t-2 border-indigo-500 rounded-xl p-6 cursor-pointer hover:bg-[#181a22] transition-colors group flex flex-col h-full border-x border-b border-slate-800/50 shadow-lg">
+            <div class="flex items-center gap-4 mb-8">
+              <div class="w-12 h-12 rounded-lg bg-[#1a1c24] border border-indigo-500/20 flex items-center justify-center text-indigo-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm mb-1">Scénario A — Ransomware</h3>
+                <div class="text-[10px] font-mono text-slate-500">Cyberattaque · propagation active</div>
+              </div>
+            </div>
+            
+            <div class="space-y-3 font-mono text-[11px] text-slate-300 mb-8 flex-grow">
+              <div class="flex gap-3"><span class="text-indigo-400 font-bold">01</span> Isolation VM infectée sur VLAN 999</div>
+              <div class="flex gap-3"><span class="text-indigo-400 font-bold">02</span> Snapshot figé — cluster Proxmox</div>
+              <div class="flex gap-3"><span class="text-indigo-400 font-bold">03</span> Restauration depuis PBS - snapshot J-1</div>
+              <div class="flex gap-3"><span class="text-indigo-400 font-bold">04</span> Scan EDR + remise en production</div>
+            </div>
+            
+            <div class="text-[10px] font-mono text-slate-500 mt-auto pt-4">
+              RTO effectif : <span class="text-slate-300">~2h30</span>
+            </div>
+          </div>
+
+          <!-- Fire -->
+          <div id="btn-start-fire" class="bg-[#13141a] border-t-2 border-yellow-500 rounded-xl p-6 cursor-pointer hover:bg-[#181a22] transition-colors group flex flex-col h-full border-x border-b border-slate-800/50 shadow-lg">
+            <div class="flex items-center gap-4 mb-8">
+              <div class="w-12 h-12 rounded-lg bg-[#1a1c24] border border-yellow-500/20 flex items-center justify-center text-yellow-500">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              </div>
+              <div>
+                <h3 class="font-bold text-white text-sm mb-1">Scénario B — Sinistre Physique</h3>
+                <div class="text-[10px] font-mono text-slate-500">Incendie · destruction totale du Hub</div>
+              </div>
+            </div>
+            
+            <div class="space-y-3 font-mono text-[11px] text-slate-300 mb-8 flex-grow">
+              <div class="flex gap-3"><span class="text-yellow-500 font-bold">01</span> Failover DNS AD ➔ contrôleur Nantes</div>
+              <div class="flex gap-3"><span class="text-yellow-500 font-bold">02</span> Tunnels VPN spokes redirigés sur Nantes</div>
+              <div class="flex gap-3"><span class="text-yellow-500 font-bold">03</span> Restauration SGL sur R730 standby</div>
+              <div class="flex gap-3"><span class="text-yellow-500 font-bold">04</span> Validation PostgreSQL · 14 321 patients</div>
+            </div>
+            
+            <div class="text-[10px] font-mono text-slate-500 mt-auto pt-4">
+              RTO effectif : <span class="text-slate-300">1h42</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Backup Chain -->
+        <div data-reveal-at="3" class="bg-[#13141a] rounded-xl p-6 shadow-lg border border-slate-800/50 opacity-0 transition-all duration-700">
+          <div class="text-[10px] font-mono tracking-widest text-slate-500 mb-8 uppercase">Chaîne de Sauvegarde 3-2-1-1-0</div>
           
-          <!-- Ransomware Box -->
-          <div data-pres-step="1" class="glass-panel rounded-xl p-6 flex flex-col justify-between space-y-4 hover:border-red-500/20 transition duration-200">
-            <div class="space-y-2">
-              <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
-                <svg class="w-6 h-6 text-red-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+          <div class="flex items-center justify-between px-4 lg:px-12">
+            <!-- PBS Local -->
+            <div class="flex flex-col items-center text-center w-32">
+              <div class="w-12 h-12 rounded-lg bg-[#1a1c24] border border-slate-700/50 flex items-center justify-center mb-4 text-slate-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
               </div>
-              <h3 class="text-lg font-bold text-white">Scénario A : Infection Ransomware</h3>
-              <p class="text-sm text-slate-400 leading-relaxed">
-                Le ransomware se propage à partir d'un poste client du siège et commence à chiffrer les partages de fichiers. L'objectif est d'isoler le Hub, de figer le cluster Proxmox, de restaurer depuis le PBS et de valider la VM en quarantaine.
-              </p>
+              <div class="text-[11px] font-bold text-slate-200 mb-1">PBS Local</div>
+              <div class="text-[10px] text-slate-500">J-1 incrémental<br>Strasbourg</div>
             </div>
-            <button
-              id="btn-start-ransomware"
-              class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition"
-            >
-              Lancer la simulation Ransomware
-            </button>
-          </div>
 
-          <!-- Fire Box -->
-          <div data-pres-step="2" class="glass-panel rounded-xl p-6 flex flex-col justify-between space-y-4 hover:border-orange-500/20 transition duration-200">
-            <div class="space-y-2">
-              <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <!-- Line 1 -->
+            <div class="h-[1px] flex-1 bg-slate-800/60 mx-2 relative flex justify-center -translate-y-6">
+              <span class="absolute text-[9px] font-mono text-slate-600 bg-[#13141a] px-2 -translate-y-1/2">hebdo</span>
+            </div>
+
+            <!-- PBS Nantes -->
+            <div class="flex flex-col items-center text-center w-32">
+              <div class="w-12 h-12 rounded-lg bg-[#1a1c24] border border-slate-700/50 flex items-center justify-center mb-4 text-slate-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
               </div>
-              <h3 class="text-lg font-bold text-white">Scénario B : Incendie Hub Strasbourg</h3>
-              <p class="text-sm text-slate-400 leading-relaxed">
-                Une panne majeure de climatisation provoque un incendie dans la salle serveur de Strasbourg, entraînant une destruction physique totale. L'objectif est de déclencher le PRA, de failover le DNS AD et de remonter le SGL sur le site standby de Nantes.
-              </p>
+              <div class="text-[11px] font-bold text-slate-200 mb-1">PBS Nantes</div>
+              <div class="text-[10px] text-slate-500">Hebdomadaire<br>Site de secours</div>
             </div>
-            <button
-              id="btn-start-fire"
-              class="w-full bg-orange-600 hover:bg-orange-700 text-white font-medium py-2.5 px-4 rounded-lg flex items-center justify-center gap-2 transition"
-            >
-              Lancer la simulation Incendie
-            </button>
-          </div>
 
+            <!-- Line 2 -->
+            <div class="h-[1px] flex-1 bg-slate-800/60 mx-2 relative flex justify-center -translate-y-6">
+              <span class="absolute text-[9px] font-mono text-slate-600 bg-[#13141a] px-2 -translate-y-1/2">mensuel</span>
+            </div>
+
+            <!-- OVH Cloud -->
+            <div class="flex flex-col items-center text-center w-32">
+              <div class="w-12 h-12 rounded-lg bg-[#1a1c24] border border-slate-700/50 flex items-center justify-center mb-4 text-slate-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path></svg>
+              </div>
+              <div class="text-[11px] font-bold text-slate-200 mb-1">OVHcloud HDS</div>
+              <div class="text-[10px] text-slate-500">Object Storage<br>Cold Archive</div>
+            </div>
+
+            <!-- Spacer -->
+            <div class="w-8"></div>
+
+            <!-- 3-2-1-1-0 -->
+            <div class="flex flex-col items-center text-center w-32">
+              <div class="w-12 h-12 rounded-lg bg-[#1a1c24] border border-slate-700/50 flex items-center justify-center mb-4 text-slate-300">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+              </div>
+              <div class="text-[11px] font-bold text-slate-200 mb-1">3-2-1-1-0</div>
+              <div class="text-[10px] text-slate-500">Immuable<br>0 erreur</div>
+            </div>
+            
+          </div>
         </div>
+
       </div>
     `;
   }
 
   const currentSteps = state.activeCrisis === 'ransomware' ? ransomwareSteps : fireSteps;
   const currentStepData = currentSteps[state.crisisStep];
+  const crisisColor = state.activeCrisis === 'ransomware' ? 'indigo' : 'yellow';
+  const crisisTitle = state.activeCrisis === 'ransomware' ? 'Infection Ransomware' : 'Sinistre Physique';
 
   const stepsIndicators = currentSteps.map((_, i) => `
-    <div class="h-1.5 flex-1 rounded-full transition-all ${
-      i <= state.crisisStep ? 'bg-red-500' : 'bg-slate-800'
-    }"></div>
+    <div class="h-1 flex-1 rounded-full transition-all duration-300 ${
+      i < state.crisisStep ? `bg-${crisisColor}-500` : 
+      i === state.crisisStep ? `bg-${crisisColor}-500/50 relative overflow-hidden` : 
+      'bg-slate-800'
+    }">
+      ${i === state.crisisStep ? `<div class="absolute inset-0 bg-${crisisColor}-400/30 animate-pulse"></div>` : ''}
+    </div>
   `).join('');
 
   return `
-    <div class="space-y-6 animate-fade-in">
+    <div data-pres-slide="1,2,3" data-pres-label="Simulation Active" class="h-full w-full flex flex-col font-sans animate-fade-in text-slate-300 pb-8">
       
-      <!-- Title -->
-      <div>
-        <h2 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
-          Simulateur de Secours & Reprise après Sinistre (DRP / PRA)
-        </h2>
-        <p class="text-slate-400 text-sm">
-          Simulez en temps réel une cyberattaque ou un incendie sur le Hub central de Strasbourg et validez le plan de secours HDS.
-        </p>
+      <!-- Top Header -->
+      <div class="flex justify-between items-start mb-8">
+        <div>
+          <div class="text-[10px] text-slate-400 font-mono tracking-widest uppercase mb-3 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-${crisisColor}-500 animate-pulse"></span>
+            Simulation Active · HDS V2
+          </div>
+          <h1 class="text-3xl font-bold tracking-tight text-white mb-2">${crisisTitle}</h1>
+          <p class="text-slate-400 text-sm max-w-xl leading-relaxed">
+            Exécution des procédures de reprise d'activité...
+          </p>
+        </div>
+        <div class="text-right">
+          <div class="text-[10px] font-mono tracking-widest text-slate-400 mb-1 uppercase">Progression</div>
+          <div class="text-3xl font-bold text-${crisisColor}-400">${Math.round(((state.crisisStep) / (currentSteps.length - 1)) * 100)}%</div>
+        </div>
       </div>
 
-      <!-- Active Crisis Simulation -->
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Active Crisis Layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         
         <!-- Timeline & Steps (Left) -->
-        <div data-pres-step="1" class="lg:col-span-1 glass-panel rounded-xl p-6 flex flex-col justify-between">
-          <div class="space-y-4">
-            <div class="flex items-center justify-between border-b border-white/5 pb-2">
-              <span class="text-xs font-bold text-red-400 uppercase tracking-wide flex items-center gap-1.5 animate-pulse">
-                SIMULATION ACTIVE
+        <div class="lg:col-span-4 bg-[#13141a] border border-slate-800/50 rounded-xl p-8 flex flex-col justify-between shadow-lg">
+          
+          <div class="space-y-8">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+              <span class="text-[10px] font-bold text-${crisisColor}-400 uppercase tracking-widest flex items-center gap-2">
+                Action Requise
               </span>
-              <span class="text-xs text-slate-500">Étape ${state.crisisStep + 1} / ${currentSteps.length}</span>
+              <span class="text-[10px] font-mono text-slate-500">
+                Étape ${state.crisisStep + 1} / ${currentSteps.length}
+              </span>
             </div>
             
-            <div class="space-y-1">
-              <h3 class="text-base font-bold text-white">${currentStepData.title}</h3>
-              <p class="text-xs text-slate-400 leading-relaxed">${currentStepData.desc}</p>
+            <div class="space-y-4 min-h-[140px]">
+              <h3 class="text-xl font-bold text-white">${currentStepData.title}</h3>
+              <p class="text-sm text-slate-400 leading-relaxed">${currentStepData.desc}</p>
             </div>
 
             <!-- Steps indicators -->
-            <div class="flex items-center gap-2 pt-2">
+            <div class="flex items-center gap-2 pt-4 border-t border-slate-800">
               ${stepsIndicators}
             </div>
           </div>
 
           <button
             id="btn-next-crisis-step"
-            class="w-full mt-6 py-2.5 px-4 rounded-lg font-medium flex items-center justify-center gap-2 transition ${
+            class="w-full mt-8 py-3.5 px-6 rounded-lg font-medium flex items-center justify-center gap-3 transition-colors ${
               state.crisisStep === currentSteps.length - 1 
-                ? 'bg-emerald-600 hover:bg-emerald-700 text-white' 
-                : 'bg-blue-600 hover:bg-blue-700 text-white'
+                ? 'bg-slate-200 hover:bg-white text-slate-900' 
+                : `bg-${crisisColor}-500/10 hover:bg-${crisisColor}-500/20 text-${crisisColor}-400 border border-${crisisColor}-500/20`
             }"
           >
-            ${currentStepData.btnText}
+            <span>${currentStepData.btnText}</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${state.crisisStep === currentSteps.length - 1 ? 'M5 13l4 4L19 7' : 'M14 5l7 7m0 0l-7 7m7-7H3'}"></path>
+            </svg>
           </button>
         </div>
 
         <!-- Terminal Output (Right) -->
-        <div data-pres-step="2" class="lg:col-span-2 glass-panel rounded-xl p-6 flex flex-col justify-between">
-          <h3 class="text-sm font-semibold text-slate-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-            Console Trace d'Exécution & Journaux
-          </h3>
+        <div class="lg:col-span-8 bg-[#13141a] border border-slate-800/50 rounded-xl p-0 flex flex-col overflow-hidden shadow-lg">
           
-          <div class="bg-slate-950 rounded-lg p-4 font-mono text-[10px] text-slate-300 overflow-y-auto h-[240px] border border-white/5 whitespace-pre-wrap flex-grow" id="terminal-logs">
-            ${currentStepData.log}
+          <!-- Terminal Header -->
+          <div class="bg-[#1a1c24] border-b border-slate-800 px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+              <div class="flex gap-2">
+                <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+                <div class="w-2.5 h-2.5 rounded-full bg-slate-600"></div>
+              </div>
+              <span class="text-xs font-mono text-slate-500">root@hub-str-01:~#</span>
+            </div>
+          </div>
+          
+          <!-- Terminal Body -->
+          <div class="p-8 font-mono text-[11px] md:text-xs leading-relaxed overflow-y-auto h-[320px] lg:h-auto custom-scrollbar flex-grow text-slate-300 whitespace-pre-wrap" id="terminal-logs">
+            ${formatTerminalOutput(currentStepData.log, state.activeCrisis)}
           </div>
 
-          <div class="flex justify-between items-center text-[9px] text-slate-500 mt-3 border-t border-white/5 pt-2">
-            <span>Nœud affecté : ${state.activeCrisis === 'ransomware' ? 'SRV-STR-SGL-01' : 'HUB-STR-ROUT-01'}</span>
-            <span>Conforme référentiel HDS Activité 6</span>
+          <!-- Terminal Footer -->
+          <div class="bg-[#1a1c24] border-t border-slate-800 px-8 py-4 flex flex-col sm:flex-row justify-between sm:items-center text-[10px] text-slate-500 font-mono">
+            <div class="flex items-center gap-6">
+              <span>CIBLE: <span class="text-slate-300">${state.activeCrisis === 'ransomware' ? 'SRV-STR-SGL-01' : 'HUB-STR-ROUT-01'}</span></span>
+              <span>PROTOCOLE: <span class="text-slate-300">SSH/CLI</span></span>
+            </div>
+            <span class="mt-2 sm:mt-0">Conforme HDS Act. 6</span>
           </div>
         </div>
 
@@ -326,6 +270,29 @@ export default function DrpSimulator(state) {
 
     </div>
   `;
+}
+
+// Helper to format terminal text nicely with syntax highlighting pseudo-classes
+function formatTerminalOutput(logText, crisisType) {
+  const colorHighlight = crisisType === 'ransomware' ? 'text-indigo-400' : 'text-yellow-500';
+  return logText.split('\n').map(line => {
+    if (line.startsWith('#')) {
+      return `<span class="text-slate-600">$ </span><span class="text-slate-400">${line.substring(1).trim()}</span>`;
+    }
+    if (line.startsWith('[ALERTE]') || line.startsWith('[CRITIQUE]')) {
+      return `<span class="${colorHighlight} font-bold">${line}</span>`;
+    }
+    if (line.startsWith('[OK]') || line.startsWith('[SUCCÈS]')) {
+      return `<span class="text-slate-200 font-bold">${line}</span>`;
+    }
+    if (line.startsWith('[INFO]') || line.startsWith('[LOG]') || line.startsWith('[STATUT]')) {
+      return `<span class="text-slate-400">${line}</span>`;
+    }
+    if (line.startsWith('[RÉSULTAT]')) {
+      return `<span class="text-white">${line}</span>`;
+    }
+    return line;
+  }).join('<br/>');
 }
 
 const ransomwareSteps = [
@@ -339,19 +306,19 @@ const ransomwareSteps = [
     title: "Confinement Réseau",
     desc: "Lancement des scripts CLI sur le FortiGate de Strasbourg. Les liaisons VPN des 17 spokes sont immédiatement coupées pour protéger les centres.",
     log: "# Connexion SSH sur FW-STR-EDGE-01...\n# config firewall policy\n# edit 15 (VPN-SPOKES)\n# set status disable\n# next\n# end\n[INFO] Tunnels VPN IPsec vers les 17 centres d'Alsace désactivés.\n[STATUT] Strasbourg isolé du réseau d'entreprise.",
-    btnText: "Arrêter les hyperviseurs et isoler les VM"
+    btnText: "Arrêter hyperviseurs et isoler VM"
   },
   {
     title: "Arrêt Forcé & Purge",
     desc: "Les VMs suspectes et le stockage partagé Ceph de production sont arrêtés de force sur le cluster Proxmox pour figer l'environnement.",
     log: "# Connexion SSH sur pve01 (10.100.99.11)...\n# qm stop 104 --skiplock 1\n[OK] Machine virtuelle de fichiers arrêtée.\n# qm stop 101 --skiplock 1\n[OK] Machine SGL Medoc arrêtée.\n[LOG] Wiping et réinitialisation des disques virtuels de production.",
-    btnText: "Restaurer depuis le Proxmox Backup Server"
+    btnText: "Restaurer depuis le PBS"
   },
   {
     title: "Restauration PBS",
     desc: "Restauration complète de la dernière sauvegarde incrémentale saine effectuée à 2:00 du matin sur le stockage dédupliqué et protégé.",
     log: "# Recherche snapshot immuable PBS du 31/05/2026 à 02:00...\n[OK] Snapshot valide trouvé.\n# qmrestore pbs-storage:backup/vm-101-2026_05_31T02_00_00Z 101 --force 1\n[LOG] Copie de 120 Go d'image système en cours...\n[INFO] Restauration terminée à 100%.",
-    btnText: "Valider en quarantaine avant démarrage"
+    btnText: "Valider en quarantaine"
   },
   {
     title: "Validation & Remise en Route",
@@ -366,19 +333,19 @@ const fireSteps = [
     title: "Alerte Destruction Hub",
     desc: "Un incendie détruit intégralement la salle serveur principale du siège de Strasbourg. Toutes les liaisons physiques tombent en timeout.",
     log: "[ALERTE] Timeout complet de la passerelle 154.32.23.154.\n[CRITIQUE] Panne totale d'alimentation et rupture réseau à Strasbourg.\n[INFO] RTO cible pour bascule vers le site de secours : 2 Heures.",
-    btnText: "Déclencher le plan de secours et le failover DNS"
+    btnText: "Déclencher failover DNS"
   },
   {
     title: "Failover DNS & Routage WAN",
     desc: "Mise à jour des enregistrements DNS internes sur le contrôleur de Nantes et réactivation des tunnels VPN secondaires des 17 centres.",
     log: "# Connexion AD Nantes en PowerShell...\n# Set-DnsServerResourceRecordA -Name \"sgl\" -ZoneName \"gsblab.local\" -OldRecordData \"10.100.10.10\" -NewRecordData \"10.200.10.10\"\n# repadmin /syncall /AePdq\n[OK] Mise à jour DNS propagée. Les spokes ciblent désormais Nantes.",
-    btnText: "Provisionner les VM et restaurer sur cluster de secours"
+    btnText: "Restaurer sur cluster de secours"
   },
   {
     title: "Restauration Nantes (R730)",
     desc: "Puisque Strasbourg est physiquement détruit, restauration des VMs du SGL et de l'AD depuis le serveur PBS secondaire de Nantes.",
     log: "# Connexion SSH sur hyperviseur de secours Nantes (10.200.99.10)...\n# qmstart 200 (Contrôleur de Domaine Standby)\n[OK] AD-Nantes en cours d'exécution.\n# qmrestore pbs-standby:backup/vm-101-2026_05_30 101 --force 1\n# qm set 101 --net0 virtio,bridge=vmbr0,tag=210 (VLAN Production Nantes)\n# qm start 101\n[OK] SGL Medoc actif sur serveur R730.",
-    btnText: "Re-router les flux réseau FortiGate Spokes"
+    btnText: "Re-router flux FortiGate Spokes"
   },
   {
     title: "Rétablissement Réseau Spokes",
@@ -399,24 +366,28 @@ export function bindDrpEvents(state, renderApp) {
     const btnRans = document.getElementById('btn-start-ransomware');
     const btnFire = document.getElementById('btn-start-fire');
 
-    btnRans.addEventListener('click', () => {
+    const startRansomware = () => {
       state.activeCrisis = 'ransomware';
       state.crisisStep = 0;
       if (state.presentationMode) state.presentationStep = 1;
       renderApp();
-    });
+    };
 
-    btnFire.addEventListener('click', () => {
+    const startFire = () => {
       state.activeCrisis = 'fire';
       state.crisisStep = 0;
       if (state.presentationMode) state.presentationStep = 1;
       renderApp();
-    });
+    };
+
+    btnRans?.addEventListener('click', startRansomware);
+    btnFire?.addEventListener('click', startFire);
+
   } else {
     const btnNext = document.getElementById('btn-next-crisis-step');
     const currentSteps = state.activeCrisis === 'ransomware' ? ransomwareSteps : fireSteps;
 
-    btnNext.addEventListener('click', () => {
+    btnNext?.addEventListener('click', () => {
       if (state.crisisStep < currentSteps.length - 1) {
         state.crisisStep += 1;
         if (state.presentationMode) state.presentationStep = 1;
