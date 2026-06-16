@@ -145,8 +145,8 @@ vient d'être refaite dans ce style et **validée** par l'utilisateur
 | tech | 2 | Cluster Proxmox | ⏳ À retravailler |
 | tech | 3 | Déploiement IaC | ⏳ À retravailler |
 | drp | 1-3 (1 slide) | Plan de Reprise d'Activité | 🔶 Reveal déjà ajouté (2026-06-10) mais style "cards" — à harmoniser avec le gabarit §2 |
-| pmo | 1-3 (1 slide) | Roadmap 2026-2030 | 🔶 idem (cards + reveal) |
-| pmo | 4-5 (1 slide) | Risques Critiques | 🔶 idem |
+| pmo | 1-5 (1 slide) | Roadmap 2026-2030 | ✅ **FAIT** (session 2026-06-16) — Frise chronologique horizontale avec 5 étapes (révélation pas-à-pas des années) |
+| pmo | - | Risques Critiques | ❌ Supprimé du mode présentation |
 | comparison | 1-2 (1 slide) | Avant/Après — Dette Technique | 🔶 idem |
 | sites | 1-3 (1 slide) | Architecture des 27 Sites | 🔶 idem |
 | sites | 4-5 (1 slide) | Connectivité & Sécurité Réseau | 🔶 idem |

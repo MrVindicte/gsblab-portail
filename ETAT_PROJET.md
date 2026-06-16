@@ -110,7 +110,7 @@ Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélect
 | finance | 5 | 1-4 Analyse TCO & Économies, « Facture Comparée » 2 colonnes VMware/Proxmox (CapEx identique reveal 2 → OpEx divergent reveal 3 → TOTAL 441,5k€ vs 112,0k€ + écart "+329 500 €" reveal 4) · 5 Comparatif budgétaire |
 | tech | 3 | 1 Carte de France — Réseau National · 2 Cluster Proxmox · 3 Déploiement IaC |
 | drp | 3 | 1 slide « PRA » : KPIs fixes → scénarios (reveal 2) → chaîne PBS (reveal 3) |
-| pmo | 5 | Slides 1-3 « Roadmap 2026-2030 » (2026 fixe → +2027/28 reveal 2 → +2029/30 reveal 3) · Slides 4-5 « Risques critiques » (top2 fixes → risques 3-4 reveal 5) |
+| pmo | 5 | Slides 1-5 « Roadmap 2026-2030 » (timeline 2026 → reveal 2027 à 2030) |
 | comparison | 2 | 1 slide « Avant/Après » : avant seul → delta+après (reveal 2) |
 | sites | 5 | Slides 1-3 « Architecture 27 sites » (Siège fixe → Labos reveal 2 → Centres reveal 3) · Slides 4-5 « Connectivité réseau » (Topo fixe → palette VLAN reveal 5) |
 
@@ -128,6 +128,19 @@ Navigation : `Espace`/`→` avance · `←` recule · `Échap` quitte · sélect
 ---
 
 ## Ce qui a été fait
+
+### Session 2026-06-16 — Slide "Roadmap 2026-2030" repensée en frise chronologique
+
+Refonte de l'ancienne grille de cartes (slide 1 de l'onglet `pmo`) en une **timeline horizontale** complète :
+- Axe horizontal de fond.
+- 5 jalons dévoilés pas-à-pas (reveal de 2026 seul, puis 2027 à 2030 un par un au clic).
+- Suppression de la barre progressive à la demande de l'utilisateur.
+- La slide passe de **3 étapes** locales (`data-pres-slide="1,2,3"`) à **5 étapes** locales (`"1,2,3,4,5"`).
+- Décalage de la slide "Risques Critiques" de l'étape 4,5 vers **6,7**.
+
+Impact : `PRES_MAX.pmo` 3 → **5** (suite au retrait de Risques Critiques par un autre commit), `PRES_TOTAL` 35 → **37**.
+
+Versions : `index.html` → `main.js?v=72` · `PmoWorkspace.js?v=9`
 
 ### Session 2026-06-10 (suite 4) — Slide "Topologie Réseau & SD-WAN" (tech, slide 1) repensée en "Carte de France"
 

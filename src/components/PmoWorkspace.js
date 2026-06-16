@@ -1,4 +1,4 @@
-﻿import { defaultRaci } from '../config/defaultData.js?v=3';
+import { defaultRaci } from '../config/defaultData.js?v=3';
 
 export default function PmoWorkspace(state) {
   // Sort risks by criticality descending
@@ -108,45 +108,63 @@ export default function PmoWorkspace(state) {
   if (isPres) {
     return `
       <!-- SLIDE 1 : Roadmap -->
-      <div data-pres-slide="1,2,3" data-pres-label="Roadmap 2026-2030"
+      <div data-pres-slide="1,2,3,4,5" data-pres-label="Roadmap 2026-2030"
            class="flex-1 min-h-0 flex flex-col items-center justify-center gap-6 w-full max-w-6xl mx-auto h-full py-4">
 
-        <div class="text-center space-y-2">
-          <h2 class="text-5xl font-extrabold text-indigo-300 tracking-tight font-display">Roadmap 2026–2030</h2>
-          <div class="w-16 h-1.5 bg-indigo-500 mx-auto rounded-full shadow-[0_0_12px_rgba(99,102,241,0.5)]"></div>
-          <p class="text-slate-400 text-sm">440 794 € sur 5 ans &middot; Plafond 450 000 € &middot; Réserve 9 206 €</p>
+        <div class="text-center space-y-2.5">
+          <h2 class="text-3xl font-extrabold text-white tracking-tight leading-tight">Roadmap 2026–2030</h2>
+          <div class="w-16 h-[2px] mx-auto bg-slate-700 rounded-full"></div>
+          <p class="text-slate-400 text-sm mt-4">440 794 € sur 5 ans &middot; Plafond 450 000 € &middot; Réserve 9 206 €</p>
         </div>
 
-        <div class="grid grid-cols-5 gap-3 w-full flex-1 min-h-0">
+        <div class="relative w-full max-w-5xl mx-auto mt-12 px-4">
+          <!-- Ligne horizontale de fond -->
+          <div class="absolute top-[82px] left-[10%] right-[10%] h-[2px] bg-slate-800"></div>
+
+          <div class="relative flex justify-between w-full">
           ${[
             { year:'2026', budget:'228 k€', color:'violet', phase:'Migration cœur', sites:12, users:215, bullets:['Proxmox VE + 2× R760','Exchange Online HDS','5 labos déployés'],   revealAt: null },
             { year:'2027', budget:'64 k€',  color:'blue',   phase:'Centres lot 1',  sites:20, users:303, bullets:['8 centres ouverts','VPN 20 spokes','CBS250 remplacement'],          revealAt: 2 },
-            { year:'2028', budget:'60 k€',  color:'cyan',   phase:'Parc cible',     sites:27, users:380, bullets:['7 centres → plateau','380 utilisateurs','Coûts stabilisés'],        revealAt: 2 },
-            { year:'2029', budget:'23 k€',  color:'emerald',phase:'Run-rate',        sites:27, users:380, bullets:['Exploitation courante','LTO-6 → LTO-8','Rachat optionnel'],        revealAt: 3 },
-            { year:'2030', budget:'23 k€',  color:'slate',  phase:'Clôture projet', sites:27, users:380, bullets:['Dernière année','Bilan migration','Réserve disponible'],            revealAt: 3 },
-          ].map(y => `
-            <div ${y.revealAt ? `data-reveal-at="${y.revealAt}"` : ''} class="glass-panel rounded-2xl p-4 border-t-[4px] border-t-${y.color}-500 flex flex-col gap-3 bg-slate-900/60 ${y.revealAt ? 'opacity-0 transition-all duration-700' : ''}">
-              <div class="text-center">
-                <div class="text-2xl font-black text-${y.color}-300 font-mono">${y.year}</div>
-                <div class="text-lg font-mono font-bold text-white">${y.budget}</div>
-                <div class="label-subtext">${y.phase}</div>
+            { year:'2028', budget:'60 k€',  color:'cyan',   phase:'Parc cible',     sites:27, users:380, bullets:['7 centres → plateau','380 utilisateurs','Coûts stabilisés'],        revealAt: 3 },
+            { year:'2029', budget:'23 k€',  color:'emerald',phase:'Run-rate',        sites:27, users:380, bullets:['Exploitation courante','LTO-6 → LTO-8','Rachat optionnel'],        revealAt: 4 },
+            { year:'2030', budget:'23 k€',  color:'slate',  phase:'Clôture projet', sites:27, users:380, bullets:['Dernière année','Bilan migration','Réserve disponible'],            revealAt: 5 },
+          ].map((y, i) => `
+            <div ${y.revealAt ? `data-reveal-at="${y.revealAt}"` : ''} class="relative flex flex-col items-center w-1/5 ${y.revealAt ? 'opacity-0 transition-all duration-700' : ''}">
+              
+              <!-- Titre du jalon (haut) -->
+              <div class="text-center mb-6 w-full">
+                <div class="text-3xl font-black text-${y.color}-400 font-mono" style="text-shadow: 0 0 15px rgba(255,255,255,0.05)">${y.year}</div>
+                <div class="text-[10px] font-bold text-slate-300 uppercase tracking-widest mt-2">${y.phase}</div>
+                <div class="font-mono text-${y.color}-300 font-bold text-sm mt-1">${y.budget}</div>
               </div>
-              <div class="flex justify-around text-center border-t border-white/5 pt-2">
-                <div><div class="font-mono font-bold text-${y.color}-300 text-sm">${y.users}</div><div class="text-[9px] text-slate-600">pers.</div></div>
-                <div><div class="font-mono font-bold text-${y.color}-300 text-sm">${y.sites}</div><div class="text-[9px] text-slate-600">sites</div></div>
+
+              <!-- Nœud sur la ligne -->
+              <div class="w-12 h-12 bg-slate-950 rounded-full border-[3px] border-${y.color}-500/50 flex items-center justify-center z-10 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+                <div class="w-3 h-3 bg-${y.color}-400 rounded-full shadow-[0_0_10px_currentColor]"></div>
               </div>
-              <div class="space-y-1.5 flex-1">
-                ${y.bullets.map(b => `
-                  <div class="flex items-start gap-1.5 text-[10px] text-slate-400">
-                    <span class="text-${y.color}-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span>
-                  </div>
-                `).join('')}
+
+              <!-- Contenu du jalon (bas) -->
+              <div class="mt-6 w-full px-2 text-center">
+                <div class="flex justify-center gap-5 text-center border-b border-white/5 pb-3 mb-3 mx-2">
+                  <div><div class="font-mono font-bold text-white text-sm">${y.users}</div><div class="text-[9px] text-slate-500 uppercase tracking-wider">pers.</div></div>
+                  <div><div class="font-mono font-bold text-white text-sm">${y.sites}</div><div class="text-[9px] text-slate-500 uppercase tracking-wider">sites</div></div>
+                </div>
+                <div class="flex flex-col items-start gap-2 text-left pl-1">
+                  ${y.bullets.map(b => `
+                    <div class="flex items-start gap-1.5 text-xs text-slate-400 leading-tight">
+                      <span class="text-${y.color}-500 flex-shrink-0 mt-0.5">▸</span><span>${b}</span>
+                    </div>
+                  `).join('')}
+                </div>
               </div>
+              
             </div>
           `).join('')}
+          </div>
         </div>
 
       </div>
+
     `;
   }
 
