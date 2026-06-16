@@ -4,63 +4,204 @@ export default function DrpSimulator(state) {
   // ── MODE PRÉSENTATION — slide visuelle full-screen ──────────────────────────
   if (isPres) {
     return `
-      <div data-pres-slide="1,2,3" data-pres-label="Plan de Reprise d'Activité"
-           class="flex-1 min-h-0 flex flex-col items-center justify-center gap-8 w-full max-w-6xl mx-auto h-full py-6">
+      <div data-pres-slide="1,2,3" data-pres-label="Plan de Reprise d'Activité" class="flex-1 min-h-0 w-full h-full">
+        <style>
+          @keyframes drpIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+          .drp-1{animation:drpIn .45s cubic-bezier(.16,1,.3,1) forwards;opacity:0;animation-delay:.1s}
+          .drp-2{animation:drpIn .45s cubic-bezier(.16,1,.3,1) forwards;opacity:0;animation-delay:.35s}
+          .drp-3{animation:drpIn .45s cubic-bezier(.16,1,.3,1) forwards;opacity:0;animation-delay:.6s}
+          .drp-4{animation:drpIn .45s cubic-bezier(.16,1,.3,1) forwards;opacity:0;animation-delay:.85s}
+          @keyframes alertBlink{0%,100%{opacity:1}50%{opacity:.3}}
+          .drp-alert{animation:alertBlink 1.6s ease-in-out infinite}
+          @keyframes drpChainIn{from{opacity:0;transform:scaleX(0)}to{opacity:1;transform:scaleX(1)}}
+          .drp-chain-line{transform-origin:left;animation:drpChainIn .6s ease forwards}
+        </style>
 
-        <div class="text-center space-y-3">
-          <h2 class="text-5xl font-extrabold text-red-400 tracking-tight font-display">Plan de Reprise d'Activité</h2>
-          <div class="w-16 h-1.5 bg-red-500 mx-auto rounded-full shadow-[0_0_15px_rgba(239,68,68,0.4)]"></div>
-          <p class="text-slate-400 text-sm">Hub Strasbourg — Conformité HDS v2 Activité 6</p>
-        </div>
+        <div class="max-w-6xl w-full mx-auto px-4 py-3 h-full flex flex-col gap-3">
 
-        <div class="grid grid-cols-3 gap-6 w-full">
-          <div class="glass-panel rounded-3xl p-8 border-l-[6px] border-l-emerald-500 flex flex-col items-center justify-center text-center bg-slate-900/60 shadow-xl">
-            <span class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-3">RTO</span>
-            <div class="text-6xl font-mono font-extrabold text-emerald-400 leading-none">4h</div>
-            <div class="text-slate-400 text-sm mt-3">Reprise d'activité max.</div>
-          </div>
-          <div class="glass-panel rounded-3xl p-8 border-l-[6px] border-l-blue-500 flex flex-col items-center justify-center text-center bg-slate-900/60 shadow-xl">
-            <span class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-3">RPO</span>
-            <div class="text-6xl font-mono font-extrabold text-blue-400 leading-none">1h</div>
-            <div class="text-slate-400 text-sm mt-3">Perte de données max.</div>
-          </div>
-          <div class="glass-panel rounded-3xl p-8 border-l-[6px] border-l-indigo-500 flex flex-col items-center justify-center text-center bg-slate-900/60 shadow-xl">
-            <span class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-3">Sites couverts</span>
-            <div class="text-6xl font-mono font-extrabold text-indigo-400 leading-none">27</div>
-            <div class="text-slate-400 text-sm mt-3">Spokes VPN IPsec</div>
-          </div>
-        </div>
-
-        <div data-reveal-at="2" class="grid grid-cols-2 gap-6 w-full opacity-0 transition-all duration-700">
-          <div class="glass-panel rounded-2xl p-6 border-l-[5px] border-l-red-500 flex items-start gap-4 bg-slate-900/60">
-            <div class="w-12 h-12 rounded-xl bg-red-500/15 flex items-center justify-center flex-shrink-0">
-              <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            </div>
+          <!-- Header -->
+          <div class="flex items-start justify-between shrink-0">
             <div>
-              <div class="text-lg font-bold text-white mb-1">Scénario A — Ransomware</div>
-              <div class="text-slate-400 text-sm">Isolation VM · Snapshot Proxmox · Restauration PBS · Quarantaine VLAN 999</div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="drp-alert w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.9)]"></span>
+                <span class="text-[9px] font-mono tracking-[0.28em] uppercase text-red-400/80">Plan de Reprise d'Activité · HDS v2 Activité 6</span>
+              </div>
+              <h2 class="text-[1.9rem] font-extrabold tracking-tight leading-tight" style="color:#f87171;text-shadow:0 0 40px rgba(239,68,68,0.3)">Plan de Reprise d'Activité</h2>
+              <p class="text-slate-400 text-[12px] max-w-lg mt-1 leading-snug">Procédures testées garantissant la reprise de toute activité en moins de <b class="text-slate-200">4h</b> après un sinistre majeur sur le Hub Strasbourg.</p>
+            </div>
+            <div class="flex flex-col items-end gap-1.5 shrink-0">
+              <span class="font-mono text-[9px] bg-red-500/10 text-red-400 border border-red-500/25 rounded-lg px-2.5 py-1.5 shadow-[0_0_12px_rgba(239,68,68,0.15)]">CRITIQUE · PRIORITÉ 1</span>
+              <span class="font-mono text-[9px] text-slate-600">Hub Strasbourg · Site principal</span>
             </div>
           </div>
-          <div class="glass-panel rounded-2xl p-6 border-l-[5px] border-l-amber-500 flex items-start gap-4 bg-slate-900/60">
-            <div class="w-12 h-12 rounded-xl bg-amber-500/15 flex items-center justify-center flex-shrink-0">
-              <svg class="w-6 h-6 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+
+          <!-- KPI strip — staggered entry -->
+          <div class="grid grid-cols-4 gap-3 shrink-0">
+            <div class="drp-1 glass-panel rounded-xl p-4 text-center border-l-[3px] border-l-emerald-500" style="background:rgba(16,185,129,0.04)">
+              <div class="text-[9px] font-bold text-slate-600 uppercase tracking-widest mb-1">RTO</div>
+              <div class="text-[2.2rem] font-extrabold font-mono text-emerald-400 leading-none">4h</div>
+              <div class="text-[10px] text-slate-400 mt-1.5">Reprise d'activité max.</div>
             </div>
-            <div>
-              <div class="text-lg font-bold text-white mb-1">Scénario B — Sinistre Physique</div>
-              <div class="text-slate-400 text-sm">Failover DNS AD · Restoration R730 Nantes · Bascule OVH HDS hors-site</div>
+            <div class="drp-2 glass-panel rounded-xl p-4 text-center border-l-[3px] border-l-blue-500" style="background:rgba(59,130,246,0.04)">
+              <div class="text-[9px] font-bold text-slate-600 uppercase tracking-widest mb-1">RPO</div>
+              <div class="text-[2.2rem] font-extrabold font-mono text-blue-400 leading-none">1h</div>
+              <div class="text-[10px] text-slate-400 mt-1.5">Perte de données max.</div>
+            </div>
+            <div class="drp-3 glass-panel rounded-xl p-4 text-center border-l-[3px] border-l-indigo-500" style="background:rgba(99,102,241,0.04)">
+              <div class="text-[9px] font-bold text-slate-600 uppercase tracking-widest mb-1">Sites couverts</div>
+              <div class="text-[2.2rem] font-extrabold font-mono text-indigo-400 leading-none">27</div>
+              <div class="text-[10px] text-slate-400 mt-1.5">Spokes VPN IPsec</div>
+            </div>
+            <div class="drp-4 glass-panel rounded-xl p-4 text-center border-l-[3px] border-l-red-500" style="background:rgba(239,68,68,0.04)">
+              <div class="text-[9px] font-bold text-slate-600 uppercase tracking-widest mb-1">Scénarios</div>
+              <div class="text-[2.2rem] font-extrabold font-mono text-red-400 leading-none">2</div>
+              <div class="text-[10px] text-slate-400 mt-1.5">Testés &amp; documentés</div>
             </div>
           </div>
-        </div>
 
-        <div data-reveal-at="3" class="w-full glass-panel rounded-2xl p-4 flex flex-wrap items-center justify-center gap-3 bg-emerald-500/5 border border-emerald-500/20 opacity-0 transition-all duration-700">
-          <span class="text-emerald-400 text-sm font-bold uppercase tracking-wider">Chaîne de sauvegarde :</span>
-          <span class="font-mono text-xs text-slate-300 bg-slate-900/60 border border-white/8 rounded px-2.5 py-1">PBS Local · J-1 incrémental</span>
-          <span class="text-slate-600 font-bold">→</span>
-          <span class="font-mono text-xs text-slate-300 bg-slate-900/60 border border-white/8 rounded px-2.5 py-1">PBS Nantes · hebdomadaire</span>
-          <span class="text-slate-600 font-bold">→</span>
-          <span class="font-mono text-xs text-slate-300 bg-slate-900/60 border border-white/8 rounded px-2.5 py-1">OVH Object Storage HDS · mensuel</span>
-        </div>
+          <!-- Scenarios — reveal at step 2 -->
+          <div data-reveal-at="2" class="grid grid-cols-2 gap-4 opacity-0 transition-all duration-700">
 
+            <!-- Scénario A : Ransomware -->
+            <div class="glass-panel rounded-2xl p-5 flex flex-col gap-3 border-l-[4px] border-l-red-500" style="background:rgba(239,68,68,0.04)">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-red-500/15 border border-red-500/25 flex items-center justify-center shrink-0 shadow-[0_0_14px_rgba(239,68,68,0.2)]">
+                  <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <div class="text-[11px] font-extrabold text-white">Scénario A — Ransomware</div>
+                  <div class="text-[9.5px] text-red-400/80 font-mono">Cyberattaque · propagation active</div>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center gap-2 text-[10.5px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0"></span>
+                  <span class="text-slate-300">Isolation VM infectée sur VLAN 999</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10.5px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></span>
+                  <span class="text-slate-300">Snapshot figé — cluster Proxmox</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10.5px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 shrink-0"></span>
+                  <span class="text-slate-300">Restauration depuis PBS · snapshot J-1</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10.5px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
+                  <span class="text-slate-300">Scan EDR + remise en production</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mt-auto pt-2 border-t border-white/5">
+                <span class="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/15 rounded px-2 py-0.5">RTO effectif : ~2h30</span>
+              </div>
+            </div>
+
+            <!-- Scénario B : Sinistre physique -->
+            <div class="glass-panel rounded-2xl p-5 flex flex-col gap-3 border-l-[4px] border-l-amber-500" style="background:rgba(245,158,11,0.04)">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-500/15 border border-amber-500/25 flex items-center justify-center shrink-0 shadow-[0_0_14px_rgba(245,158,11,0.2)]">
+                  <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                </div>
+                <div>
+                  <div class="text-[11px] font-extrabold text-white">Scénario B — Sinistre Physique</div>
+                  <div class="text-[9.5px] text-amber-400/80 font-mono">Incendie · destruction totale du Hub</div>
+                </div>
+              </div>
+              <div class="flex flex-col gap-1.5">
+                <div class="flex items-center gap-2 text-[10.5px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0"></span>
+                  <span class="text-slate-300">Failover DNS AD → contrôleur Nantes</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10.5px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0"></span>
+                  <span class="text-slate-300">Tunnels VPN spokes redirigés sur Nantes</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10.5px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-yellow-400 shrink-0"></span>
+                  <span class="text-slate-300">Restauration SGL sur R730 standby</span>
+                </div>
+                <div class="flex items-center gap-2 text-[10.5px]">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0"></span>
+                  <span class="text-slate-300">Validation PostgreSQL · 14 321 patients</span>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 mt-auto pt-2 border-t border-white/5">
+                <span class="text-[9px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/15 rounded px-2 py-0.5">RTO effectif : 1h42</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Backup chain — reveal at step 3 -->
+          <div data-reveal-at="3" class="opacity-0 transition-all duration-700 shrink-0">
+            <div class="glass-panel rounded-2xl p-4 border border-emerald-500/15" style="background:rgba(16,185,129,0.04)">
+              <div class="text-[8.5px] font-mono tracking-[0.22em] uppercase text-slate-600 mb-3">Chaîne de sauvegarde 3-2-1-1-0</div>
+              <div class="flex items-center gap-0">
+
+                <!-- Node 1 -->
+                <div class="flex flex-col items-center gap-1.5 flex-1">
+                  <div class="w-9 h-9 rounded-xl bg-indigo-500/15 border border-indigo-500/25 flex items-center justify-center shadow-[0_0_10px_rgba(99,102,241,0.2)]">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-[10px] font-bold text-indigo-300">PBS Local</div>
+                    <div class="text-[9px] text-slate-500">J-1 incrémental</div>
+                    <div class="text-[8.5px] font-mono text-slate-600">Strasbourg</div>
+                  </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="flex flex-col items-center gap-0.5 px-1">
+                  <div class="drp-chain-line h-px w-12 bg-gradient-to-r from-indigo-500/40 to-blue-500/40" style="animation-delay:.2s"></div>
+                  <div class="text-[8px] text-slate-700 font-mono">hebdo</div>
+                </div>
+
+                <!-- Node 2 -->
+                <div class="flex flex-col items-center gap-1.5 flex-1">
+                  <div class="w-9 h-9 rounded-xl bg-blue-500/15 border border-blue-500/25 flex items-center justify-center shadow-[0_0_10px_rgba(59,130,246,0.2)]">
+                    <svg class="w-4 h-4 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2"/></svg>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-[10px] font-bold text-blue-300">PBS Nantes</div>
+                    <div class="text-[9px] text-slate-500">Hebdomadaire</div>
+                    <div class="text-[8.5px] font-mono text-slate-600">Site de secours</div>
+                  </div>
+                </div>
+
+                <!-- Arrow -->
+                <div class="flex flex-col items-center gap-0.5 px-1">
+                  <div class="drp-chain-line h-px w-12 bg-gradient-to-r from-blue-500/40 to-emerald-500/40" style="animation-delay:.5s"></div>
+                  <div class="text-[8px] text-slate-700 font-mono">mensuel</div>
+                </div>
+
+                <!-- Node 3 -->
+                <div class="flex flex-col items-center gap-1.5 flex-1">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center shadow-[0_0_10px_rgba(52,211,153,0.2)]">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-[10px] font-bold text-emerald-300">OVHcloud HDS</div>
+                    <div class="text-[9px] text-slate-500">Object Storage</div>
+                    <div class="text-[8.5px] font-mono text-slate-600">Cold Archive</div>
+                  </div>
+                </div>
+
+                <!-- Immuable badge -->
+                <div class="ml-4 flex flex-col items-center gap-1.5">
+                  <div class="w-9 h-9 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-[10px] font-bold text-emerald-400">3-2-1-1-0</div>
+                    <div class="text-[9px] text-slate-500">Immuable</div>
+                    <div class="text-[8.5px] font-mono text-slate-600">0 erreur</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
       </div>
     `;
   }
