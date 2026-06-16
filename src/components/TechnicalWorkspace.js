@@ -514,13 +514,10 @@ export default function TechnicalWorkspace(state) {
       </div>
     </div>
   `;
-  // ── SLIDES 3–8 — Topologie sites, révélation progressive (steps 21–26) ──────
+  // ── SLIDE 3 — Schéma réseau Siège (step 21) ─────────────────────────────────
   const presSlide3 = `
-    <div data-pres-slide="21,22,23,24,25,26" data-pres-label="Topologie des sites" class="flex-1 min-h-0 overflow-y-auto w-full">
-      <div class="max-w-6xl mx-auto px-4 py-5 space-y-10">
-
-        <!-- ── Step 21 : Schéma réseau Siège ── -->
-        <div class="space-y-4 opacity-0 transition-all duration-700" data-reveal-at="21" data-reveal-mode="exclusive">
+    <div data-pres-slide="21" data-pres-label="Schéma réseau Siège" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+      <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Siège — GSBLAB-STR-DC · site 02</p>
           <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Schéma réseau détaillé — Strasbourg</h2>
@@ -538,10 +535,14 @@ export default function TechnicalWorkspace(state) {
           <div class="bg-slate-900/60 border border-indigo-500/20 rounded-xl p-3"><span class="font-mono text-indigo-300 font-bold">HA Actif/Passif</span><div class="text-slate-500 mt-1">2× UCG-Ultra · heartbeat direct</div></div>
           <div class="bg-slate-900/60 border border-emerald-500/20 rounded-xl p-3"><span class="font-mono text-emerald-300 font-bold">26 tunnels SD-WAN</span><div class="text-slate-500 mt-1">IPsec AES-256 / IKEv2 auto-orchestrés</div></div>
         </div>
-        </div>
+      </div>
+    </div>
+  `;
 
-        <!-- ── Step 22 : Laboratoire Régional ── -->
-        <div class="border-t border-white/5 pt-8 space-y-5 opacity-0 transition-all duration-700" data-reveal-at="22" data-reveal-mode="exclusive">
+  // ── SLIDE 4 — Laboratoire Régional (step 22) ──────────────────────────────
+  const presSlide4 = `
+    <div data-pres-slide="22" data-pres-label="Laboratoire régional" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+      <div class="max-w-6xl mx-auto px-4 py-5 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 04 — GSBLAB-LAB-[VILLE] · sites 10 à 14 · phase 2026</p>
           <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Laboratoire régional — site témoin</h2>
@@ -579,8 +580,14 @@ export default function TechnicalWorkspace(state) {
         </div>
         </div>
 
-        <!-- ── Step 23 : Schéma réseau Laboratoire ── -->
-        <div class="border-t border-white/5 pt-8 space-y-4 opacity-0 transition-all duration-700" data-reveal-at="23" data-reveal-mode="exclusive">
+      </div>
+    </div>
+  `;
+
+  // ── SLIDE 5 — Schéma réseau Laboratoire (step 23) ────────────────────────
+  const presSlide5 = `
+    <div data-pres-slide="23" data-pres-label="Schéma réseau Laboratoire" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+      <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Laboratoire régional — GSBLAB-LAB-[VILLE] · sites 10 → 14</p>
           <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Schéma réseau type — Laboratoire régional</h2>
@@ -600,8 +607,14 @@ export default function TechnicalWorkspace(state) {
         </div>
         </div>
 
-        <!-- ── Step 24 : Centre de Prélèvement ── -->
-        <div class="border-t border-white/5 pt-8 space-y-5 opacity-0 transition-all duration-700" data-reveal-at="24" data-reveal-mode="exclusive">
+      </div>
+    </div>
+  `;
+
+  // ── SLIDE 6 — Centre de Prélèvement (step 24) ────────────────────────────
+  const presSlide6 = `
+    <div data-pres-slide="24" data-pres-label="Centre de prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+      <div class="max-w-6xl mx-auto px-4 py-5 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 06 — GSBLAB-CP-[VILLE] · sites 20 à 34 · phase 2027-2028</p>
           <h2 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Centre de prélèvement — site témoin</h2>
@@ -638,8 +651,14 @@ export default function TechnicalWorkspace(state) {
         </div>
         </div>
 
-        <!-- ── Step 25 : Schéma réseau Centre de prélèvement ── -->
-        <div class="border-t border-white/5 pt-8 space-y-4 opacity-0 transition-all duration-700" data-reveal-at="25" data-reveal-mode="exclusive">
+      </div>
+    </div>
+  `;
+
+  // ── SLIDE 7 — Schéma réseau Centre de prélèvement (step 25) ─────────────
+  const presSlide7 = `
+    <div data-pres-slide="25" data-pres-label="Schéma réseau Centre" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+      <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Centre de prélèvement — GSBLAB-CP-[VILLE] · sites 20 → 34</p>
           <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Schéma réseau type — Centre de prélèvement</h2>
@@ -659,8 +678,14 @@ export default function TechnicalWorkspace(state) {
         </div>
         </div>
 
-        <!-- ── Step 26 : Cluster Proxmox HA ── -->
-        <div class="border-t border-white/5 pt-8 space-y-8 opacity-0 transition-all duration-700" data-reveal-at="26" data-reveal-mode="exclusive">
+      </div>
+    </div>
+  `;
+
+  // ── SLIDE 8 — Cluster Proxmox HA (step 26) ───────────────────────────────
+  const presSlide8 = `
+    <div data-pres-slide="26" data-pres-label="Cluster Proxmox HA" class="flex-1 min-h-0 w-full h-full">
+      <div class="max-w-6xl mx-auto px-4 py-5 space-y-8 h-full flex flex-col justify-center">
       <div class="text-center space-y-4 w-full">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Capacité du Cluster Proxmox HA</h2>
         <div class="w-16 h-1.5 bg-emerald-500 mx-auto rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
@@ -680,7 +705,6 @@ export default function TechnicalWorkspace(state) {
           <div class="h-6 w-full bg-slate-950 rounded-full overflow-hidden shadow-inner border border-white/5"><div class="h-full bg-gradient-to-r from-emerald-600 to-emerald-400 rounded-full" style="width:20%"></div></div>
         </div>
       </div>
-        </div>
       </div>
     </div>
   `;
@@ -855,7 +879,7 @@ export default function TechnicalWorkspace(state) {
     </div>
   `;
 
-  return `${presSlide1}${presSlide2}${presSlide3}${presSlide9}`;
+  return `${presSlide1}${presSlide2}${presSlide3}${presSlide4}${presSlide5}${presSlide6}${presSlide7}${presSlide8}${presSlide9}`;
 }
 
 const codeTerraform = `# ==============================================================================
