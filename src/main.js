@@ -11,7 +11,7 @@ import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=10';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=7';
 import SitesWorkspace from './components/SitesWorkspace.js?v=6';
 import ConclusionWorkspace from './components/ConclusionWorkspace.js?v=1';
-
+import SoutenanceController, { bindSoutenanceEvents } from './components/soutenanceV2/SoutenanceController.js?v=1';
 // Global state holding parameters
 window.appState = {
   activeTab: 'dashboard',
@@ -32,9 +32,14 @@ window.appState = {
   beforeAfterSliderVal: 50,
   
   // Presentation Mode — global continuous counter
-  presentationMode: true,     // ACTIVATED BY DEFAULT
+  presentationMode: false,    // DISABLED BY DEFAULT (V1)
   globalPresentationStep: 1,  // never resets between tabs
-  presentationStep: 1         // local step for the current tab (derived)
+  presentationStep: 1,        // local step for the current tab (derived)
+  
+  // Soutenance V2 Master Mode
+  isSoutenanceV2: true,       // ACTIVATED BY DEFAULT
+  soutenanceV2Step: parseInt(sessionStorage.getItem('gsblab_v2_step')) || 1,
+  soutenanceV2SubStep: parseInt(sessionStorage.getItem('gsblab_v2_substep')) || 0
 };
 
 // ─── Presentation step configuration ────────────────────────────────────────
@@ -320,10 +325,19 @@ const renderApp = () => {
   const state = window.appState;
   const isPres = state.presentationMode;
 
-  if (isPres) {
+  if (isPres || state.isSoutenanceV2) {
     document.body.classList.add('pres-mode-active');
   } else {
     document.body.classList.remove('pres-mode-active');
+  }
+
+  // BIFURCATION SOUTENANCE V2
+  if (state.isSoutenanceV2) {
+    sessionStorage.setItem('gsblab_v2_step', state.soutenanceV2Step || 1);
+    sessionStorage.setItem('gsblab_v2_substep', state.soutenanceV2SubStep || 0);
+    root.innerHTML = SoutenanceController(state);
+    bindSoutenanceEvents(renderApp);
+    return; // Stop default app rendering
   }
 
   // Header template (matches App.tsx layout)
@@ -389,10 +403,19 @@ const renderApp = () => {
         <button 
           id="btn-toggle-presentation"
           class="${isPres ? 'hidden' : 'btn-primary'}"
-          title="Basculer le mode présentation (Diaporama)"
+          title="Basculer l'ancien mode présentation (Diaporama)"
         >
           <svg class="w-4 h-4 ${isPres ? 'text-slate-400' : 'text-white/90 animate-pulse'}" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-          <span>${isPres ? 'Quitter' : 'Lancer la Présentation'}</span>
+          <span>${isPres ? 'Quitter' : 'Lancer la Présentation V1'}</span>
+        </button>
+
+        <button 
+          id="btn-toggle-presentation-v2"
+          class="flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm transition-all duration-200 btn-emerald hover:bg-emerald-500 bg-emerald-600 text-white shadow-lg shadow-emerald-500/30"
+          title="Lancer la nouvelle Soutenance V2 (Master Plan)"
+        >
+          <svg class="w-4 h-4 text-white animate-pulse" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span class="font-bold tracking-wide">SOUTENANCE FINALE</span>
         </button>
         
         <button 
@@ -572,6 +595,16 @@ const renderApp = () => {
     togglePresentationMode(!window.appState.presentationMode);
   });
 
+  // Toggle Soutenance V2 button
+  const btnToggleV2 = document.getElementById('btn-toggle-presentation-v2');
+  if (btnToggleV2) {
+    btnToggleV2.addEventListener('click', () => {
+      window.appState.isSoutenanceV2 = true;
+      window.appState.soutenanceV2Step = 1;
+      renderApp();
+    });
+  }
+
   // Sidebar links
   if (!isPres) {
     bindSidebarEvents(renderApp);
@@ -622,6 +655,17 @@ const renderApp = () => {
 
 // Global keydown listeners for slide navigation
 window.addEventListener('keydown', (e) => {
+  if (window.appState.isSoutenanceV2) {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.code === 'Space') {
+      e.preventDefault();
+      document.getElementById('btn-v2-next')?.click();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      document.getElementById('btn-v2-prev')?.click();
+    }
+    return;
+  }
+
   if (!window.appState.presentationMode) return;
   
   if (e.key === 'ArrowRight' || e.key === ' ' || e.code === 'Space') {
