@@ -5,7 +5,7 @@ import { defaultSpokes, defaultRisks } from './config/defaultData.js?v=3';
 import Sidebar, { bindSidebarEvents, menuSections } from './components/Sidebar.js?v=4';
 import ExecutiveSummary from './components/ExecutiveSummary.js?v=22';
 import FinanceWorkspace, { bindFinanceEvents } from './components/FinanceWorkspace.js?v=28';
-import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=25';
+import TechnicalWorkspace, { bindTechEvents } from './components/TechnicalWorkspace.js?v=27';
 import DrpSimulator, { bindDrpEvents } from './components/DrpSimulator.js?v=11';
 import PmoWorkspace, { bindPmoEvents } from './components/PmoWorkspace.js?v=10';
 import BeforeAfterSlider, { bindSliderEvents } from './components/BeforeAfterSlider.js?v=7';
@@ -41,7 +41,7 @@ window.appState = {
 // Update maxSteps when you add/remove data-pres-step elements in a component.
 const PRES_TABS = ['dashboard', 'finance', 'tech', 'drp', 'pmo', 'comparison', 'sites', 'conclusion'];
 // Nombre de slides par onglet (Option B : slides exclusives)
-const PRES_MAX  = { dashboard: 14, finance: 7, tech: 27, drp: 3, pmo: 5, comparison: 3, sites: 5, conclusion: 1 };
+const PRES_MAX  = { dashboard: 14, finance: 7, tech: 29, drp: 3, pmo: 5, comparison: 3, sites: 5, conclusion: 1 };
 const PRES_SLIDE_MAX = { dashboard: 4, finance: 3, tech: 9, drp: 1, pmo: 1, comparison: 1, sites: 2, conclusion: 1 };
 
 // Compute cumulative offsets once
@@ -156,7 +156,7 @@ const _startIacLoop = () => {
   _resetIacAnimation();
   // dernier row-delay 10.8s + durée 0.25s ≈ 11s + 3s pause = 14s cycle
   _iacTimer = setTimeout(() => {
-    if (window.appState?.presentationStep === 27 && window.appState?.presentationMode) {
+    if (window.appState?.presentationStep === 29 && window.appState?.presentationMode) {
       _startIacLoop();
     }
   }, 14000);
@@ -200,8 +200,8 @@ const updatePresentationDOM = () => {
       }
     });
 
-    // Boucle animation IaC (step 27)
-    if (window.appState.presentationStep === 27) {
+    // Boucle animation IaC (step 29)
+    if (window.appState.presentationStep === 29) {
       _startIacLoop();
     } else {
       clearTimeout(_iacTimer);

@@ -227,3 +227,17 @@ input[type="range"]::-moz-range-track {
   width: 100%;
   display: block;
 }
+
+/* ── SVG réseau — animation couche par couche ───────────── */
+.svg-g1,.svg-g2,.svg-g3,.svg-g4,.svg-g5,.svg-g6,.svg-g7 { opacity: 0; }
+.opacity-100 .svg-g1 { animation: svgFadeUp .45s ease both .05s; }
+.opacity-100 .svg-g2 { animation: svgFadeUp .45s ease both .40s; }
+.opacity-100 .svg-g3 { animation: svgFadeUp .45s ease both .75s; }
+.opacity-100 .svg-g4 { animation: svgFadeUp .45s ease both 1.10s; }
+.opacity-100 .svg-g5 { animation: svgFadeUp .45s ease both 1.45s; }
+.opacity-100 .svg-g6 { animation: svgFadeUp .45s ease both 1.80s; }
+.opacity-100 .svg-g7 { animation: svgFadeUp .45s ease both 2.15s; }
+@keyframes svgFadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

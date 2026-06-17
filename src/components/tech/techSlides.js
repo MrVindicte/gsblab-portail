@@ -422,21 +422,103 @@ export function buildPresHTML(state) {
     </div>
   `;
   const presSlide3 = `
-    <div data-pres-slide="21" data-pres-label="Schéma réseau Siège" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+    <div data-pres-slide="21,22,23" data-pres-label="Schéma réseau Siège" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Siège — GSBLAB-STR-DC · site 02</p>
           <h2 class="text-2xl md:text-3xl font-extrabold text-white tracking-tight">Schéma réseau détaillé — Strasbourg</h2>
           <div class="w-14 h-1 bg-gradient-to-r from-indigo-500 to-indigo-300 mx-auto rounded-full"></div>
         </div>
-        <div class="glass-panel rounded-xl p-5">
+        <div class="glass-panel rounded-xl p-5 opacity-0 transition-all duration-700" data-reveal-at="22">
           <svg class="pres-schema-svg" viewBox="0 0 680 530" role="img" preserveAspectRatio="xMidYMid meet"><title>Schéma réseau du siège GSBLAB</title><defs>
   <marker id="arsg2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
     <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </marker>
-</defs><rect x="96" y="14" width="160" height="44" rx="8" fill="#1e2530" stroke="#334155" stroke-width="0.5"/><text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="176" y="27" text-anchor="middle" dominant-baseline="central">WAN principal</text><text font-family="inherit" font-size="12" fill="#94a3b8" x="176" y="45" text-anchor="middle" dominant-baseline="central">FTTO 1 Gb/s — opérateur</text><rect x="424" y="14" width="160" height="44" rx="8" fill="#1e2530" stroke="#334155" stroke-width="0.5"/><text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="504" y="27" text-anchor="middle" dominant-baseline="central">WAN secours</text><text font-family="inherit" font-size="12" fill="#94a3b8" x="504" y="45" text-anchor="middle" dominant-baseline="central">FTTH — failover auto</text><line x1="176" y1="58" x2="230" y2="100" stroke="#334155" stroke-width="1.2" marker-end="url(#arsg2)" fill="none"/><line x1="504" y1="58" x2="450" y2="100" stroke="#334155" stroke-width="1.2" marker-end="url(#arsg2)" fill="none"/><rect x="150" y="100" width="160" height="54" rx="8" fill="#0c1e36" stroke="#6366f1" stroke-width="0.5"/><text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="230" y="118" text-anchor="middle" dominant-baseline="central">UCG-Ultra n°1</text><text font-family="inherit" font-size="12" fill="#94a3b8" x="230" y="136" text-anchor="middle" dominant-baseline="central">SD-WAN hub · firewall</text><rect x="370" y="100" width="160" height="54" rx="8" fill="#0c1e36" stroke="#6366f1" stroke-width="0.5"/><text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="450" y="118" text-anchor="middle" dominant-baseline="central">UCG-Ultra n°2</text><text font-family="inherit" font-size="12" fill="#94a3b8" x="450" y="136" text-anchor="middle" dominant-baseline="central">Standby HA</text><line x1="310" y1="127" x2="370" y2="127" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="4 3" fill="none"/><text font-family="monospace" font-size="10" fill="#6366f1" x="340" y="121" text-anchor="middle" dominant-baseline="central">HA</text><rect x="260" y="156" width="160" height="22" rx="6" fill="#0a1f15" stroke="#059669" stroke-width="0.5"/><text font-family="monospace" font-size="10" font-weight="600" fill="#34d399" x="340" y="168" text-anchor="middle" dominant-baseline="central">IPsec AES-256 · IKEv2</text><line x1="230" y1="154" x2="295" y2="196" stroke="#334155" stroke-width="1.2" marker-end="url(#arsg2)" fill="none"/><line x1="450" y1="154" x2="385" y2="196" stroke="#334155" stroke-width="1.2" marker-end="url(#arsg2)" fill="none"/><rect x="190" y="196" width="300" height="54" rx="8" fill="#171340" stroke="#818cf8" stroke-width="0.5"/><text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="340" y="214" text-anchor="middle" dominant-baseline="central">Cœur de commutation</text><text font-family="inherit" font-size="12" fill="#94a3b8" x="340" y="232" text-anchor="middle" dominant-baseline="central">5× USW-24 · 802.1Q · PoE · 10 GbE uplinks</text><line x1="265" y1="250" x2="160" y2="292" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/><line x1="340" y1="250" x2="340" y2="292" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/><line x1="415" y1="250" x2="500" y2="292" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/><rect x="60" y="292" width="190" height="54" rx="8" fill="#0a2a1a" stroke="#10b981" stroke-width="0.5"/><text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="155" y="310" text-anchor="middle" dominant-baseline="central">3× Ubiquiti U6+</text><text font-family="inherit" font-size="12" fill="#94a3b8" x="155" y="328" text-anchor="middle" dominant-baseline="central">Wi-Fi 6 · PoE alimentées</text><rect x="245" y="292" width="190" height="54" rx="8" fill="#0a2a1a" stroke="#10b981" stroke-width="0.5"/><text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="340" y="310" text-anchor="middle" dominant-baseline="central">Serveurs Dell R760 / R730</text><text font-family="inherit" font-size="12" fill="#94a3b8" x="340" y="328" text-anchor="middle" dominant-baseline="central">Proxmox VE · HA · 9 VMs</text><rect x="430" y="292" width="190" height="54" rx="8" fill="#1e2530" stroke="#334155" stroke-width="0.5"/><text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="525" y="310" text-anchor="middle" dominant-baseline="central">Postes &amp; téléphonie</text><text font-family="inherit" font-size="12" fill="#94a3b8" x="525" y="328" text-anchor="middle" dominant-baseline="central">56 postes · 15 smartphones</text><line x1="160" y1="346" x2="160" y2="388" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/><line x1="340" y1="346" x2="340" y2="388" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/><line x1="500" y1="346" x2="500" y2="388" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/><rect x="60" y="388" width="100" height="46" rx="6" fill="#0c1e36" stroke="#c7d2fe" stroke-width="2.5"/><rect x="60" y="388" width="100" height="8" rx="3" fill="#1e3a8a"/><text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="110" y="393" text-anchor="middle" dominant-baseline="central">VLAN 10</text><text font-family="inherit" font-size="10" fill="#e2e8f0" x="110" y="414" text-anchor="middle" dominant-baseline="central">Administration</text><text font-family="monospace" font-size="9" fill="#94a3b8" x="110" y="425" text-anchor="middle" dominant-baseline="central">10.2.1.0/24</text><rect x="171" y="388" width="100" height="46" rx="6" fill="#0c1235" stroke="#6366f1" stroke-width="2.5"/><rect x="171" y="388" width="100" height="8" rx="3" fill="#4338ca"/><text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="221" y="393" text-anchor="middle" dominant-baseline="central">VLAN 20</text><text font-family="inherit" font-size="10" fill="#e2e8f0" x="221" y="414" text-anchor="middle" dominant-baseline="central">Postes</text><text font-family="monospace" font-size="9" fill="#94a3b8" x="221" y="425" text-anchor="middle" dominant-baseline="central">10.2.20.0/24</text><rect x="282" y="384" width="100" height="50" rx="6" fill="#0a1f15" stroke="#10b981" stroke-width="2.5"/><rect x="282" y="384" width="100" height="8" rx="3" fill="#047857"/><text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="332" y="389" text-anchor="middle" dominant-baseline="central">VLAN 30</text><text font-family="inherit" font-size="10" fill="#34d399" x="332" y="409" text-anchor="middle" dominant-baseline="central">Analyse médicale</text><text font-family="monospace" font-size="9" fill="#34d399" x="332" y="420" text-anchor="middle" dominant-baseline="central">10.2.30.0/24</text><text font-family="monospace" font-size="8" font-weight="700" fill="#34d399" x="332" y="431" text-anchor="middle" dominant-baseline="central">HDS — ISOLÉ</text><rect x="393" y="388" width="100" height="46" rx="6" fill="#221400" stroke="#d97706" stroke-width="2.5"/><rect x="393" y="388" width="100" height="8" rx="3" fill="#B45309"/><text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="443" y="393" text-anchor="middle" dominant-baseline="central">VLAN 40</text><text font-family="inherit" font-size="10" fill="#B45309" x="443" y="414" text-anchor="middle" dominant-baseline="central">Wi-Fi invités</text><text font-family="monospace" font-size="9" fill="#94a3b8" x="443" y="425" text-anchor="middle" dominant-baseline="central">10.2.40.0/24</text><rect x="504" y="388" width="100" height="46" rx="6" fill="#1e2530" stroke="#475569" stroke-width="2.5"/><rect x="504" y="388" width="100" height="8" rx="3" fill="#475569"/><text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="554" y="393" text-anchor="middle" dominant-baseline="central">VLAN 99</text><text font-family="inherit" font-size="10" fill="#94a3b8" x="554" y="414" text-anchor="middle" dominant-baseline="central">Management</text><text font-family="monospace" font-size="9" fill="#94a3b8" x="554" y="425" text-anchor="middle" dominant-baseline="central">10.2.99.0/24</text><rect x="40" y="452" width="600" height="46" rx="8" fill="#0c1235" stroke="#6366f1" stroke-width="0.5" stroke-dasharray="5 3"/><text font-family="inherit" font-size="14" font-weight="500" fill="#818cf8" x="340" y="469" text-anchor="middle" dominant-baseline="central">26 tunnels SD-WAN sortants — IPsec AES-256 / IKEv2</text><text font-family="inherit" font-size="12" fill="#6366f1" x="340" y="486" text-anchor="middle" dominant-baseline="central">5 laboratoires · 21 centres · auto-orchestrés — UniFi Magic Site-to-Site</text></svg>
+</defs>
+<g class="svg-g1">
+  <rect x="96" y="14" width="160" height="44" rx="8" fill="#1e2530" stroke="#334155" stroke-width="0.5"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="176" y="27" text-anchor="middle" dominant-baseline="central">WAN principal</text>
+  <text font-family="inherit" font-size="12" fill="#94a3b8" x="176" y="45" text-anchor="middle" dominant-baseline="central">FTTO 1 Gb/s — opérateur</text>
+  <rect x="424" y="14" width="160" height="44" rx="8" fill="#1e2530" stroke="#334155" stroke-width="0.5"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="504" y="27" text-anchor="middle" dominant-baseline="central">WAN secours</text>
+  <text font-family="inherit" font-size="12" fill="#94a3b8" x="504" y="45" text-anchor="middle" dominant-baseline="central">FTTH — failover auto</text>
+  <line x1="176" y1="58" x2="230" y2="100" stroke="#334155" stroke-width="1.2" marker-end="url(#arsg2)" fill="none"/>
+  <line x1="504" y1="58" x2="450" y2="100" stroke="#334155" stroke-width="1.2" marker-end="url(#arsg2)" fill="none"/>
+</g>
+<g class="svg-g2">
+  <rect x="150" y="100" width="160" height="54" rx="8" fill="#0c1e36" stroke="#6366f1" stroke-width="0.5"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="230" y="118" text-anchor="middle" dominant-baseline="central">UCG-Ultra n°1</text>
+  <text font-family="inherit" font-size="12" fill="#94a3b8" x="230" y="136" text-anchor="middle" dominant-baseline="central">SD-WAN hub · firewall</text>
+  <rect x="370" y="100" width="160" height="54" rx="8" fill="#0c1e36" stroke="#6366f1" stroke-width="0.5"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="450" y="118" text-anchor="middle" dominant-baseline="central">UCG-Ultra n°2</text>
+  <text font-family="inherit" font-size="12" fill="#94a3b8" x="450" y="136" text-anchor="middle" dominant-baseline="central">Standby HA</text>
+  <line x1="310" y1="127" x2="370" y2="127" stroke="#6366f1" stroke-width="1.2" stroke-dasharray="4 3" fill="none"/>
+  <text font-family="monospace" font-size="10" fill="#6366f1" x="340" y="121" text-anchor="middle" dominant-baseline="central">HA</text>
+</g>
+<g class="svg-g3">
+  <rect x="260" y="156" width="160" height="22" rx="6" fill="#0a1f15" stroke="#059669" stroke-width="0.5"/>
+  <text font-family="monospace" font-size="10" font-weight="600" fill="#34d399" x="340" y="168" text-anchor="middle" dominant-baseline="central">IPsec AES-256 · IKEv2</text>
+  <line x1="230" y1="154" x2="295" y2="196" stroke="#334155" stroke-width="1.2" marker-end="url(#arsg2)" fill="none"/>
+  <line x1="450" y1="154" x2="385" y2="196" stroke="#334155" stroke-width="1.2" marker-end="url(#arsg2)" fill="none"/>
+</g>
+<g class="svg-g4">
+  <rect x="190" y="196" width="300" height="54" rx="8" fill="#171340" stroke="#818cf8" stroke-width="0.5"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="340" y="214" text-anchor="middle" dominant-baseline="central">Cœur de commutation</text>
+  <text font-family="inherit" font-size="12" fill="#94a3b8" x="340" y="232" text-anchor="middle" dominant-baseline="central">5× USW-24 · 802.1Q · PoE · 10 GbE uplinks</text>
+  <line x1="265" y1="250" x2="160" y2="292" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/>
+  <line x1="340" y1="250" x2="340" y2="292" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/>
+  <line x1="415" y1="250" x2="500" y2="292" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/>
+</g>
+<g class="svg-g5">
+  <rect x="60" y="292" width="190" height="54" rx="8" fill="#0a2a1a" stroke="#10b981" stroke-width="0.5"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="155" y="310" text-anchor="middle" dominant-baseline="central">3× Ubiquiti U6+</text>
+  <text font-family="inherit" font-size="12" fill="#94a3b8" x="155" y="328" text-anchor="middle" dominant-baseline="central">Wi-Fi 6 · PoE alimentées</text>
+  <rect x="245" y="292" width="190" height="54" rx="8" fill="#0a2a1a" stroke="#10b981" stroke-width="0.5"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="340" y="310" text-anchor="middle" dominant-baseline="central">Serveurs Dell R760 / R730</text>
+  <text font-family="inherit" font-size="12" fill="#94a3b8" x="340" y="328" text-anchor="middle" dominant-baseline="central">Proxmox VE · HA · 9 VMs</text>
+  <rect x="430" y="292" width="190" height="54" rx="8" fill="#1e2530" stroke="#334155" stroke-width="0.5"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#e2e8f0" x="525" y="310" text-anchor="middle" dominant-baseline="central">Postes &amp; téléphonie</text>
+  <text font-family="inherit" font-size="12" fill="#94a3b8" x="525" y="328" text-anchor="middle" dominant-baseline="central">56 postes · 15 smartphones</text>
+  <line x1="160" y1="346" x2="160" y2="388" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/>
+  <line x1="340" y1="346" x2="340" y2="388" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/>
+  <line x1="500" y1="346" x2="500" y2="388" stroke="#334155" stroke-width="1" marker-end="url(#arsg2)" fill="none"/>
+</g>
+<g class="svg-g6">
+  <rect x="60" y="388" width="100" height="46" rx="6" fill="#0c1e36" stroke="#c7d2fe" stroke-width="2.5"/>
+  <rect x="60" y="388" width="100" height="8" rx="3" fill="#1e3a8a"/>
+  <text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="110" y="393" text-anchor="middle" dominant-baseline="central">VLAN 10</text>
+  <text font-family="inherit" font-size="10" fill="#e2e8f0" x="110" y="414" text-anchor="middle" dominant-baseline="central">Administration</text>
+  <text font-family="monospace" font-size="9" fill="#94a3b8" x="110" y="425" text-anchor="middle" dominant-baseline="central">10.2.1.0/24</text>
+  <rect x="171" y="388" width="100" height="46" rx="6" fill="#0c1235" stroke="#6366f1" stroke-width="2.5"/>
+  <rect x="171" y="388" width="100" height="8" rx="3" fill="#4338ca"/>
+  <text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="221" y="393" text-anchor="middle" dominant-baseline="central">VLAN 20</text>
+  <text font-family="inherit" font-size="10" fill="#e2e8f0" x="221" y="414" text-anchor="middle" dominant-baseline="central">Postes</text>
+  <text font-family="monospace" font-size="9" fill="#94a3b8" x="221" y="425" text-anchor="middle" dominant-baseline="central">10.2.20.0/24</text>
+  <rect x="282" y="384" width="100" height="50" rx="6" fill="#0a1f15" stroke="#10b981" stroke-width="2.5"/>
+  <rect x="282" y="384" width="100" height="8" rx="3" fill="#047857"/>
+  <text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="332" y="389" text-anchor="middle" dominant-baseline="central">VLAN 30</text>
+  <text font-family="inherit" font-size="10" fill="#34d399" x="332" y="409" text-anchor="middle" dominant-baseline="central">Analyse médicale</text>
+  <text font-family="monospace" font-size="9" fill="#34d399" x="332" y="420" text-anchor="middle" dominant-baseline="central">10.2.30.0/24</text>
+  <text font-family="monospace" font-size="8" font-weight="700" fill="#34d399" x="332" y="431" text-anchor="middle" dominant-baseline="central">HDS — ISOLÉ</text>
+  <rect x="393" y="388" width="100" height="46" rx="6" fill="#221400" stroke="#d97706" stroke-width="2.5"/>
+  <rect x="393" y="388" width="100" height="8" rx="3" fill="#B45309"/>
+  <text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="443" y="393" text-anchor="middle" dominant-baseline="central">VLAN 40</text>
+  <text font-family="inherit" font-size="10" fill="#B45309" x="443" y="414" text-anchor="middle" dominant-baseline="central">Wi-Fi invités</text>
+  <text font-family="monospace" font-size="9" fill="#94a3b8" x="443" y="425" text-anchor="middle" dominant-baseline="central">10.2.40.0/24</text>
+  <rect x="504" y="388" width="100" height="46" rx="6" fill="#1e2530" stroke="#475569" stroke-width="2.5"/>
+  <rect x="504" y="388" width="100" height="8" rx="3" fill="#475569"/>
+  <text font-family="monospace" font-size="9" font-weight="700" fill="#fff" x="554" y="393" text-anchor="middle" dominant-baseline="central">VLAN 99</text>
+  <text font-family="inherit" font-size="10" fill="#94a3b8" x="554" y="414" text-anchor="middle" dominant-baseline="central">Management</text>
+  <text font-family="monospace" font-size="9" fill="#94a3b8" x="554" y="425" text-anchor="middle" dominant-baseline="central">10.2.99.0/24</text>
+</g>
+<g class="svg-g7">
+  <rect x="40" y="452" width="600" height="46" rx="8" fill="#0c1235" stroke="#6366f1" stroke-width="0.5" stroke-dasharray="5 3"/>
+  <text font-family="inherit" font-size="14" font-weight="500" fill="#818cf8" x="340" y="469" text-anchor="middle" dominant-baseline="central">26 tunnels SD-WAN sortants — IPsec AES-256 / IKEv2</text>
+  <text font-family="inherit" font-size="12" fill="#6366f1" x="340" y="486" text-anchor="middle" dominant-baseline="central">5 laboratoires · 21 centres · auto-orchestrés — UniFi Magic Site-to-Site</text>
+</g>
+</svg>
         </div>
-        <div class="grid grid-cols-3 gap-3 text-center text-xs">
+        <div class="grid grid-cols-3 gap-3 text-center text-xs opacity-0 transition-all duration-700" data-reveal-at="23">
           <div class="bg-slate-900/60 border border-indigo-500/20 rounded-xl p-3"><span class="font-mono text-indigo-300 font-bold">Dual-WAN</span><div class="text-slate-500 mt-1">FTTO 1 Gb/s + FTTH failover</div></div>
           <div class="bg-slate-900/60 border border-indigo-500/20 rounded-xl p-3"><span class="font-mono text-indigo-300 font-bold">HA Actif/Passif</span><div class="text-slate-500 mt-1">2× UCG-Ultra · heartbeat direct</div></div>
           <div class="bg-slate-900/60 border border-emerald-500/20 rounded-xl p-3"><span class="font-mono text-emerald-300 font-bold">26 tunnels SD-WAN</span><div class="text-slate-500 mt-1">IPsec AES-256 / IKEv2 auto-orchestrés</div></div>
@@ -445,7 +527,7 @@ export function buildPresHTML(state) {
     </div>
   `;
   const presSlide4 = `
-    <div data-pres-slide="22" data-pres-label="Laboratoire régional" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+    <div data-pres-slide="24" data-pres-label="Laboratoire régional" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 04 — GSBLAB-LAB-[VILLE] · sites 10 à 14 · phase 2026</p>
@@ -487,7 +569,7 @@ export function buildPresHTML(state) {
     </div>
   `;
   const presSlide5 = `
-    <div data-pres-slide="23" data-pres-label="Schéma réseau Laboratoire" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+    <div data-pres-slide="25" data-pres-label="Schéma réseau Laboratoire" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Laboratoire régional — GSBLAB-LAB-[VILLE] · sites 10 → 14</p>
@@ -511,7 +593,7 @@ export function buildPresHTML(state) {
     </div>
   `;
   const presSlide6 = `
-    <div data-pres-slide="24" data-pres-label="Centre de prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+    <div data-pres-slide="26" data-pres-label="Centre de prélèvement" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-5">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Étape 06 — GSBLAB-CP-[VILLE] · sites 20 à 34 · phase 2027-2028</p>
@@ -552,7 +634,7 @@ export function buildPresHTML(state) {
     </div>
   `;
   const presSlide7 = `
-    <div data-pres-slide="25" data-pres-label="Schéma réseau Centre" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
+    <div data-pres-slide="27" data-pres-label="Schéma réseau Centre" class="flex-1 min-h-0 overflow-y-auto w-full h-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-4">
         <div class="text-center space-y-2">
           <p class="text-[11px] font-mono tracking-widest uppercase text-indigo-400">Centre de prélèvement — GSBLAB-CP-[VILLE] · sites 20 → 34</p>
@@ -576,7 +658,7 @@ export function buildPresHTML(state) {
     </div>
   `;
   const presSlide8 = `
-    <div data-pres-slide="26" data-pres-label="Cluster Proxmox HA" class="flex-1 min-h-0 w-full h-full">
+    <div data-pres-slide="28" data-pres-label="Cluster Proxmox HA" class="flex-1 min-h-0 w-full h-full">
       <div class="max-w-6xl mx-auto px-4 py-5 space-y-8 h-full flex flex-col justify-center">
       <div class="text-center space-y-4 w-full">
         <h2 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">Capacité du Cluster Proxmox HA</h2>
@@ -601,7 +683,7 @@ export function buildPresHTML(state) {
     </div>
   `;
   const presSlide9 = `
-    <div data-pres-slide="27" data-pres-label="Déploiement IaC" class="flex-1 min-h-0 w-full h-full">
+    <div data-pres-slide="29" data-pres-label="Déploiement IaC" class="flex-1 min-h-0 w-full h-full">
       <style>
         @keyframes iacCursor{0%,100%{opacity:1}50%{opacity:0}}
         .iac-cursor{display:inline-block;width:7px;height:0.9em;background:#6366f1;vertical-align:text-bottom;border-radius:1px;animation:iacCursor 1.1s step-end infinite;margin-left:1px}
