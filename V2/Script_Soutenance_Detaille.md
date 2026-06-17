@@ -41,11 +41,16 @@ Ce document contient le script complet, mot pour mot, pour présenter la solutio
 ### Slide 3.4 : Systèmes & Licences
 > "Sur la partie matérielle, nous avons dimensionné les serveurs avec du stockage Full NVMe pour des temps de réponse quasi instantanés, indispensables pour les bases de données médicales. Côté licences utilisateurs, nous avons fait le choix de la pérennité : des licences Office LTSC 2024 perpétuelles couplées à Exchange Online Plan 1, ce qui évite l'abonnement mensuel de l'offre E3 ou E5 qui aurait explosé le budget."
 
-### Slide 3.5 : Sauvegarde 3-2-1-1-0
-> "Concernant vos données vitales, nous appliquons la règle d'or 3-2-1-1-0 avec Proxmox Backup Server (PBS). 3 copies de vos données, sur 2 médias différents, 1 copie hors site chez OVHcloud HDS, et surtout **1 copie immuable**. Immuable signifie qu'en cas d'attaque par ransomware, même avec les droits administrateurs, les pirates ne pourront ni modifier ni supprimer vos sauvegardes de secours. De plus, nous réutilisons votre robot à bandes actuel pour la copie 'air-gap' totale."
+### Slide 3.5 : Le Bastion (Sauvegarde 3-2-1-1-0)
+> *(Changer de ton, plus grave)* "La question aujourd'hui n'est plus de savoir SI nous serons attaqués, mais QUAND. 
+> Pour garantir la survie de GSBLAB, nous avons implémenté la règle d'or de la sauvegarde : le 3-2-1-1-0. 
+> Concrètement, comment ça se passe ? Les données des 17 cliniques (y compris les nouveaux labos comme Nantes) remontent toutes au siège à Strasbourg via notre SD-WAN. À Strasbourg, Proxmox Backup Server crée 3 copies de la donnée. Il les stocke sur 2 supports différents : d'abord sur l'ancienne baie VNX que nous avons recyclée en stockage SAS pur, puis sur des bandes magnétiques physiques.
+> Ensuite, 1 copie part chaque nuit de manière chiffrée chez OVHcloud en France, un hébergeur certifié HDS.
+> Le deuxième '1', c'est l'Air-Gap : les bandes magnétiques sont sorties du robot et stockées physiquement dans un coffre bancaire à Strasbourg, totalement déconnectées du réseau.
+> Enfin, le '0', c'est 0 erreur de restauration. Proxmox Backup Server vérifie l'intégrité de chaque bloc automatiquement, et les sauvegardes sont immuables. Même si un pirate devient administrateur du réseau, il ne peut mathématiquement pas supprimer nos sauvegardes."
 
 ### Slide 3.6 : Réseau SD-WAN & Sécurité
-> "Enfin, pour relier les cliniques au siège, nous déployons une architecture 100% Ubiquiti UniFi avec des passerelles UXG-Lite. Cela nous permet d'activer un SD-WAN 'Magic Site-to-Site' très simple à gérer, qui chiffre tous les échanges de bout en bout (IPsec AES-256) sans aucun coût de licence récurrent. En interne, la segmentation réseau par VLAN isole la R&D, l'administration et les serveurs pour bloquer toute propagation de virus."
+> "Enfin, pour relier les cliniques au siège, nous déployons une architecture 100% Ubiquiti UniFi avec des passerelles UCG-Ultra. Cela nous permet d'activer un SD-WAN 'Magic Site-to-Site' très simple à gérer, qui chiffre tous les échanges de bout en bout (IPsec AES-256) sans aucun coût de licence récurrent. En interne, la segmentation réseau par VLAN isole la R&D, l'administration et les serveurs pour bloquer toute propagation de virus."
 
 ---
 

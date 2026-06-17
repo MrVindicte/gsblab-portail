@@ -40,16 +40,16 @@ export default [
               <div class="absolute top-0 right-0 bg-emerald-500/20 px-4 py-1.5 rounded-bl-2xl font-mono text-xs text-emerald-400 font-bold tracking-widest">VALIDÉ</div>
               
               <h3 class="text-emerald-400/80 font-bold uppercase tracking-widest text-sm mb-4 relative z-10">Notre CAPEX Global</h3>
-              <div class="text-7xl font-black text-emerald-400 font-mono mb-4 relative z-10 drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">~ 395k€</div>
+              <div class="text-7xl font-black text-emerald-400 font-mono mb-4 relative z-10 drop-shadow-[0_0_15px_rgba(52,211,153,0.3)]">398 733 €</div>
               
               <div class="grid grid-cols-3 gap-4 mt-8 relative z-10">
                  <div class="border-t border-emerald-500/20 pt-3">
                     <div class="text-white font-bold">Matériel</div>
-                    <div class="text-xs text-slate-400 mt-1">Dell, Ubiquiti, NAS</div>
+                    <div class="text-xs text-slate-400 mt-1">Serveurs Dell, Ubiquiti, NAS</div>
                  </div>
                  <div class="border-t border-emerald-500/20 pt-3">
                     <div class="text-white font-bold">Licences Initiales</div>
-                    <div class="text-xs text-slate-400 mt-1">LTSC, Veeam, Windows</div>
+                    <div class="text-xs text-slate-400 mt-1">LTSC, PBS, Windows Server</div>
                  </div>
                  <div class="border-t border-emerald-500/20 pt-3">
                     <div class="text-white font-bold">Prestations</div>
@@ -61,7 +61,7 @@ export default [
         </div>
 
         <div class="${getClasses(1)} transition-all duration-500 bg-slate-900/40 border border-slate-700/50 rounded-xl p-5 text-center text-slate-400 text-sm">
-           Marge de sécurité conservée : <strong class="text-emerald-400 text-lg font-mono">55 000 €</strong> (12% du budget global pour imprévus de chantier).
+           Réserve de sécurité conservée : <strong class="text-emerald-400 text-lg font-mono">51 267 €</strong> (~11% du budget global pour imprévus de chantier).
         </div>
       </div>
       `;
@@ -71,74 +71,100 @@ export default [
     id: "5.2",
     actName: "Acte 5 — Le Budget (TCO)",
     label: "TCO & Économies sur 5 ans",
-    subSteps: 3,
+    subSteps: 4,
     render: (state) => {
       const sub = state.soutenanceV2SubStep || 0;
       const getClasses = (step) => {
          if (sub < step) return "opacity-0 invisible translate-y-4 pointer-events-none";
-         if (sub === step) return "animate-[fadeIn_0.5s_ease-out] translate-y-0";
+         if (sub === step) return "animate-fade-in translate-y-0";
          return "opacity-100 translate-y-0";
       };
 
       return `
-      <div class="flex flex-col justify-center h-full max-w-6xl mx-auto space-y-12 ${sub === 0 ? 'animate-[fadeIn_0.5s_ease-out]' : ''}">
+      <div class="flex flex-col justify-center h-full max-w-6xl mx-auto space-y-8 ${sub === 0 ? 'animate-fade-in' : ''}">
         <h2 class="text-4xl font-bold text-white tracking-tight border-l-4 border-emerald-500 pl-6">
            Les Choix Qui Paient (TCO 5 ans)
         </h2>
-        
-        <p class="text-xl text-slate-400">
+
+        <p class="text-lg text-slate-400">
            Le vrai coût s'évalue sur 5 ans (TCO). Nos choix à contre-courant génèrent des <strong class="text-emerald-400">économies massives en OPEX</strong>.
         </p>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-4">
-           
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
            <!-- Economy 1 -->
-           <div class="${getClasses(1)} transition-all duration-500 bg-indigo-950/20 border border-indigo-500/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-indigo-500/40 hover:bg-indigo-900/20">
+           <div class="${getClasses(1)} transition-all duration-500 bg-indigo-950/20 border border-indigo-500/20 rounded-2xl p-5 backdrop-blur-md relative overflow-hidden group hover:border-indigo-500/40 hover:bg-indigo-900/20">
               <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all duration-500"></div>
-              
+
               <div class="relative z-10 flex flex-col h-full">
-                 <div class="flex items-center justify-between mb-4">
-                    <h4 class="text-lg font-bold text-white flex items-center gap-2">
-                       <span class="text-indigo-400">01.</span> Refus de Microsoft 365 (E3/E5)
+                 <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-base font-bold text-white flex items-center gap-2">
+                       <span class="text-indigo-400">01.</span> Refus de Microsoft 365
                     </h4>
                     <span class="bg-indigo-500/10 text-indigo-400 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider border border-indigo-500/20">Licences</span>
                  </div>
-                 
-                 <p class="text-sm text-slate-400 mb-4 flex-1"><span class="font-medium text-white">Office LTSC 2024 (perpétuel) + Exchange Online P1</span> plutôt qu'un abonnement M365 Business Premium.</p>
-                 
-                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+
+                 <p class="text-sm text-slate-400 mb-3 flex-1"><span class="font-medium text-white">Office LTSC 2024 (perpétuel) + Exchange Online P1</span> plutôt qu'un abonnement M365 Business Premium.</p>
+
+                 <div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
                     <div>
-                       <span class="text-[9px] uppercase tracking-widest text-emerald-500 font-black block mb-0.5">Économie générée (TCO)</span>
-                       <span class="text-2xl font-black text-emerald-400 font-mono drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">~ 200 000 €</span>
+                       <span class="text-[9px] uppercase tracking-widest text-emerald-500 font-black block mb-0.5">Économie (TCO)</span>
+                       <span class="text-xl font-black text-emerald-400 font-mono">~ 200 000 €</span>
                     </div>
-                    <div class="bg-emerald-500/10 text-emerald-400 p-2 rounded-xl border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_25px_rgba(16,185,129,0.3)] transition-all duration-500 group-hover:-translate-y-1">
-                       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    <div class="bg-emerald-500/10 text-emerald-400 p-1.5 rounded-lg border border-emerald-500/20">
+                       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                     </div>
                  </div>
               </div>
            </div>
 
            <!-- Economy 2 -->
-           <div class="${getClasses(2)} transition-all duration-500 bg-amber-950/20 border border-amber-500/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-amber-500/40 hover:bg-amber-900/20">
+           <div class="${getClasses(2)} transition-all duration-500 bg-amber-950/20 border border-amber-500/20 rounded-2xl p-5 backdrop-blur-md relative overflow-hidden group hover:border-amber-500/40 hover:bg-amber-900/20">
               <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all duration-500"></div>
-              
+
               <div class="relative z-10 flex flex-col h-full">
-                 <div class="flex items-center justify-between mb-4">
-                    <h4 class="text-lg font-bold text-white flex items-center gap-2">
+                 <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-base font-bold text-white flex items-center gap-2">
                        <span class="text-amber-400">02.</span> Refus de VMware VVF
                     </h4>
                     <span class="bg-amber-500/10 text-amber-400 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider border border-amber-500/20">Hyperviseur</span>
                  </div>
-                 
-                 <p class="text-sm text-slate-400 mb-4 flex-1"><span class="font-medium text-white">Fuite du modèle par cœur (Broadcom)</span> au profit de l'hyperconvergence open-source Proxmox VE.</p>
-                 
-                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+
+                 <p class="text-sm text-slate-400 mb-3 flex-1"><span class="font-medium text-white">Fuite du modèle par cœur (Broadcom)</span> au profit de l'hyperconvergence open-source Proxmox VE.</p>
+
+                 <div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
                     <div>
-                       <span class="text-[9px] uppercase tracking-widest text-emerald-500 font-black block mb-0.5">Économie générée (TCO)</span>
-                       <span class="text-2xl font-black text-emerald-400 font-mono drop-shadow-[0_0_10px_rgba(52,211,153,0.3)]">~ 75 000 €</span>
+                       <span class="text-[9px] uppercase tracking-widest text-emerald-500 font-black block mb-0.5">Économie (TCO)</span>
+                       <span class="text-xl font-black text-emerald-400 font-mono">~ 75 000 €</span>
                     </div>
-                    <div class="bg-emerald-500/10 text-emerald-400 p-2 rounded-xl border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_25px_rgba(16,185,129,0.3)] transition-all duration-500 group-hover:-translate-y-1">
-                       <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    <div class="bg-emerald-500/10 text-emerald-400 p-1.5 rounded-lg border border-emerald-500/20">
+                       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    </div>
+                 </div>
+              </div>
+           </div>
+
+           <!-- Economy 3 -->
+           <div class="${getClasses(3)} transition-all duration-500 bg-blue-950/20 border border-blue-500/20 rounded-2xl p-5 backdrop-blur-md relative overflow-hidden group hover:border-blue-500/40 hover:bg-blue-900/20">
+              <div class="absolute -top-10 -right-10 w-32 h-32 bg-blue-500/10 rounded-full blur-2xl group-hover:bg-blue-500/20 transition-all duration-500"></div>
+
+              <div class="relative z-10 flex flex-col h-full">
+                 <div class="flex items-center justify-between mb-3">
+                    <h4 class="text-base font-bold text-white flex items-center gap-2">
+                       <span class="text-blue-400">03.</span> Optimisations Récurrentes
+                    </h4>
+                    <span class="bg-blue-500/10 text-blue-400 text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider border border-blue-500/20">OpEx</span>
+                 </div>
+
+                 <p class="text-sm text-slate-400 mb-3 flex-1"><span class="font-medium text-white">Recyclage matériel (R730, baie VNX, robot LTO)</span>, correction double comptage et effet cumulé 5 ans.</p>
+
+                 <div class="mt-auto pt-3 border-t border-white/5 flex items-center justify-between">
+                    <div>
+                       <span class="text-[9px] uppercase tracking-widest text-emerald-500 font-black block mb-0.5">Économie (TCO)</span>
+                       <span class="text-xl font-black text-emerald-400 font-mono">~ 54 500 €</span>
+                    </div>
+                    <div class="bg-emerald-500/10 text-emerald-400 p-1.5 rounded-lg border border-emerald-500/20">
+                       <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                     </div>
                  </div>
               </div>
@@ -147,10 +173,10 @@ export default [
         </div>
 
         <!-- Big Total -->
-        <div class="${getClasses(3)} transition-all duration-500 bg-emerald-950/30 border border-emerald-500/40 rounded-2xl p-6 flex items-center justify-between shadow-[0_0_30px_rgba(16,185,129,0.15)]">
+        <div class="${getClasses(4)} transition-all duration-500 bg-emerald-950/30 border border-emerald-500/40 rounded-2xl p-5 flex items-center justify-between shadow-[0_0_30px_rgba(16,185,129,0.15)]">
            <div>
               <h4 class="text-emerald-400 font-bold uppercase tracking-widest text-sm mb-1">Économies Totales (TCO)</h4>
-              <p class="text-slate-400 text-sm">Sur 5 ans par rapport aux standards habituels du marché.</p>
+              <p class="text-slate-400 text-sm">Sur 5 ans par rapport aux standards du marché (200k + 75k + 54,5k).</p>
            </div>
            <div class="text-5xl font-black text-white font-mono drop-shadow-lg">
               329 500 €

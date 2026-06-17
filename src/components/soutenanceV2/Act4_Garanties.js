@@ -128,7 +128,7 @@ export default [
                  <div class="absolute -top-3 left-6 bg-indigo-500 text-white text-[10px] font-bold px-2 py-1 rounded font-mono tracking-widest">T + 5 sec</div>
                  <div class="text-indigo-400 mb-4"><svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7z"></path></svg></div>
                  <h4 class="text-white font-bold mb-2">Isolation Réseau</h4>
-                 <p class="text-xs text-slate-400">Le FortiGate reçoit l'alerte et coupe le port réseau du PC infecté. La menace est confinée au VLAN 40.</p>
+                 <p class="text-xs text-slate-400">Le pare-feu Ubiquiti UCG-Ultra coupe le port réseau du PC infecté. Menace confinée au VLAN 40.</p>
               </div>
 
               <!-- T+15 -->
@@ -165,7 +165,7 @@ export default [
         </h2>
         
         <p class="text-xl text-slate-400 max-w-4xl">
-           Bascule des 380 boîtes (Exchange 2013 vers Online) : voici le planning du <strong>Cutover (Week-end J-0)</strong>.
+           Bascule des 130 boîtes existantes (Exchange 2013 vers Online) : voici le planning du <strong>Cutover (Week-end J-0)</strong>. Les futurs collaborateurs seront créés nativement dans le cloud.
         </p>
 
         <div class="bg-slate-900/50 border border-white/5 p-8 rounded-3xl backdrop-blur-md">
@@ -220,6 +220,126 @@ export default [
                  </div>
               </div>
 
+           </div>
+
+        </div>
+      </div>
+      `;
+    }
+  },
+  {
+    id: "4.4",
+    actName: "Acte 4 — Les Garanties",
+    label: "Conduite du Changement",
+    subSteps: 3,
+    render: (state) => {
+      const sub = state.soutenanceV2SubStep || 0;
+      const getClasses = (step) => {
+         if (sub < step) return "opacity-0 invisible translate-y-4 pointer-events-none";
+         if (sub === step) return "animate-[fadeIn_0.5s_ease-out] translate-y-0";
+         return "opacity-100 translate-y-0";
+      };
+
+      return `
+      <div class="flex flex-col justify-center h-full max-w-6xl mx-auto space-y-5 ${sub === 0 ? 'animate-[fadeIn_0.5s_ease-out]' : ''}">
+        <h2 class="text-3xl font-bold text-white tracking-tight border-l-4 border-amber-500 pl-6">
+           Conduite du Changement (130 collaborateurs actuels)
+        </h2>
+
+        <p class="text-lg text-slate-400">
+           La technique ne suffit pas. Si les collaborateurs n'adhèrent pas, le projet échoue.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+           <!-- Communication -->
+           <div class="${getClasses(1)} transition-all duration-500 bg-slate-900/50 border border-slate-700/50 rounded-2xl p-5 backdrop-blur-md">
+              <h3 class="text-base font-bold text-white mb-3 flex items-center gap-2">
+                 <svg class="w-4 h-4 text-blue-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                 Communication
+              </h3>
+              <div class="space-y-2.5 text-sm">
+                 <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                    <span class="text-slate-300">S-4 : Annonce DG</span>
+                    <span class="text-slate-500 text-[10px] font-mono">Mail + affichage</span>
+                 </div>
+                 <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                    <span class="text-slate-300">S-2 : Guide de Survie IT</span>
+                    <span class="text-slate-500 text-[10px] font-mono">PDF à tous</span>
+                 </div>
+                 <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                    <span class="text-slate-300">J-3 : Rappel maintenance</span>
+                    <span class="text-slate-500 text-[10px] font-mono">Mail + Teams</span>
+                 </div>
+                 <div class="flex items-center justify-between">
+                    <span class="text-slate-300">J+0 : Hypercare sur site</span>
+                    <span class="text-emerald-400 text-[10px] font-bold font-mono">Gilets IT</span>
+                 </div>
+              </div>
+           </div>
+
+           <!-- Formations Utilisateurs -->
+           <div class="${getClasses(2)} transition-all duration-500 bg-slate-900/50 border border-slate-700/50 rounded-2xl p-5 backdrop-blur-md">
+              <h3 class="text-base font-bold text-white mb-3 flex items-center gap-2">
+                 <svg class="w-4 h-4 text-blue-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                 Formations Users
+              </h3>
+              <div class="space-y-2.5 text-sm">
+                 <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                    <span class="text-slate-300">Office LTSC & OWA</span>
+                    <span class="text-blue-400 text-[10px] font-bold font-mono">1h · Tous</span>
+                 </div>
+                 <div class="flex items-center justify-between">
+                    <span class="text-slate-300">Cybersécurité / MFA</span>
+                    <span class="text-blue-400 text-[10px] font-bold font-mono">1h · Obligatoire</span>
+                 </div>
+              </div>
+              <div class="mt-4 pt-3 border-t border-white/5">
+                 <h3 class="text-base font-bold text-white mb-3 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-indigo-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    Transfert DSI
+                 </h3>
+                 <div class="space-y-2.5 text-sm">
+                    <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                       <span class="text-slate-300">Proxmox VE & PBS</span>
+                       <span class="text-indigo-400 text-[10px] font-bold font-mono">2j</span>
+                    </div>
+                    <div class="flex items-center justify-between border-b border-white/5 pb-2">
+                       <span class="text-slate-300">Ubiquiti UniFi</span>
+                       <span class="text-indigo-400 text-[10px] font-bold font-mono">1j</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                       <span class="text-slate-300">ESET Endpoint</span>
+                       <span class="text-indigo-400 text-[10px] font-bold font-mono">½j</span>
+                    </div>
+                 </div>
+              </div>
+           </div>
+
+           <!-- Hotline -->
+           <div class="${getClasses(3)} transition-all duration-500 bg-emerald-950/20 border border-emerald-500/30 rounded-2xl p-5 backdrop-blur-md flex flex-col">
+              <h3 class="text-base font-bold text-white mb-3 flex items-center gap-2">
+                 <svg class="w-4 h-4 text-emerald-400 shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                 Hotline VIP
+              </h3>
+              <div class="space-y-3 text-sm flex-1">
+                 <div class="flex items-start gap-2">
+                    <span class="text-emerald-500 mt-0.5">✓</span>
+                    <span class="text-slate-300">Numéro dédié + raccourci Teams prioritaire</span>
+                 </div>
+                 <div class="flex items-start gap-2">
+                    <span class="text-emerald-500 mt-0.5">✓</span>
+                    <span class="text-slate-300">Support N1 sur site le jour J</span>
+                 </div>
+                 <div class="flex items-start gap-2">
+                    <span class="text-emerald-500 mt-0.5">✓</span>
+                    <span class="text-slate-300">Couverture J+0 à J+30</span>
+                 </div>
+              </div>
+              <div class="mt-auto pt-3 border-t border-emerald-500/20 text-center">
+                 <span class="text-emerald-400 font-bold text-lg font-mono">3,5 jours</span>
+                 <span class="text-slate-500 text-xs block mt-0.5">de transfert de compétences DSI</span>
+              </div>
            </div>
 
         </div>

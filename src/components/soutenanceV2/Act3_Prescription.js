@@ -30,7 +30,7 @@ export default [
               <div class="space-y-4">
                  <div class="line-through text-slate-500 text-sm">VMware ESXi 6.0</div>
                  <div class="flex flex-col">
-                    <span class="text-emerald-400 font-bold text-lg">Proxmox VE 8.x</span>
+                    <span class="text-emerald-400 font-bold text-lg">Proxmox VE 9.x</span>
                     <span class="text-slate-400 text-xs mt-1">Cluster HA / Open-Source</span>
                  </div>
               </div>
@@ -61,10 +61,10 @@ export default [
               </h3>
               <div class="space-y-4">
                  <div class="line-through text-slate-500 text-sm">Réseau plat & VPN statique</div>
-                 <div class="flex flex-col">
-                    <span class="text-emerald-400 font-bold text-lg">Ubiquiti UniFi</span>
-                    <span class="text-slate-400 text-xs mt-1">SD-WAN / IPsec AES-256</span>
-                 </div>
+                  <div class="flex flex-col">
+                     <span class="text-emerald-400 font-bold text-lg">100% Ubiquiti UniFi</span>
+                     <span class="text-slate-400 text-xs mt-1">SD-WAN / IPsec AES-256</span>
+                  </div>
               </div>
            </div>
 
@@ -123,7 +123,7 @@ export default [
            </div>
 
            <div class="${getClasses(2)} transition-all duration-500 bg-emerald-950/20 border border-emerald-500/30 rounded-2xl p-8 flex-1 text-center backdrop-blur-md shadow-[0_0_40px_rgba(16,185,129,0.1)]">
-              <div class="text-3xl font-bold text-white mb-2">Proxmox VE 8.x</div>
+              <div class="text-3xl font-bold text-white mb-2">Proxmox VE 9.x</div>
               <p class="text-emerald-400 font-mono mb-6">Open-Source & Hyperconvergé</p>
               <div class="text-5xl font-black text-emerald-500 font-mono mb-2">0 €</div>
               <div class="text-slate-400 text-sm">Aucun coût de licence</div>
@@ -301,24 +301,24 @@ export default [
            
            <div class="${getClasses(1)} transition-all duration-500 flex-1 flex flex-col items-center text-center space-y-3 p-4">
               <div class="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center text-blue-400 text-2xl font-black mb-2">3</div>
-              <h4 class="text-white font-bold">Copies de la donnée</h4>
-              <p class="text-xs text-slate-500">1 Prod + 2 Backups</p>
+              <h4 class="text-white font-bold">Copies de données</h4>
+              <p class="text-xs text-slate-500">1 Prod + 2 Backups. Centralisation de toutes les données (Siège + Labos distants ex: Nantes).</p>
            </div>
            
            <div class="${getClasses(2)} w-px h-24 bg-white/10 hidden md:block"></div>
 
            <div class="${getClasses(2)} transition-all duration-500 flex-1 flex flex-col items-center text-center space-y-3 p-4">
               <div class="w-16 h-16 bg-indigo-500/10 rounded-full flex items-center justify-center text-indigo-400 text-2xl font-black mb-2">2</div>
-              <h4 class="text-white font-bold">Supports physiques</h4>
-              <p class="text-xs text-slate-500">Disques NAS locaux + Bandes magnétiques LTO-6</p>
+              <h4 class="text-white font-bold">Supports (Strasbourg)</h4>
+              <p class="text-xs text-slate-500">Disques SAS (Baie VNX) + Bandes LTO-6 (Robot PowerVault).</p>
            </div>
            
            <div class="${getClasses(3)} w-px h-24 bg-white/10 hidden md:block"></div>
 
            <div class="${getClasses(3)} transition-all duration-500 flex-1 flex flex-col items-center text-center space-y-3 p-4">
               <div class="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center text-purple-400 text-2xl font-black mb-2">1</div>
-              <h4 class="text-white font-bold">Copie hors site</h4>
-              <p class="text-xs text-slate-500">Cold Archive OVHcloud certifié HDS (France)</p>
+              <h4 class="text-white font-bold">Copie Hors-Site</h4>
+              <p class="text-xs text-slate-500">Datacenter OVHcloud certifié HDS (Externalisation distante).</p>
            </div>
 
            <div class="${getClasses(4)} w-px h-24 bg-white/10 hidden md:block"></div>
@@ -326,21 +326,21 @@ export default [
            <div class="${getClasses(4)} transition-all duration-500 flex-1 flex flex-col items-center text-center space-y-3 p-4">
               <div class="w-16 h-16 bg-amber-500/10 rounded-full flex items-center justify-center text-amber-400 text-2xl font-black mb-2">1</div>
               <h4 class="text-white font-bold">Copie "Air-Gap"</h4>
-              <p class="text-xs text-slate-500">Bandes déconnectées au coffre bancaire</p>
+              <p class="text-xs text-slate-500">Bandes magnétiques stockées au coffre bancaire local.</p>
            </div>
 
            <div class="${getClasses(5)} w-px h-24 bg-white/10 hidden md:block"></div>
 
            <div class="${getClasses(5)} transition-all duration-500 flex-1 flex flex-col items-center text-center space-y-3 p-4">
               <div class="w-16 h-16 bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-400 text-2xl font-black mb-2">0</div>
-              <h4 class="text-white font-bold">Erreur de restore</h4>
-              <p class="text-xs text-slate-500">Immuabilité "Append-only" via PBS</p>
+              <h4 class="text-white font-bold">Erreur Restore</h4>
+              <p class="text-xs text-slate-500">Vérification auto (PBS) + Immuabilité "Append-Only".</p>
            </div>
 
         </div>
 
         <div class="${getClasses(5)} transition-all duration-500 bg-[#111218] border border-slate-800 rounded-xl p-6 text-center text-slate-400 text-lg">
-           <span class="text-white font-bold">Le principe :</span> Même si un attaquant chiffre les serveurs de production et obtient les droits d'administration, il lui sera <span class="text-emerald-400 font-bold underline decoration-emerald-500/50">physiquement et logiquement impossible</span> d'effacer les sauvegardes.
+           <span class="text-white font-bold">Le flux (Le "Comment") :</span> Les données de toutes les cliniques remontent par le SD-WAN au Siège (Strasbourg). Proxmox Backup Server sauvegarde sur la Baie locale, puis externalise vers OVHcloud, pendant que le robot grave les bandes physiques.
         </div>
       </div>
       `;
@@ -384,7 +384,7 @@ export default [
                  <li class="flex items-start gap-3">
                     <span class="text-emerald-500 font-bold mt-0.5">✓</span>
                     <div>
-                       <span class="text-slate-200 font-medium block">Passerelles UXG-Lite (0€ licence)</span>
+                       <span class="text-slate-200 font-medium block">Passerelles UCG-Ultra (0€ licence)</span>
                        <span class="text-slate-500 text-sm">Pare-feux stateful avec gestion centralisée sur contrôleur VM Proxmox.</span>
                     </div>
                  </li>
@@ -402,7 +402,13 @@ export default [
                     <span class="text-emerald-500 font-bold mt-0.5">✓</span>
                     <div>
                        <span class="text-slate-200 font-medium block">Segmentation VLAN stricte</span>
-                       <span class="text-slate-500 text-sm font-mono mt-1 block">VLAN 10: IT | 20: Prod | 30: Médical HDS | 40: Users | 99: Guest</span>
+                       <div class="flex flex-wrap gap-2 mt-2">
+                          <span class="px-2 py-1 bg-slate-800 border border-slate-700 rounded text-xs font-mono text-slate-300">VLAN 10 <span class="text-slate-500 ml-1">Administration</span></span>
+                          <span class="px-2 py-1 bg-emerald-900/40 border border-emerald-700/50 rounded text-xs font-mono text-emerald-300">VLAN 20 <span class="text-emerald-500/70 ml-1">Production</span></span>
+                          <span class="px-2 py-1 bg-blue-900/40 border border-blue-700/50 rounded text-xs font-mono text-blue-300">VLAN 30 <span class="text-blue-500/70 ml-1">Médical HDS</span></span>
+                          <span class="px-2 py-1 bg-amber-900/40 border border-amber-700/50 rounded text-xs font-mono text-amber-300">VLAN 40 <span class="text-amber-500/70 ml-1">Invités</span></span>
+                          <span class="px-2 py-1 bg-purple-900/40 border border-purple-700/50 rounded text-xs font-mono text-purple-300">VLAN 99 <span class="text-purple-500/70 ml-1">Management</span></span>
+                       </div>
                     </div>
                  </li>
                  <li class="flex items-start gap-3">
