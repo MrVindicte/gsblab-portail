@@ -91,19 +91,21 @@ export default [
 
         <!-- DAF (Révélé au SubStep 2, S'anime au SubStep 3) -->
         <div class="${sub < 2 ? 'opacity-0 invisible translate-y-4' : 'opacity-100 translate-y-0'} transition-all duration-700 mt-8 relative group">
-           <!-- Glow effect -->
-           <div class="absolute inset-0 bg-amber-500/10 rounded-2xl blur-2xl transition-all duration-700 ${sub >= 3 ? 'opacity-100' : 'opacity-0'} pointer-events-none"></div>
            
-           <div class="relative bg-slate-900/60 border rounded-2xl p-6 backdrop-blur-md overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 transition-all duration-500 ${sub >= 3 ? 'border-amber-500/50 shadow-[0_0_40px_rgba(245,158,11,0.15)]' : 'border-slate-700/50 shadow-lg'}">
+           <div class="relative bg-slate-900/60 border rounded-2xl p-8 backdrop-blur-md overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 transition-all duration-500 ${sub >= 3 ? 'border-amber-500/30 bg-slate-800/40' : 'border-slate-700/50 shadow-lg'}">
               
-              <!-- Background gradient -->
-              <div class="absolute inset-0 transition-all duration-500 ${sub >= 3 ? 'bg-gradient-to-r from-amber-500/10 to-transparent' : 'bg-transparent'}"></div>
+              <!-- Background Grid Pattern -->
+              <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none transition-opacity duration-500 ${sub >= 3 ? 'opacity-100' : 'opacity-0'}"></div>
+              
+              <!-- Corner Ribbon -->
+              <div class="absolute top-0 left-0 border-b border-r px-4 py-1.5 rounded-br-2xl font-mono text-[10px] font-bold tracking-widest z-10 transition-colors duration-500 ${sub >= 3 ? 'bg-amber-500/10 border-amber-500/30 text-amber-500' : 'bg-transparent border-transparent text-transparent'}">
+                 LIMITE DAF
+              </div>
 
-              <div class="flex items-center gap-5 relative z-10 w-full">
-                 <!-- Icon Box -->
-                 <div class="w-14 h-14 shrink-0 rounded-xl flex items-center justify-center border transition-all duration-500 ${sub >= 3 ? 'bg-amber-500/20 border-amber-500/50 text-amber-400 shadow-[0_0_15px_rgba(245,158,11,0.4)]' : 'bg-slate-800 border-slate-700 text-slate-400'}">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7z"></path></svg>
-                 </div>
+              <!-- Watermark Lock Icon -->
+              <svg class="absolute right-4 top-1/2 -translate-y-1/2 w-28 h-28 pointer-events-none transition-all duration-1000 ${sub >= 3 ? 'text-amber-500/10 rotate-[-5deg] scale-100' : 'text-slate-500/5 rotate-0 scale-110'}" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8V7z"></path></svg>
+
+              <div class="flex items-center gap-5 relative z-10 w-full pt-4 px-4">
                  
                  <!-- Text Content -->
                  <div class="flex-1">
@@ -112,20 +114,20 @@ export default [
                        
                        <!-- Animated Premium Typography -->
                        <div class="transition-all duration-500 overflow-hidden flex items-center gap-3 ${sub >= 3 ? 'max-w-xs opacity-100 translate-x-0' : 'max-w-0 opacity-0 -translate-x-4'}">
-                          <div class="w-1 h-4 bg-amber-500 rounded-full shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
-                          <span class="text-amber-400 font-bold text-[11px] uppercase tracking-[0.2em] whitespace-nowrap">
+                          <div class="w-0.5 h-4 bg-amber-500/50 rounded-full"></div>
+                          <span class="text-amber-500/90 font-bold text-[10px] uppercase tracking-[0.2em] whitespace-nowrap">
                              BUDGET VERROUILLÉ
                           </span>
                        </div>
                     </div>
-                    <p class="text-slate-400 text-sm max-w-xl transition-colors duration-500 ${sub >= 3 ? 'text-amber-200/70' : ''}">
+                    <p class="text-slate-400 text-sm max-w-xl transition-colors duration-500 ${sub >= 3 ? 'text-slate-300' : ''}">
                        Plafond global (CAPEX) pour l'ensemble du projet de migration.
                     </p>
                  </div>
                  
                  <!-- Amount -->
                  <div class="text-right shrink-0">
-                    <div class="font-mono text-4xl font-black tracking-tight transition-all duration-500 ${sub >= 3 ? 'text-amber-400 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)] scale-105' : 'text-slate-200 scale-100'}">
+                    <div class="font-mono text-4xl font-black tracking-tight text-white transition-all duration-500">
                        450 <span class="opacity-50">000</span> <span class="text-2xl text-slate-500 ml-1">€ HT</span>
                     </div>
                  </div>

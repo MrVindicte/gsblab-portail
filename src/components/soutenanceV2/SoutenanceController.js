@@ -37,6 +37,7 @@ export default function SoutenanceController(state) {
          <div class="flex items-center gap-4">
             <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.8)]"></div>
             <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase">${slide.actName}</span>
+            <span id="presentation-timer" class="ml-4 font-mono text-[11px] tracking-widest text-slate-400 bg-slate-800/50 px-2 py-0.5 rounded border border-white/10 hidden">00:00</span>
          </div>
          <button id="btn-quit-v2" class="px-4 py-1.5 text-xs font-semibold bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/50 rounded-lg text-slate-400 hover:text-red-400 transition-all flex items-center gap-2">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -96,6 +97,58 @@ export function bindSoutenanceEvents(renderApp) {
       renderApp();
     });
   }
+
+  // --- Timer Logic ---
+  const currentStep = window.appState.soutenanceV2Step || 1;
+  const currentSubStep = window.appState.soutenanceV2SubStep || 0;
+  
+  if (currentStep === 1) {
+      window.appState.presentationStartTime = null;
+      window.appState.presentationEndTime = null;
+  } else if (currentStep === 2 && !window.appState.presentationStartTime) {
+      window.appState.presentationStartTime = Date.now();
+      window.appState.presentationEndTime = null;
+  }
+  
+  if (currentStep === allSlides.length && currentSubStep === 4) {
+      if (window.appState.presentationStartTime && !window.appState.presentationEndTime) {
+          window.appState.presentationEndTime = Date.now();
+      }
+  } else {
+      window.appState.presentationEndTime = null;
+  }
+
+  const updateTimer = () => {
+      const timerEl = document.getElementById('presentation-timer');
+      if (!timerEl) return;
+      
+      if (!window.appState.presentationStartTime) {
+          timerEl.classList.add('hidden');
+          return;
+      }
+      timerEl.classList.remove('hidden');
+      
+      const end = window.appState.presentationEndTime || Date.now();
+      const diff = Math.floor((end - window.appState.presentationStartTime) / 1000);
+      const m = String(Math.floor(diff / 60)).padStart(2, '0');
+      const s = String(diff % 60).padStart(2, '0');
+      timerEl.innerText = `${m}:${s}`;
+      
+      if (window.appState.presentationEndTime) {
+         timerEl.classList.add('text-emerald-400');
+         timerEl.classList.remove('text-slate-400');
+      } else {
+         timerEl.classList.remove('text-emerald-400');
+         timerEl.classList.add('text-slate-400');
+      }
+  };
+
+  if (window.presentationTimerInterval) {
+      clearInterval(window.presentationTimerInterval);
+  }
+  updateTimer();
+  window.presentationTimerInterval = setInterval(updateTimer, 1000);
+  // --- End Timer Logic ---
 
   const navigate = (dir) => {
      const currentSlide = allSlides[window.appState.soutenanceV2Step - 1];

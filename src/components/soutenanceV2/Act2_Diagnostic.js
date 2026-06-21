@@ -29,56 +29,63 @@ export default [
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
            
            <!-- OS Alert -->
-           <div class="${getClasses(1)} transition-all duration-500 bg-red-950/30 border border-red-500/30 rounded-2xl p-6 backdrop-blur-md hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(239,68,68,0.1)]">
-              <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center text-red-400 mb-6">
-                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+           <div class="${getClasses(1)} transition-all duration-500 bg-red-950/30 border border-red-500/30 rounded-2xl p-6 backdrop-blur-md hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(239,68,68,0.1)] relative overflow-hidden group">
+              <!-- Watermark Icon -->
+              <svg class="absolute -bottom-6 -right-6 w-36 h-36 text-red-500/5 group-hover:text-red-500/10 group-hover:scale-110 transition-all duration-700 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+              
+              <div class="relative z-10">
+                 <h3 class="text-xl font-bold text-white mb-2">OS Obsolètes</h3>
+                 <p class="text-sm text-red-200/80 mb-4">Fin de support critique</p>
+                 <ul class="text-sm text-slate-400 space-y-2 font-medium">
+                    <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Windows Server 2012 R2 (EOL)</li>
+                    <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Active Directory vulnérable</li>
+                 </ul>
               </div>
-              <h3 class="text-xl font-bold text-white mb-2">OS Obsolètes</h3>
-              <p class="text-sm text-red-200/80 mb-4">Fin de support critique</p>
-               <ul class="text-sm text-slate-400 space-y-2 font-medium">
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Windows Server 2012 R2 (EOL)</li>
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Active Directory vulnérable</li>
-               </ul>
            </div>
 
            <!-- Virtu Alert -->
-           <div class="${getClasses(2)} transition-all duration-500 bg-red-950/30 border border-red-500/30 rounded-2xl p-6 backdrop-blur-md hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(239,68,68,0.1)]">
-              <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center text-red-400 mb-6">
-                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+           <div class="${getClasses(2)} transition-all duration-500 bg-red-950/30 border border-red-500/30 rounded-2xl p-6 backdrop-blur-md hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(239,68,68,0.1)] relative overflow-hidden group">
+              <!-- Watermark Icon -->
+              <svg class="absolute -bottom-6 -right-6 w-36 h-36 text-red-500/5 group-hover:text-red-500/10 group-hover:scale-110 transition-all duration-700 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+              
+              <div class="relative z-10">
+                 <h3 class="text-xl font-bold text-white mb-2">Virtualisation</h3>
+                 <p class="text-sm text-red-200/80 mb-4">Vendor Lock-in Broadcom</p>
+                 <ul class="text-sm text-slate-400 space-y-2 font-medium">
+                    <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> VMware ESXi 6.0 (EOL)</li>
+                    <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Explosion des coûts (+75k€)</li>
+                 </ul>
               </div>
-              <h3 class="text-xl font-bold text-white mb-2">Virtualisation</h3>
-              <p class="text-sm text-red-200/80 mb-4">Vendor Lock-in Broadcom</p>
-               <ul class="text-sm text-slate-400 space-y-2 font-medium">
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> VMware ESXi 6.0 (EOL)</li>
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Explosion des coûts de licence (+75k€)</li>
-               </ul>
            </div>
 
            <!-- Network Alert -->
-           <div class="${getClasses(3)} transition-all duration-500 bg-red-950/30 border border-red-500/30 rounded-2xl p-6 backdrop-blur-md hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(239,68,68,0.1)]">
-              <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center text-red-400 mb-6">
-                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+           <div class="${getClasses(3)} transition-all duration-500 bg-red-950/30 border border-red-500/30 rounded-2xl p-6 backdrop-blur-md hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(239,68,68,0.1)] relative overflow-hidden group">
+              <!-- Watermark Icon -->
+              <svg class="absolute -bottom-6 -right-6 w-36 h-36 text-red-500/5 group-hover:text-red-500/10 group-hover:scale-110 transition-all duration-700 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+              
+              <div class="relative z-10">
+                 <h3 class="text-xl font-bold text-white mb-2">Réseau "À Plat"</h3>
+                 <p class="text-sm text-red-200/80 mb-4">Zéro segmentation</p>
+                 <ul class="text-sm text-slate-400 space-y-2 font-medium">
+                    <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Réseau unique (Pas de VLANs)</li>
+                    <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Risque de propagation latérale</li>
+                 </ul>
               </div>
-              <h3 class="text-xl font-bold text-white mb-2">Réseau "À Plat"</h3>
-              <p class="text-sm text-red-200/80 mb-4">Zéro segmentation</p>
-               <ul class="text-sm text-slate-400 space-y-2 font-medium">
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Réseau unique (Pas de VLANs)</li>
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Flux Médicaux & Guest mélangés</li>
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Risque de propagation latérale (Ransomware)</li>
-               </ul>
            </div>
 
            <!-- Mail Alert -->
-           <div class="${getClasses(4)} transition-all duration-500 bg-red-950/30 border border-red-500/30 rounded-2xl p-6 backdrop-blur-md hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(239,68,68,0.1)]">
-              <div class="w-12 h-12 bg-red-500/20 rounded-xl flex items-center justify-center text-red-400 mb-6">
-                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v10a2 2 0 002 2z"></path></svg>
+           <div class="${getClasses(4)} transition-all duration-500 bg-red-950/30 border border-red-500/30 rounded-2xl p-6 backdrop-blur-md hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(239,68,68,0.1)] relative overflow-hidden group">
+              <!-- Watermark Icon -->
+              <svg class="absolute -bottom-6 -right-6 w-36 h-36 text-red-500/5 group-hover:text-red-500/10 group-hover:scale-110 transition-all duration-700 pointer-events-none" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"></path></svg>
+              
+              <div class="relative z-10">
+                 <h3 class="text-xl font-bold text-white mb-2">Messagerie</h3>
+                 <p class="text-sm text-red-200/80 mb-4">Faille de sécurité béante</p>
+                 <ul class="text-sm text-slate-400 space-y-2 font-medium">
+                    <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Exchange 2013 (EOL)</li>
+                    <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Failles critiques (Hafnium/ProxyShell)</li>
+                 </ul>
               </div>
-              <h3 class="text-xl font-bold text-white mb-2">Messagerie</h3>
-              <p class="text-sm text-red-200/80 mb-4">Faille de sécurité béante</p>
-               <ul class="text-sm text-slate-400 space-y-2 font-medium">
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Exchange 2013 (EOL)</li>
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Failles critiques (Hafnium/ProxyShell)</li>
-               </ul>
            </div>
 
         </div>
