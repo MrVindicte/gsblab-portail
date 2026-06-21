@@ -1,28 +1,29 @@
 export default [
-  {
-    id: "2.1",
-    actName: "Acte 2 — Le Diagnostic",
-    label: "L'Audit de l'Existant",
-    subSteps: 4,
-    render: (state) => {
-      const sub = state.soutenanceV2SubStep || 0;
-      const getClasses = (step) => {
-         if (sub < step) return "opacity-0 invisible translate-y-4 pointer-events-none";
-         if (sub === step) return "animate-[fadeIn_0.5s_ease-out] translate-y-0";
-         return "opacity-100 translate-y-0";
-      };
+   {
+      id: "2.1",
+      actName: "Acte 2 — Le Diagnostic",
+      label: "L'Audit de l'Existant",
+      subSteps: 4,
+      render: (state) => {
+         const sub = state.soutenanceV2SubStep || 0;
+         const getClasses = (step) => {
+            if (sub < step) return "opacity-0 invisible translate-y-4 pointer-events-none";
+            if (sub === step) return "animate-[fadeIn_0.5s_ease-out] translate-y-0";
+            return "opacity-100 translate-y-0";
+         };
 
-      return `
+         return `
       <div class="flex flex-col justify-center h-full max-w-6xl mx-auto space-y-10 ${sub === 0 ? 'animate-[fadeIn_0.5s_ease-out]' : ''}">
         <div class="flex items-center gap-4 border-l-4 border-amber-500 pl-6">
            <svg class="w-10 h-10 text-amber-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
            <h2 class="text-4xl md:text-5xl font-bold text-white tracking-tight drop-shadow-lg">
-              Audit de la Dette Technique
+              État des Lieux & Risques Majeurs
            </h2>
         </div>
         
         <p class="text-xl text-slate-400 max-w-3xl leading-relaxed">
-          L'infrastructure héritée cumule obsolescence et failles critiques. <strong class="text-red-400">La certification HDS est impossible en l'état.</strong>
+          L'infrastructure héritée cumule obsolescence et failles critiques.<br />
+          <strong class="text-red-400 mt-2 block">La certification HDS est impossible en l'état.</strong>
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
@@ -63,7 +64,7 @@ export default [
                <ul class="text-sm text-slate-400 space-y-2 font-medium">
                   <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Réseau unique (Pas de VLANs)</li>
                   <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Flux Médicaux & Guest mélangés</li>
-                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Tunnels VPN instables</li>
+                  <li class="flex items-start gap-2"><span class="text-red-500 mt-0.5">✗</span> Risque de propagation latérale (Ransomware)</li>
                </ul>
            </div>
 
@@ -83,29 +84,29 @@ export default [
         </div>
       </div>
       `;
-    }
-  },
-  {
-    id: "2.2",
-    actName: "Acte 2 — Le Diagnostic",
-    label: "L'Esprit Critique (Anomalies)",
-    subSteps: 4,
-    render: (state) => {
-      const sub = state.soutenanceV2SubStep || 0;
-      const getClasses = (step) => {
-         if (sub < step) return "opacity-0 invisible translate-y-4 pointer-events-none";
-         if (sub === step) return "animate-[fadeIn_0.5s_ease-out] translate-y-0";
-         return "opacity-100 translate-y-0";
-      };
+      }
+   },
+   {
+      id: "2.2",
+      actName: "Acte 2 — Le Diagnostic",
+      label: "L'Esprit Critique (Anomalies)",
+      subSteps: 8,
+      render: (state) => {
+         const sub = state.soutenanceV2SubStep || 0;
+         const getClasses = (step) => {
+            if (sub < step) return "opacity-0 invisible translate-y-4 pointer-events-none";
+            if (sub === step) return "animate-[fadeIn_0.5s_ease-out] translate-y-0";
+            return "opacity-100 translate-y-0";
+         };
 
-      return `
+         return `
       <div class="flex flex-col justify-center h-full max-w-6xl mx-auto space-y-10 ${sub === 0 ? 'animate-[fadeIn_0.5s_ease-out]' : ''}">
         <h2 class="text-4xl md:text-5xl font-bold text-white tracking-tight border-l-4 border-emerald-500 pl-6 drop-shadow-lg">
-           Notre Esprit Critique : Le Cahier des Charges
+           Cahier des Charges
         </h2>
         
         <p class="text-xl text-slate-400 max-w-3xl leading-relaxed">
-          Nous avons challengé les spécifications techniques et identifié <span class="text-emerald-400 font-bold">16 anomalies majeures</span> dans la demande initiale.
+          Nous avons challengé le cahier des charges et identifié <span class="text-emerald-400 font-bold">16 anomalies techniques</span>. En voici 4 exemples critiques :
         </p>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
@@ -124,7 +125,7 @@ export default [
                  
                  <p class="text-sm text-slate-400 mb-4 flex-1"><span class="font-medium text-white">Bornes Wi-Fi 4 (2015) non supportées.</span> Violation de la norme HDS.</p>
                  
-                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center gap-3">
+                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center gap-3 ${getClasses(2)} transition-all duration-500">
                     <div class="bg-emerald-500/10 text-emerald-400 p-1.5 rounded-lg shrink-0 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-shadow">
                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
                     </div>
@@ -137,7 +138,7 @@ export default [
            </div>
 
            <!-- Anomalie 2 -->
-           <div class="${getClasses(2)} transition-all duration-500 bg-indigo-950/20 border border-indigo-500/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-indigo-500/40 hover:bg-indigo-900/20">
+           <div class="${getClasses(3)} transition-all duration-500 bg-indigo-950/20 border border-indigo-500/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-indigo-500/40 hover:bg-indigo-900/20">
               <div class="absolute -top-10 -right-10 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all duration-500"></div>
               
               <div class="relative z-10 flex flex-col h-full">
@@ -150,20 +151,20 @@ export default [
                  
                  <p class="text-sm text-slate-400 mb-4 flex-1"><span class="font-medium text-white">Portables comptabilisés deux fois</span> dans le budget initial (siège + centres).</p>
                  
-                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center gap-3">
+                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center gap-3 ${getClasses(4)} transition-all duration-500">
                     <div class="bg-emerald-500/10 text-emerald-400 p-1.5 rounded-lg shrink-0 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-shadow">
                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
                     <div>
                        <span class="text-[9px] uppercase tracking-widest text-emerald-500 font-black block mb-0.5">Économie générée : 1 560 €</span>
-                       <p class="text-xs text-emerald-100 font-medium">Correction du parc LTSC à 231 au lieu de 237.</p>
+                       <p class="text-xs text-emerald-100 font-medium">Ajustement des licences au nombre réel d'utilisateurs.</p>
                     </div>
                  </div>
               </div>
            </div>
 
            <!-- Anomalie 3 -->
-           <div class="${getClasses(3)} transition-all duration-500 bg-red-950/20 border border-red-500/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-red-500/40 hover:bg-red-900/20">
+           <div class="${getClasses(5)} transition-all duration-500 bg-red-950/20 border border-red-500/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-red-500/40 hover:bg-red-900/20">
               <div class="absolute -top-10 -right-10 w-32 h-32 bg-red-500/10 rounded-full blur-2xl group-hover:bg-red-500/20 transition-all duration-500"></div>
               
               <div class="relative z-10 flex flex-col h-full">
@@ -176,7 +177,7 @@ export default [
                  
                  <p class="text-sm text-slate-400 mb-4 flex-1"><span class="font-medium text-white">Baie SAN de santé reliée directement à internet</span> (sans firewall).</p>
                  
-                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center gap-3">
+                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center gap-3 ${getClasses(6)} transition-all duration-500">
                     <div class="bg-emerald-500/10 text-emerald-400 p-1.5 rounded-lg shrink-0 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-shadow">
                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                     </div>
@@ -189,7 +190,7 @@ export default [
            </div>
 
            <!-- Anomalie 4 -->
-           <div class="${getClasses(4)} transition-all duration-500 bg-amber-950/20 border border-amber-500/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-amber-500/40 hover:bg-amber-900/20">
+           <div class="${getClasses(7)} transition-all duration-500 bg-amber-950/20 border border-amber-500/20 rounded-2xl p-6 backdrop-blur-md relative overflow-hidden group hover:border-amber-500/40 hover:bg-amber-900/20">
               <div class="absolute -top-10 -right-10 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-all duration-500"></div>
               
               <div class="relative z-10 flex flex-col h-full">
@@ -202,7 +203,7 @@ export default [
                  
                  <p class="text-sm text-slate-400 mb-4 flex-1"><span class="font-medium text-white">Live migration d'un CPU récent vers ancien = Kernel Panic</span> immédiat.</p>
                  
-                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center gap-3">
+                 <div class="mt-auto pt-4 border-t border-white/5 flex items-center gap-3 ${getClasses(8)} transition-all duration-500">
                     <div class="bg-emerald-500/10 text-emerald-400 p-1.5 rounded-lg shrink-0 border border-emerald-500/20 shadow-[0_0_15px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-shadow">
                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path></svg>
                     </div>
@@ -217,6 +218,6 @@ export default [
         </div>
       </div>
       `;
-    }
-  }
+      }
+   }
 ];
