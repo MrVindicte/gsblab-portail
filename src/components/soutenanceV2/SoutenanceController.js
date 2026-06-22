@@ -39,7 +39,7 @@ export default function SoutenanceController(state) {
             <span class="text-emerald-400 font-bold tracking-widest text-[10px] uppercase">${slide.actName}</span>
             <span id="presentation-timer" class="ml-4 font-mono text-[11px] tracking-widest text-slate-400 bg-slate-800/50 px-2 py-0.5 rounded border border-white/10 hidden">00:00</span>
          </div>
-         <button id="btn-quit-v2" class="px-4 py-1.5 text-xs font-semibold bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/50 rounded-lg text-slate-400 hover:text-red-400 transition-all flex items-center gap-2">
+         <button id="btn-quit-v2" class="hidden px-4 py-1.5 text-xs font-semibold bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/50 rounded-lg text-slate-400 hover:text-red-400 transition-all flex items-center gap-2">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
             Quitter V2
          </button>

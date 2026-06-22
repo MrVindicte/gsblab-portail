@@ -98,7 +98,7 @@ export default [
       return `
       <div class="flex flex-col justify-center h-full max-w-6xl mx-auto space-y-8 ${sub === 0 ? 'animate-fade-in' : ''}">
         <h2 class="text-4xl font-bold text-white tracking-tight border-l-4 border-emerald-500 pl-6">
-           Les Choix Qui Paient (TCO 5 ans)
+           Optimisation du TCO (5 ans)
         </h2>
 
         <p class="text-lg text-slate-400">
